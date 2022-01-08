@@ -1,0 +1,19 @@
+.button-container {
+  background-color: #01c935;
+  color: #fefdff;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 20px;
+  outline: 0;
+  border: 0;
+  font-size: 19px;
+  min-width: 200px;
+  margin: 35px 0 20px;
+  opacity: 1;
+  transition: 0.2s all ease-in-out;
+  font-family: "Roboto";
+}
+
+.button-container:hover {
+  opacity: 0.6;
+}

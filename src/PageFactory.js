@@ -1,0 +1,30 @@
+import React from "react";
+import { Route } from "react-router-dom";
+
+import Banner from "./Components/Banner.jsx";
+import TextContainer from "./Components/TextContainer.jsx";
+import Button from "./Components/Button.jsx";
+import FooterImage from "./Components/FooterImage.jsx";
+
+export default class PageFactory {
+
+
+
+  constructor({ image, district, containerText, buttonText, footerImage, pathName }) {
+
+    function createComponent() {
+      return (
+        <div>
+          <Banner imageSrc={image} />
+          <TextContainer district={district} containerText={containerText} />
+          <Button buttonText={buttonText} />
+          <FooterImage src={footerImage} />
+        </div>
+      )
+    }
+
+    return (
+      <Route path={`/${pathName}`} component={createComponent} />
+    )
+  }
+}
