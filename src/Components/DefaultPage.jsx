@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { mockedData } from "../utils"
+import { getPages } from "../utils"
+import { Spinner } from "react-bootstrap"
 
 
 const DefaultPage = () => {
   const history = useHistory();
   useEffect(() => {
-    history.push(`/${mockedData[0].pathName}`)
+    getPages().then((data) => {
+      history.push(`/${data[0].pathName}`)
+    })
   })
   return (
-    <h1>This is a default page</h1>
+    <div style={{ margin: '150px auto', width: 'fit-content' }}>
+      <Spinner animation="border" size="lg" />
+    </div>
   )
 }
 
