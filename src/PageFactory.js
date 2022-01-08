@@ -10,14 +10,14 @@ export default class PageFactory {
 
 
 
-  constructor({ image, district, containerText, buttonText, footerImage, pathName }) {
+  constructor({ image, district, containerText, buttonText, footerImage, modalImage, pathName }) {
 
     function createComponent() {
       return (
         <div>
           <Banner imageSrc={image} />
           <TextContainer district={district} containerText={containerText} />
-          <Button buttonText={buttonText} />
+          <Button buttonText={buttonText} modalImage={modalImage} />
           <FooterImage src={footerImage} />
         </div>
       )

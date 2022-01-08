@@ -1,0 +1,67 @@
+.form-modal-container .modal-content {
+  border-radius: 10px;
+  background-color: black;
+  color: #f0f0f0;
+  padding: 12px 20px;
+}
+
+.form-modal-container .modal-content img {
+  width: 70px;
+  margin: 0 auto 10px;
+}
+
+.form-modal-input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-modal-input-area>div {
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+}
+
+.form-modal-input-area>div>label {
+  margin-bottom: 3px;
+  font-family: "Roboto";
+  font-weight: 400;
+  margin-left: 7px;
+  font-size: 11px;
+  position: absolute;
+  transition: all 0.20s ease-in-out;
+  top: -4px;
+  left: -2px;
+}
+
+.form-modal-input-area>div:focus-within label {
+  top: -12px;
+  left: -6px;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.form-modal-input-area>div>input {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: transparent;
+  height: 33px;
+  outline: 0;
+  color: #f0f0f0;
+  padding-left: 7px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.form-modal-button-area {
+  margin-top: 40px;
+  text-align: center;
+}
+
+@media (min-width: 1300px) {
+  .form-modal-container .modal-content {
+    padding: 12px 30px;
+  }
+}
