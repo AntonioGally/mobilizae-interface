@@ -6,7 +6,8 @@ export const mockedData = [
     buttonText: 'Quero participar',
     footerImage: 'https://cdn.picpng.com/cats/pic-cats-22936.png',
     modalImage: "https://cdn.picpng.com/cats/pic-cats-22936.png",
-    pathName: 'jardimDasOliveiras'
+    pathName: 'jardimDasOliveiras',
+    groupLink: 'https://chat.whatsapp.com/GLnSsOcddN46Yd2kTxp1Vu'
   },
   {
     image: 'https://www.trisul-sa.com.br/blog/wp-content/uploads/2017/03/bairro-arborizado-200317.jpg',
@@ -15,6 +16,7 @@ export const mockedData = [
     buttonText: 'Texto do botão',
     footerImage: 'https://cdn.picpng.com/cats/pic-cats-22936.png',
     modalImage: "https://cdn.picpng.com/cats/pic-cats-22936.png",
-    pathName: 'jardimDaPenha'
+    pathName: 'jardimDaPenha',
+    groupLink: 'https://chat.whatsapp.com/GLnSsOcddN46Yd2kTxp1Vu'
   },
 ]
