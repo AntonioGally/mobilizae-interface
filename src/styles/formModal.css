@@ -17,7 +17,7 @@
 }
 
 .form-modal-input-area>div {
-  margin: 5px auto;
+  margin: 7px auto;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -32,13 +32,13 @@
   font-size: 11px;
   position: absolute;
   transition: all 0.20s ease-in-out;
-  top: -4px;
+  top: -10px;
   left: -2px;
 }
 
 .form-modal-input-area>div:focus-within label {
-  top: -12px;
-  left: -6px;
+  top: -16px;
+  left: 0px;
   font-size: 15px;
   color: #ffffff;
 }
@@ -52,7 +52,7 @@
   color: #f0f0f0;
   padding-left: 7px;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .form-modal-button-area {

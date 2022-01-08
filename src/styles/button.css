@@ -12,6 +12,7 @@
   opacity: 1;
   transition: 0.2s all ease-in-out;
   font-family: "Roboto";
+  font-weight: 500;
 }
 
 .button-container:hover {

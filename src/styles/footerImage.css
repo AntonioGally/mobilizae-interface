@@ -20,3 +20,9 @@
   width: 170px;
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .footer-image-container img {
+    width: 120px;
+  }
+}
