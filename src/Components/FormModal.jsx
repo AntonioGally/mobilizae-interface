@@ -35,9 +35,9 @@ const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
       groupLink: groupLink
     }
     createUser(newUser).then((data) => {
-      console.log(data);
+      window.location.href = groupLink;
     })
-    // window.location.href = groupLink;
+
   }
 
   return ReactDOM.createPortal(

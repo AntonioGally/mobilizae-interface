@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 //Components
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Spinner } from "react-bootstrap";
 import ListUser from './ListUser.jsx';
+import CreatePage from './CreatePage.jsx';
 
 // Data Base
 import { db } from "../../firebase-config"
@@ -34,7 +35,7 @@ const AdminPage = () => {
       case 'listGroup':
         return <span>List Group</span>
       case 'createNewPages':
-        return <span>Create new page</span>
+        return <CreatePage />
       case 'createNewGroups':
         return <span>Create new Groups</span>
       default:
@@ -48,7 +49,7 @@ const AdminPage = () => {
         <>
           <Navbar bg="dark" variant="dark">
             <Container>
-              <Navbar.Brand href="#home">Admin</Navbar.Brand>
+              <Navbar.Brand>Admin</Navbar.Brand>
               <Nav className="me-auto">
                 <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
                   onClick={() => setTabNavigation('listUser')}>
@@ -76,9 +77,9 @@ const AdminPage = () => {
 
         </>
       ) : (
-        <>
-          <span>...Loading</span>
-        </>
+        <div style={{ margin: '150px auto', width: 'fit-content' }}>
+          <Spinner animation="border" size="lg" />
+        </div>
       )}
 
     </>
