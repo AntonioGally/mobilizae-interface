@@ -5,6 +5,7 @@ import { Navbar, Container, Nav, Spinner, NavDropdown } from "react-bootstrap";
 import ListPage from "./ListPage.jsx";
 import ListUser from './ListUser.jsx';
 import CreatePage from './CreatePage.jsx';
+import Image from "./Image.jsx";
 
 // Data Base
 import { db } from "../../firebase-config"
