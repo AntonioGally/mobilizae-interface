@@ -57,9 +57,9 @@ const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
             <label className={errors.email ? "text-danger" : ""}>Seu melhor email:</label>
             <input type="text" {...register("email", {
               required: true,
-              pattern: {
-                value: /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
-              },
+              // pattern: {
+              //   value: /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i
+              // },
               minLength: 3
             })} />
           </div>
