@@ -20,6 +20,10 @@ const ListUser = ({ users }) => {
     return {
       filterIcon: () => <FilterOutlined style={filteredValue[dataIndex] !== "" ? { color: "#1890ff" } : { color: "#000" }} />,
       onFilter: (value, record) => {
+        if (typeof record[dataIndex] === 'boolean') {
+          const auxRecordValue = record[dataIndex] ? "Ativo" : "Bloqueado";
+          return auxRecordValue.toString().toLowerCase().includes(value.toLowerCase());
+        }
         return record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : "";
       },
       filteredValue: [filteredValue[dataIndex]] || null,
@@ -114,7 +118,7 @@ const ListUser = ({ users }) => {
     <>
       {users && (
         <div>
-          <h3>Listar usuários</h3>
+          <h3 onClick={() => console.log(users)}>Listar usuários</h3>
           <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
         </div>
       )}
