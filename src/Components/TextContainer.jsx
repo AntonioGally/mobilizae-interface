@@ -1,10 +1,10 @@
 import React from "react";
 import "../styles/textContainer.css";
-const TextContainer = ({ district, titleText = "Programa a casa é minha no", containerText }) => {
+const TextContainer = ({ titleText, containerText }) => {
   return (
     <div className="text-container">
       <h1>
-        {titleText} {district}
+        {titleText}
       </h1>
       <p>
         {containerText ? containerText : 'O novo programa irá acolher 500 novas famílias. Participe do grupo e saiba mais'}

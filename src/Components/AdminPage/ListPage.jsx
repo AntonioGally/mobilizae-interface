@@ -7,7 +7,6 @@ import { sort } from "../../utils.js";
 
 const ListPage = ({ pages }) => {
   const [filteredValue, setFilteredValue] = useState({
-    district: "",
     groupLink: "",
     createdDate: "",
     pathName: "",
@@ -34,15 +33,6 @@ const ListPage = ({ pages }) => {
   }
 
   const columns = [
-    {
-      title: 'Bairro',
-      dataIndex: 'district',
-      key: 'district',
-      ...getColumnFilterProps("district"),
-      sorter: {
-        compare: (a, b) => sort(a.district, b.district)
-      },
-    },
     {
       title: 'Link whatsApp atrelado',
       dataIndex: 'groupLink',

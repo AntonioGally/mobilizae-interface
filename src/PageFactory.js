@@ -1,6 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
+import ReactGA from 'react-ga';
+
 import Banner from "./Components/Banner.jsx";
 import TextContainer from "./Components/TextContainer.jsx";
 import Button from "./Components/Button.jsx";
@@ -10,14 +12,16 @@ export default class PageFactory {
 
 
 
-  constructor({ bannerImage, district, title, containerText, buttonText,
-    footerImage, modalImage, pathName, groupLink }) {
+  constructor({ bannerImage, title, containerText, buttonText,
+    footerImage, modalImage, pathName, groupLink }, id) {
 
     function createComponent() {
+      ReactGA.ga('set', 'new_page_path', `/${window.location.hash}`);
+      ReactGA.pageview(`/${window.location.hash}`);
       return (
-        <div>
+        <div >
           <Banner imageSrc={bannerImage} />
-          <TextContainer district={district} titleText={title} containerText={containerText} />
+          <TextContainer titleText={title} containerText={containerText} />
           <Button buttonText={buttonText} modalImage={modalImage} groupLink={groupLink} />
           <FooterImage src={footerImage} />
         </div>
@@ -25,7 +29,7 @@ export default class PageFactory {
     }
 
     return (
-      <Route path={`/${pathName}`} component={createComponent} />
+      <Route key={id} path={`/${pathName}`} component={createComponent} />
     )
   }
 }

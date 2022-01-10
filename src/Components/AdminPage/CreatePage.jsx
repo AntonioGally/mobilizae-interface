@@ -35,7 +35,7 @@ const CreatePage = () => {
 
     createPage(newPageObj).then(() => {
       toast.success(`Página ${newPageObj.pathName} criada com sucesso`);
-      var arr = ["district", "pathName", "groupLink"];
+      var arr = ["pathName", "groupLink"];
       arr.forEach((value) => {
         resetField(value);
       })
@@ -54,15 +54,6 @@ const CreatePage = () => {
             setImages={(value) => { setImages((prev) => ({ ...prev, banner: value })) }} />
         </div>
         <Col md={6} sm={12} className="my-col">
-          <Form.Group className="mb-3">
-            <Form.Label>Bairro</Form.Label>
-            <Form.Control type="text" placeholder="Enter distric"
-              isInvalid={errors.district}
-              {...register("district", {
-                required: true,
-              })} />
-          </Form.Group>
-
           <Form.Group className="mb-3">
             <Form.Label>Texto do container (opcional) </Form.Label>
             <Form.Control type="text" placeholder="Enter container text"

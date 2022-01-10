@@ -21,7 +21,7 @@ const Router = () => {
         <Route exact path="/" component={DefaultPage} />
         <Route path="/admin" component={AdminPage} />
         {pages && pages.map((value) => {
-          return new PageFactory(value);
+          return new PageFactory(value, value.id);
         })}
       </Switch>
     </HashRouter>
