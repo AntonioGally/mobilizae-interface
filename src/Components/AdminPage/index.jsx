@@ -5,7 +5,7 @@ import { Navbar, Container, Nav, Spinner, NavDropdown } from "react-bootstrap";
 import ListPage from "./ListPage.jsx";
 import ListUser from './ListUser.jsx';
 import CreatePage from './CreatePage.jsx';
-import Image from "./Image.jsx";
+import CreateQRCode from './CreateQRCode.jsx';
 
 // Data Base
 import { db } from "../../firebase-config"
@@ -46,6 +46,8 @@ const AdminPage = () => {
         return <ListPage pages={pages} />
       case 'createNewPages':
         return <CreatePage />
+      case 'createQRCode':
+        return <CreateQRCode />
       default:
         return 'Default option'
     }
@@ -73,6 +75,10 @@ const AdminPage = () => {
                       Criar páginas
                     </NavDropdown.Item>
                   </NavDropdown>
+                  <Nav.Link className={tabNavigation === 'createQRCode' ? 'active' : ''}
+                    onClick={() => setTabNavigation('createQRCode')}>
+                    Criar QR Code
+                  </Nav.Link>
                 </Nav>
               </Navbar.Collapse>
             </Container>

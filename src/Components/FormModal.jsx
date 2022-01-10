@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 //Components
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 
 //Scripts
 import { useForm } from "react-hook-form";
@@ -20,6 +21,7 @@ import { collection, addDoc } from "firebase/firestore"
 
 const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
   const [radioValue, setRadioValue] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const usersCollectionRef = collection(db, "users");
 
@@ -28,14 +30,19 @@ const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
   }
 
   function onSubmit(value) {
+    setLoading(true);
     const newUser = {
       ...value,
+      pagePath: window.location.hash.replace(/[#/]{2}/, ""),
       createdDate: new Date(),
       wantReceiveSMS: radioValue,
       groupLink: groupLink
     }
     createUser(newUser).then((data) => {
+      setLoading(false);
       window.location.href = groupLink;
+    }).catch(() => {
+      setLoading(false);
     })
 
   }
@@ -82,6 +89,10 @@ const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
             label={`Aceito receber sms e avisos no meu telefone `}
           />
           <button className="button-container">Confirmar</button>
+          <br />
+          {loading && (
+            <Spinner animation="border" size="lg" />
+          )}
         </div>
       </form>
     </Modal>, document.getElementById('modal-root')
