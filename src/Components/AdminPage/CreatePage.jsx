@@ -16,9 +16,10 @@ const CreatePage = () => {
   }
 
   function onSubmit(newPageObj) {
+    newPageObj.createdDate = new Date();
     createPage(newPageObj).then(() => {
       toast.success(`Página ${newPageObj.pathName} criada com sucesso`);
-      var arr = ["bannerImage", "district", "containerText", "pathName", "groupLink"];
+      var arr = ["bannerImage", "district", "pathName", "groupLink"];
       arr.forEach((value) => {
         resetField(value);
       })

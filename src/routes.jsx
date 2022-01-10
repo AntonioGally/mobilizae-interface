@@ -11,7 +11,6 @@ const Router = () => {
   const [pages, setPages] = useState([]);
   useEffect(() => {
     getPages().then((data) => {
-      console.log("DATA", data)
       setPages(data);
     })
   }, [])

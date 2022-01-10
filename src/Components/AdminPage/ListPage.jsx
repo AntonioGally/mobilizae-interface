@@ -4,17 +4,14 @@ import { FilterOutlined } from '@ant-design/icons';
 
 import { sort } from "../../utils.js";
 
-const ListUser = ({ users }) => {
 
+const ListPage = ({ pages }) => {
   const [filteredValue, setFilteredValue] = useState({
-    name: "",
-    email: "",
-    number: "",
-    wantReceiveSMS: "",
+    district: "",
     groupLink: "",
     createdDate: "",
+    pathName: "",
   });
-
 
   const getColumnFilterProps = (dataIndex) => {
     return {
@@ -38,51 +35,16 @@ const ListUser = ({ users }) => {
 
   const columns = [
     {
-      title: 'Nome',
-      dataIndex: 'name',
-      key: 'name',
-      ...getColumnFilterProps("name"),
+      title: 'Bairro',
+      dataIndex: 'district',
+      key: 'district',
+      ...getColumnFilterProps("district"),
       sorter: {
-        compare: (a, b) => sort(a.name, b.name)
+        compare: (a, b) => sort(a.district, b.district)
       },
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      sorter: {
-        compare: (a, b) => sort(a.email, b.email)
-      },
-      ...getColumnFilterProps("email"),
-    },
-    {
-      title: 'Número',
-      dataIndex: 'number',
-      key: 'number',
-      sorter: (a, b) => a.number - b.number,
-      ...getColumnFilterProps("number"),
-    },
-    {
-      title: 'SMS',
-      dataIndex: 'wantReceiveSMS',
-      key: 'wantReceiveSMS',
-      sorter: {
-        compare: (a, b) => {
-          console.log(a, b);
-           sort(a.wantReceiveSMS, b.wantReceiveSMS)
-        }
-      },
-      ...getColumnFilterProps("wantReceiveSMS"),
-      render: (text) => {
-        if (text === true) {
-          return "Ativado"
-        } else {
-          return "Bloqueado"
-        }
-      }
-    },
-    {
-      title: 'Grupo',
+      title: 'Link whatsApp atrelado',
       dataIndex: 'groupLink',
       key: 'groupLink',
       sorter: {
@@ -97,29 +59,42 @@ const ListUser = ({ users }) => {
       title: 'Data de cadastro',
       dataIndex: 'createdDate',
       key: 'createdDate',
-      ...getColumnFilterProps("createdDate"),
-      sorter: (a, b) => new Date(Number(a.createdDate?.seconds) * 1000) - new Date(Number(b.createdDate?.seconds) * 1000),
+      sorter: (a, b) => {
+        return new Date(Number(a.createdDate?.seconds) * 1000) - new Date(Number(b.createdDate?.seconds) * 1000)
+      },
       render: (text) => {
         if (!text) {
           return "-"
         } else {
-          var date = new Date(Number(text?.seconds) * 1000)
+          var date = new Date(Number(text.seconds) * 1000)
           return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.getHours()}:${date.getSeconds()}`
         }
-      }
-    }
+      },
+    },
+    {
+      title: 'Link da página',
+      dataIndex: 'pathName',
+      key: 'pathName',
+      sorter: {
+        compare: (a, b) => sort(a.pathName, b.pathName)
+      },
+      render: (text) => (
+        <a href={`/#/${text}`} alt="page link" target="_blank" rel="noreferrer">{text}</a>
+      ),
+      ...getColumnFilterProps("pathName"),
+    },
   ]
 
   return (
     <>
-      {users && (
+      {pages && (
         <div>
-          <h3>Listar usuários</h3>
-          <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+          <h3>Listar páginas</h3>
+          <Table dataSource={pages} columns={columns} scroll={{ x: 'auto' }} pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
         </div>
       )}
     </>
   )
 }
 
-export default ListUser;
+export default ListPage;
