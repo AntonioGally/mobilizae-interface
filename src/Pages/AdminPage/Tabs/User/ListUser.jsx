@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, memo } from "react";
+
+//Components
 import { Table, Input } from "antd"
 import { FilterOutlined } from '@ant-design/icons';
+import { Spinner } from "react-bootstrap";
 
+//Scripts
 import { sort } from "../../../../scripts/utils.js";
 
-const ListUser = ({ users }) => {
+// Data Base
+import { db } from "../../../../firebase-config";
+import { collection, getDocs } from "firebase/firestore"
 
+const ListUser = () => {
+
+  const usersCollectionRef = collection(db, "users");
+
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [filteredValue, setFilteredValue] = useState({
     name: "",
     email: "",
@@ -16,7 +28,7 @@ const ListUser = ({ users }) => {
   });
 
 
-  const getColumnFilterProps = (dataIndex) => {
+  function getColumnFilterProps(dataIndex) {
     return {
       filterIcon: () => <FilterOutlined style={filteredValue[dataIndex] !== "" ? { color: "#1890ff" } : { color: "#000" }} />,
       onFilter: (value, record) => {
@@ -38,6 +50,13 @@ const ListUser = ({ users }) => {
         </div>
       ),
     }
+  }
+
+  async function getUsers() {
+    setLoading(true);
+    const data = await getDocs(usersCollectionRef);
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLoading(false);
   }
 
   const columns = [
@@ -73,7 +92,7 @@ const ListUser = ({ users }) => {
       sorter: {
         compare: (a, b) => {
           console.log(a, b);
-           sort(a.wantReceiveSMS, b.wantReceiveSMS)
+          sort(a.wantReceiveSMS, b.wantReceiveSMS)
         }
       },
       ...getColumnFilterProps("wantReceiveSMS"),
@@ -114,12 +133,21 @@ const ListUser = ({ users }) => {
     }
   ]
 
+  useEffect(() => {
+    getUsers();
+  }, [])
+
   return (
     <>
-      {users && (
+      {!loading ? (
         <div>
-          <h3 onClick={() => console.log(users)}>Listar usuários</h3>
-          <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+          <h3>Listar usuários</h3>
+          <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
+            pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+        </div>
+      ) : (
+        <div style={{ margin: '150px auto', width: 'fit-content' }}>
+          <Spinner animation="border" size="lg" />
         </div>
       )}
     </>

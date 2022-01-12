@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+//Components
 import { Table, Input } from "antd"
 import { FilterOutlined } from '@ant-design/icons';
+import { Spinner } from "react-bootstrap";
 
+//Scripts
 import { sort } from "../../../../scripts/utils.js";
 
+// Data Base
+import { db } from "../../../../firebase-config";
+import { collection, getDocs } from "firebase/firestore"
 
-const ListPage = ({ pages }) => {
+
+const ListPage = () => {
+  const [pages, setPages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const pagesCollectionRef = collection(db, "pages");
+
   const [filteredValue, setFilteredValue] = useState({
     groupLink: "",
     createdDate: "",
     pathName: "",
   });
 
-  const getColumnFilterProps = (dataIndex) => {
+  async function getPages() {
+    setLoading(true);
+    const data = await getDocs(pagesCollectionRef);
+    setPages(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    setLoading(false);
+  }
+
+  function getColumnFilterProps(dataIndex) {
     return {
       filterIcon: () => <FilterOutlined style={filteredValue[dataIndex] !== "" ? { color: "#1890ff" } : { color: "#000" }} />,
       onFilter: (value, record) => {
@@ -75,12 +94,21 @@ const ListPage = ({ pages }) => {
     },
   ]
 
+  useEffect(() => {
+    getPages();
+  }, [])
+
   return (
     <>
-      {pages && (
+      {!loading ? (
         <div>
           <h3>Listar páginas</h3>
-          <Table dataSource={pages} columns={columns} scroll={{ x: 'auto' }} pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+          <Table dataSource={pages} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
+            pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+        </div>
+      ) : (
+        <div style={{ margin: '150px auto', width: 'fit-content' }}>
+          <Spinner animation="border" size="lg" />
         </div>
       )}
     </>
