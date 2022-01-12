@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap"
-import { MD5 } from "../../utils.js";
+import { MD5 } from "../../scripts/utils.js";
 
 import Index from "./index.jsx";
 
@@ -38,7 +38,6 @@ const Login = () => {
   if (isAthenticated) {
     return <Index />
   }
-
 
   return (
     <div style={{ width: 500, margin: "150px auto" }}>

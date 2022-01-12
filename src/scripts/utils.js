@@ -1,4 +1,4 @@
-import { db } from "./firebase-config"
+import { db } from "../firebase-config"
 import { collection, getDocs } from "firebase/firestore"
 
 export async function getPages() {

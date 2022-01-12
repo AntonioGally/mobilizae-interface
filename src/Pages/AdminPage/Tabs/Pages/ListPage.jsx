@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Table, Input } from "antd"
 import { FilterOutlined } from '@ant-design/icons';
 
-import { sort } from "../../utils.js";
+import { sort } from "../../../../scripts/utils.js";
 
 
 const ListPage = ({ pages }) => {
