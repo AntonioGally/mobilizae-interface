@@ -160,7 +160,7 @@ const ListUser = (props) => {
     <>
       {!loading ? (
         <div>
-          <h3>Listar usuários</h3>
+          <h3 className="admin-tab-title">Listar usuários</h3>
           <Table dataSource={props.userList} columns={columns} scroll={{ x: 1200, y: 450 }} rowKey={(record) => record.id}
             pagination={{ showSizeChanger: true, defaultPageSize: 10 }} />
         </div>

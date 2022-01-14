@@ -107,7 +107,7 @@ const ListPage = (props) => {
     <>
       {!loading ? (
         <div>
-          <h3>Listar páginas</h3>
+          <h3 className="admin-tab-title">Listar páginas</h3>
           <Table dataSource={props.pageList} columns={columns} scroll={{ x: 'auto', y: 600 }} rowKey={(record) => record.id}
             pagination={{ showSizeChanger: true, defaultPageSize: 10 }} />
         </div>
