@@ -27,6 +27,7 @@ const ListPage = (props) => {
   });
 
   async function getPages() {
+    console.log("entrei")
     setLoading(true);
     const data = await getDocs(pagesCollectionRef);
     props.setPageList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
@@ -97,16 +98,18 @@ const ListPage = (props) => {
   ]
 
   useEffect(() => {
-    getPages();
+    if (!props.pageList) {
+      getPages();
+    }
   }, [])
 
   return (
     <>
       {!loading ? (
         <div>
-          <h3 onClick={() => console.log(props.pageList)}>Listar páginas</h3>
-          <Table dataSource={props.pageList} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
-            pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+          <h3>Listar páginas</h3>
+          <Table dataSource={props.pageList} columns={columns} scroll={{ x: 'auto', y: 600 }} rowKey={(record) => record.id}
+            pagination={{ showSizeChanger: true, defaultPageSize: 10 }} />
         </div>
       ) : (
         <div style={{ margin: '150px auto', width: 'fit-content' }}>

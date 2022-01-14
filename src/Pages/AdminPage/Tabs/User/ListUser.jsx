@@ -8,7 +8,7 @@ import { Spinner } from "react-bootstrap";
 //Scripts
 import { sort } from "../../../../scripts/utils.js";
 import { connect } from "react-redux"
-import { setPageList } from "../../../../store/actions/admin.js";
+import { setUserList } from "../../../../store/actions/admin.js";
 
 // Data Base
 import { db } from "../../../../firebase-config";
@@ -18,7 +18,6 @@ const ListUser = (props) => {
 
   const usersCollectionRef = collection(db, "users");
 
-  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filteredValue, setFilteredValue] = useState({
     name: "",
@@ -37,6 +36,10 @@ const ListUser = (props) => {
         if (typeof record[dataIndex] === 'boolean') {
           const auxRecordValue = record[dataIndex] ? "Ativo" : "Bloqueado";
           return auxRecordValue.toString().toLowerCase().includes(value.toLowerCase());
+        } else if (dataIndex === "createdDate") {
+          var date = new Date(Number(record.createdDate?.seconds) * 1000)
+          var auxStringDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} - ${date.getHours()}:${date.getSeconds()}`;
+          return auxStringDate.toString().toLowerCase().includes(value.toLowerCase());
         }
         return record[dataIndex] ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()) : "";
       },
@@ -57,7 +60,7 @@ const ListUser = (props) => {
   async function getUsers() {
     setLoading(true);
     const data = await getDocs(usersCollectionRef);
-    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    props.setUserList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     setLoading(false);
   }
 
@@ -93,8 +96,11 @@ const ListUser = (props) => {
       key: 'wantReceiveSMS',
       sorter: {
         compare: (a, b) => {
-          console.log(a, b);
-          sort(a.wantReceiveSMS, b.wantReceiveSMS)
+          if (a.wantReceiveSMS) {
+            return -1
+          } else {
+            return 1
+          }
         }
       },
       ...getColumnFilterProps("wantReceiveSMS"),
@@ -113,10 +119,19 @@ const ListUser = (props) => {
       sorter: {
         compare: (a, b) => sort(a.groupLink, b.groupLink)
       },
+      className: "list-table-text-ellipsis",
       render: (text) => (
         <a href={text} target="_blank" rel="noreferrer">{text}</a>
       ),
       ...getColumnFilterProps("groupLink"),
+    },
+    {
+      title: 'Segmento',
+      dataIndex: 'pagePath',
+      key: 'pagePath',
+      sorter: {
+        compare: (a, b) => sort(a.pagePath, b.pagePath)
+      },
     },
     {
       title: 'Data de cadastro',
@@ -136,16 +151,18 @@ const ListUser = (props) => {
   ]
 
   useEffect(() => {
-    getUsers();
+    if (!props.userList) {
+      getUsers();
+    }
   }, [])
 
   return (
     <>
       {!loading ? (
         <div>
-          <h3 onClick={() => console.log(props.pageList)}>Listar usuários</h3>
-          <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
-            pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
+          <h3>Listar usuários</h3>
+          <Table dataSource={props.userList} columns={columns} scroll={{ x: 1200, y: 450 }} rowKey={(record) => record.id}
+            pagination={{ showSizeChanger: true, defaultPageSize: 10 }} />
         </div>
       ) : (
         <div style={{ margin: '150px auto', width: 'fit-content' }}>
@@ -158,13 +175,13 @@ const ListUser = (props) => {
 
 const mapStateToProps = state => {
   return {
-    pageList: state.admin.pageList
+    userList: state.admin.userList
   }
 }
 
 const dispatchStateToProps = dispatch => {
   return {
-    setPageList: (data) => dispatch(setPageList(data))
+    setUserList: (data) => dispatch(setUserList(data))
   }
 }
 

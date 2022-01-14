@@ -52,10 +52,11 @@ const AdminPage = () => {
                   Criar páginas
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link className={tabNavigation === 'createQRCode' ? 'active' : ''}
-                onClick={() => setTabNavigation('createQRCode')}>
-                Criar QR Code
-              </Nav.Link>
+              <NavDropdown title="Ferramentas" id="navbarScrollingDropdown">
+                <NavDropdown.Item onClick={() => setTabNavigation('createQRCode')}>
+                  Gerar QR Code
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>

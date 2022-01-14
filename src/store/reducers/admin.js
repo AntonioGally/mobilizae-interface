@@ -1,7 +1,7 @@
 import * as adminTypes from "../types/admin.js";
 
 const initialState = {
-  pageList: [],
+  pageList: null,
   userList: null
 };
 

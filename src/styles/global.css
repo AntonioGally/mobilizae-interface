@@ -13,3 +13,8 @@ code {
     monospace;
 }
 
+.list-table-text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
