@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 //Components
-import { Navbar, Container, Nav, Spinner, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import ListPage from "./Tabs/Pages/ListPage.jsx";
 import CreatePage from './Tabs/Pages/CreatePage.jsx';
 import ListUser from './Tabs/User/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
-
-// Data Base
-import { db } from "../../firebase-config"
-import { collection, getDocs } from "firebase/firestore"
 
 //Css
 import "../../styles/admin.css";

@@ -7,17 +7,19 @@ import { Spinner } from "react-bootstrap";
 
 //Scripts
 import { sort } from "../../../../scripts/utils.js";
+import { connect } from "react-redux"
+import { setPageList } from "../../../../store/actions/admin.js";
 
 // Data Base
 import { db } from "../../../../firebase-config";
 import { collection, getDocs } from "firebase/firestore"
 
 
-const ListPage = () => {
-  const [pages, setPages] = useState([]);
+
+
+const ListPage = (props) => {
   const [loading, setLoading] = useState(false);
   const pagesCollectionRef = collection(db, "pages");
-
   const [filteredValue, setFilteredValue] = useState({
     groupLink: "",
     createdDate: "",
@@ -27,7 +29,7 @@ const ListPage = () => {
   async function getPages() {
     setLoading(true);
     const data = await getDocs(pagesCollectionRef);
-    setPages(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    props.setPageList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     setLoading(false);
   }
 
@@ -102,8 +104,8 @@ const ListPage = () => {
     <>
       {!loading ? (
         <div>
-          <h3>Listar páginas</h3>
-          <Table dataSource={pages} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
+          <h3 onClick={() => console.log(props.pageList)}>Listar páginas</h3>
+          <Table dataSource={props.pageList} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
             pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
         </div>
       ) : (
@@ -115,4 +117,16 @@ const ListPage = () => {
   )
 }
 
-export default ListPage;
+const mapStateToProps = state => {
+  return {
+    pageList: state.admin.pageList
+  }
+}
+
+const dispatchStateToProps = dispatch => {
+  return {
+    setPageList: (data) => dispatch(setPageList(data))
+  }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(ListPage);

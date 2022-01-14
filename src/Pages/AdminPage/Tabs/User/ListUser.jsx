@@ -7,12 +7,14 @@ import { Spinner } from "react-bootstrap";
 
 //Scripts
 import { sort } from "../../../../scripts/utils.js";
+import { connect } from "react-redux"
+import { setPageList } from "../../../../store/actions/admin.js";
 
 // Data Base
 import { db } from "../../../../firebase-config";
 import { collection, getDocs } from "firebase/firestore"
 
-const ListUser = () => {
+const ListUser = (props) => {
 
   const usersCollectionRef = collection(db, "users");
 
@@ -141,7 +143,7 @@ const ListUser = () => {
     <>
       {!loading ? (
         <div>
-          <h3>Listar usuários</h3>
+          <h3 onClick={() => console.log(props.pageList)}>Listar usuários</h3>
           <Table dataSource={users} columns={columns} scroll={{ x: 'auto' }} rowKey={(record) => record.id}
             pagination={{ showSizeChanger: true, defaultPageSize: 50 }} />
         </div>
@@ -154,4 +156,16 @@ const ListUser = () => {
   )
 }
 
-export default ListUser;
+const mapStateToProps = state => {
+  return {
+    pageList: state.admin.pageList
+  }
+}
+
+const dispatchStateToProps = dispatch => {
+  return {
+    setPageList: (data) => dispatch(setPageList(data))
+  }
+}
+
+export default connect(mapStateToProps, dispatchStateToProps)(memo(ListUser));
