@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import ListPage from "./Tabs/Pages/ListPage.jsx";
 import CreatePage from './Tabs/Pages/CreatePage.jsx';
+import UserGraph from './Tabs/Graphs/UserGraph.jsx'
 import ListUser from './Tabs/User/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
@@ -25,6 +26,8 @@ const AdminPage = () => {
         return <ListPage />
       case 'createNewPages':
         return <CreatePage />
+      case 'userGraph':
+        return <UserGraph />
       case 'createQRCode':
         return <CreateQRCode />
       default:
@@ -50,6 +53,14 @@ const AdminPage = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
                   Criar páginas
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Gráficos" id="navbarScrollingDropdown">
+                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
+                  Usuários
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
+                  Páginas
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Ferramentas" id="navbarScrollingDropdown">
