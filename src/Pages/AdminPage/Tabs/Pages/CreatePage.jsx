@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { Form, Row, Col } from "react-bootstrap"
 import { toast } from 'react-toastify';
-import Image from "./Image.jsx";
+import Image from "../Tools/Image.jsx";
 //Data Base
-import { db } from "../../firebase-config"
+import { db } from "../../../../firebase-config"
 import { collection, addDoc } from "firebase/firestore"
 
 const CreatePage = () => {

@@ -3,10 +3,10 @@ import { Route } from "react-router-dom";
 
 import ReactGA from 'react-ga';
 
-import Banner from "./Components/Banner.jsx";
-import TextContainer from "./Components/TextContainer.jsx";
-import Button from "./Components/Button.jsx";
-import FooterImage from "./Components/FooterImage.jsx";
+import Banner from "../Components/Banner.jsx";
+import TextContainer from "../Components/TextContainer.jsx";
+import Button from "../Components/Button.jsx";
+import FooterImage from "../Components/FooterImage.jsx";
 
 export default class PageFactory {
 

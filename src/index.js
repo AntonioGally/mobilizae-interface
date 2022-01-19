@@ -1,18 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux'
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
+import thunk from "redux-thunk";
+import adminReducer from "./store/reducers/admin";
+//Css
 import './styles/global.css';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { ToastContainer } from "react-toastify";
-
 import Routes from "./routes";
+
+const composeEnhancers = typeof window !== undefined && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+  admin: adminReducer
+});
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>
-    <ToastContainer />
-    <Routes />
+    <Provider store={store}>
+      <ToastContainer />
+      <Routes />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

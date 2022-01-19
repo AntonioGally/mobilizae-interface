@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Route, HashRouter, Switch } from "react-router-dom";
 
-import { getPages } from "./utils";
-import PageFactory from "./PageFactory.js"
+import { getPages } from "./scripts/utils";
+import PageFactory from "./scripts/PageFactory.js"
 
-import DefaultPage from "./Components/DefaultPage.jsx";
-import AdminPage from "./Components/AdminPage/Login.jsx";
+import DefaultPage from "./Pages/DefaultPage";
+import AdminPage from "./Pages/AdminPage/Login.jsx";
 
 const Router = () => {
   const [pages, setPages] = useState([]);
