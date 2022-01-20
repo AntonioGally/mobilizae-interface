@@ -24,3 +24,46 @@ code {
   margin: 0 8px 20px;
   color: #4c4c4c;
 }
+
+.secondary-title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: var(--secondary-title);
+  margin: 0;
+}
+
+.input-subtitle {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--secondary-title);
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: var(--primary-button-background);
+  border-radius: 3px;
+  height: 44px;
+  width: 235px;
+  border: none;
+  outline: 0;
+  color: white;
+}
+
+
+:root {
+  --navbar-background: #1DBF72;
+  --primary-button-background: #1DBF72;
+  --secondary-button-background: #1D9FBF;
+  --primary-title: #404040;
+  --secondary-title: #1DBF72;
+  --border-color: #9A9A9A;
+  --admin-background-color: #F6F6F6;
+  --admin-card-color: #FFF;
+}
