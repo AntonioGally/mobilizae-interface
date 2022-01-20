@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useHistory } from "react-router-dom"
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import ListPage from "./Tabs/Pages/ListPage.jsx";
@@ -9,13 +9,15 @@ import ListUser from './Tabs/User/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
 //Css
-import "../../styles/admin.css";
+import "./AdminPage.style.css";
 
+//Assets
+import logoImg from "../../assets/images/defaultPageLogo.png";
 
 
 const AdminPage = () => {
-  const [tabNavigation, setTabNavigation] = useState('listUser');
-
+  const history = useHistory();
+  const [tabNavigation, setTabNavigation] = useState('listPages');
 
 
   function getTabTemplate() {
@@ -37,27 +39,29 @@ const AdminPage = () => {
 
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
         <Container>
-          <Navbar.Brand>Admin</Navbar.Brand>
+          <Navbar.Brand>
+            <img src={logoImg} alt="Mobilizae logo" className="default-page-navbar-image" onClick={() => history.push("/")} />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
-                onClick={() => setTabNavigation('listUser')}>
-                Listar usuários
-              </Nav.Link>
-              <NavDropdown title="Páginas" id="navbarScrollingDropdown">
+              <NavDropdown title="Mobilizações" id="navbarScrollingDropdown">
                 <NavDropdown.Item onClick={() => setTabNavigation('listPages')}>
-                  Listar páginas
+                  Listar Mobilizações
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
-                  Criar páginas
+                  Criar Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
+                onClick={() => setTabNavigation('listUser')}>
+                Participantes
+              </Nav.Link>
               <NavDropdown title="Gráficos" id="navbarScrollingDropdown">
                 <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
-                  Usuários
+                  Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
                   Páginas
@@ -73,9 +77,9 @@ const AdminPage = () => {
         </Container>
       </Navbar>
 
-      <Container style={{ marginTop: 40 }}>
+      <div className="admin-page-wrapper">
         {getTabTemplate()}
-      </Container>
+      </div>
     </>
   )
 }

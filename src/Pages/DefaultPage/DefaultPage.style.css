@@ -23,6 +23,7 @@
     width: 150px;
     position: relative;
     bottom: 3px;
+    cursor: pointer;
 }
 
 .default-page-navbar #responsive-navbar-nav {

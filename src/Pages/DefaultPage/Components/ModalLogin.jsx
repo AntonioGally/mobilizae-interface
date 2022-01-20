@@ -27,7 +27,7 @@ const ModalLogin = (props) => {
           type="password" />
         <span className="input-subtitle">Esqueceu a senha?</span>
       </div>
-      <PrimaryButton text="Entrar" style={{ marginTop: 15 }} />
+      <PrimaryButton text="Entrar" style={{ marginTop: 15 }} onClick={props.handleLoginButtonClick} />
     </Modal>
   )
 }
