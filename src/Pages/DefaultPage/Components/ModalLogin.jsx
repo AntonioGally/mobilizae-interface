@@ -9,9 +9,10 @@ import PasswordInput from "../Elements/PasswordInput";
 import PrimaryButton from "../Elements/PrimaryButton";
 
 const ModalLogin = (props) => {
+  const windowWidth = window.innerWidth;
   return (
     <Modal show={props.showModal} onHide={() => props.setShowModal(false)}
-      className="default-page-modal">
+      className="default-page-modal" centered={windowWidth > 768 ? false : true}>
       <div>
         <h3 className="secondary-title">
           Subdomíno

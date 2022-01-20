@@ -21,7 +21,7 @@ const InputArea = (props) => {
           <span className="input-subtitle">Esqueceu o subdomínio?</span>
         </div>
       </Col>
-      <Col sm={12} md={6} className="default-page-subdomain-button">
+      <Col sm={12} md={6} className="default-page-subdomain-button" style={{ padding: 0 }}>
         <PrimaryButton text="Próximo" onClick={props.handleButtonClick} />
       </Col>
     </Row>

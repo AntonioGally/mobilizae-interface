@@ -3,6 +3,12 @@
     margin: 0 auto;
 }
 
+@media (max-width: 768px) {
+    .defaul-page-wrapper {
+        padding: 24px;
+    }
+}
+
 .default-page-navbar, .default-page-navbar .nav-link, .default-page-navbar .nav-item .dropdown-toggle {
     background-color: #1dbf73;
     font-style: normal;
@@ -21,6 +27,12 @@
 
 .default-page-navbar #responsive-navbar-nav {
     margin-left: 100px;
+}
+
+@media (max-width: 768px) {
+    .default-page-navbar #responsive-navbar-nav {
+        margin-left: 0;
+    }
 }
 
 .default-page-subdomain-input-area {
@@ -77,6 +89,15 @@
     font-size: 16px;
     line-height: 19px;
     color: #404040;
+}
+
+@media (max-width: 768px) {
+
+    .default-page-text-container-outline>span,
+    .default-page-text-container-filled>span {
+        margin-top: 10px;
+        padding: 14px;
+    }
 }
 
 .default-page-text-container-filled {

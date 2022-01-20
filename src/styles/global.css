@@ -56,6 +56,12 @@ code {
   color: white;
 }
 
+@media (max-width: 768px) {
+  .primary-button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
 
 :root {
   --navbar-background: #1DBF72;
