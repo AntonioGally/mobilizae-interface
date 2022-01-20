@@ -108,3 +108,11 @@
     line-height: 19px;
     color: white;
 }
+
+.default-page-modal .modal-content {
+    padding: 24px;
+}
+
+.default-page-modal .modal-content .subdomain-input {
+    margin: 7px auto;
+}

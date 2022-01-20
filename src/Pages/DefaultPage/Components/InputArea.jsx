@@ -16,7 +16,8 @@ const InputArea = (props) => {
           <h3 className="secondary-title">
             Entrar na mobilizae
           </h3>
-          <SubdomainInput value={props.subdomainInputValue} onChange={(e) => props.setSubdomainInputValue(e.target.value)} />
+          <SubdomainInput value={props.subdomainInputValue} type={'text'}
+            onChange={(e) => props.setSubdomainInputValue(e.target.value)} />
           <span className="input-subtitle">Esqueceu o subdomínio?</span>
         </div>
       </Col>

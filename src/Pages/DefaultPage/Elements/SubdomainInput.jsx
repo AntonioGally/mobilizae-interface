@@ -5,7 +5,7 @@ import "./Elements.style.css"
 const SubdomainInput = (props) => {
   return (
     <div className="subdomain-input">
-      <input {...props} type={'text'} />
+      <input {...props} />
       <div>.mobilizae.com</div>
     </div>
   )
