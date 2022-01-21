@@ -1,0 +1,103 @@
+.admin-list-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.admin-list-page-header-left-side {
+  display: flex;
+  flex-direction: column;
+}
+.admin-list-page-header-left-side > span {
+  font-size: 20px;
+}
+.admin-list-page-header-left-side > div {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+.admin-list-page-header-left-side > div > button:nth-child(1) {
+  background-color: var(--primary-button-background);
+  padding: 7px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: white;
+  border: none;
+  outline: 0;
+}
+.admin-list-page-header-left-side > div > button:nth-child(2) {
+  background-color: white;
+  border: 1px solid var(--primary-button-background);
+  padding: 7px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: var(--secondary-title);
+  outline: 0;
+}
+.admin-list-page-header-right-side > input {
+  background-color: #ffffff;
+  border: 1px solid #d2d2d2;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #404040;
+  height: 30px;
+  min-width: 250px;
+  padding-left: 14px;
+  border-radius: 3px;
+}
+
+.admin-list-page-card-wrapper {
+  width: 100%;
+  filter: drop-shadow(2px 3px 4px rgba(97, 97, 97, 0.25));
+  border-radius: 3px;
+  background-color: var(--admin-card-color);
+  margin-bottom: 25px;
+  padding: 20px;
+  transform: scale(1);
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.admin-list-page-card-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.admin-list-page-card-wrapper .card-wrapper-left-side > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.admin-list-page-card-wrapper .card-wrapper-left-side > div > h5 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--primary-title);
+  margin-bottom: 1px;
+}
+
+.admin-list-page-card-wrapper .card-wrapper-left-side > div > span {
+  margin-left: 6px;
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--primary-title);
+}
+
+.admin-list-page-card-wrapper .card-wrapper-right-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-list-page-card-wrapper .card-wrapper-right-side > img {
+  width: 150px;
+}

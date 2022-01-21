@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom"
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
-import ListPage from "./Tabs/Pages/ListPage.jsx";
-import CreatePage from './Tabs/Pages/CreatePage.jsx';
-import UserGraph from './Tabs/Graphs/UserGraph.jsx'
-import ListUser from './Tabs/User/ListUser.jsx';
+import ListPage from "./Tabs/ListPage/ListPage.jsx";
+import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
+import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+import ListUser from './Tabs/ListUser/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
 //Css
