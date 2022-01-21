@@ -6,7 +6,7 @@ const Header = (props) => {
             <div className='admin-list-page-header-left-side'>
                 <span className='secondary-title'>Olá f5mkt</span>
                 <div>
-                    <button>Criar mobilização</button>
+                    <button onClick={props.onBtnClick}>Criar mobilização</button>
                     <button>Assistir ao vídio tutorial</button>
                 </div>
             </div>

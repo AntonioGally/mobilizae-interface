@@ -19,13 +19,16 @@ const AdminPage = () => {
   const history = useHistory();
   const [tabNavigation, setTabNavigation] = useState('listPages');
 
+  function changeTab(tab) {
+    setTabNavigation(tab)
+  }
 
   function getTabTemplate() {
     switch (tabNavigation) {
       case 'listUser':
         return <ListUser />
       case 'listPages':
-        return <ListPage />
+        return <ListPage changeTab={changeTab} />
       case 'createNewPages':
         return <CreatePage />
       case 'userGraph':
