@@ -1,0 +1,88 @@
+.admin-create-page-wrapper {
+  padding: 8px 20px 20px;
+  background-color: white;
+}
+
+.admin-create-page-left-side,
+.admin-create-page-right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.admin-create-page-left-side input,
+.admin-create-page-right-side input {
+  border: 1px solid #9a9a9a;
+  box-sizing: border-box;
+  border-radius: 3px;
+  height: 35px;
+  outline: 0;
+  padding-left: 14px;
+  margin-top: 12px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--primary-title);
+}
+
+.admin-create-page-left-side button,
+.admin-create-page-right-side button {
+  background: var(--primary-button-background);
+  border-radius: 3px;
+  width: 100%;
+  height: 35px;
+  border: none;
+  outline: 0;
+  margin: 12px 0;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+.admin-create-page-right-side .input-subtitle {
+  font-style: normal;
+  font-weight: 300;
+  color: var(--primary-title);
+}
+
+.admin-create-page-left-side .banner-image-dnd {
+  width: 100%;
+  height: 62px;
+  border: 1px dashed var(--border-color);
+  border-radius: 3px;
+}
+
+.admin-create-page-right-side .logo-image-dnd {
+  width: 100%;
+  height: 62px;
+  margin-top: 5px;
+  border: 1px dashed var(--border-color);
+  border-radius: 3px;
+}
+
+.admin-create-page-btn-submit {
+  background: var(--secondary-button-background);
+  border-radius: 3px;
+  width: 50%;
+  height: 35px;
+  border: none;
+  outline: 0;
+  margin: 24px auto 12px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .admin-create-page-btn-submit {
+    width: 93%;
+  }
+}
