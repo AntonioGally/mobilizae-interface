@@ -3,9 +3,9 @@ import React, { memo } from 'react'
 //Components
 import { Row, Col } from "react-bootstrap"
 
-const Card = ({ content }) => {
+const Card = ({ content, onCardClick }) => {
     return (
-        <div className='admin-list-page-card-wrapper'>
+        <div className='admin-list-page-card-wrapper' onClick={() => onCardClick(content)}>
             <div style={{ textAlign: 'center', marginBottom: 10 }}>
                 <span className='secondary-title'>{content.segmentName}</span>
             </div>
