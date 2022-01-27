@@ -1,6 +1,6 @@
 //Libs
 import React, { useEffect } from "react";
-import { Route, HashRouter, Switch, useHistory } from "react-router-dom";
+import { Route, HashRouter, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux"
 
 //Actions
@@ -15,8 +15,15 @@ import request from "./scripts/http/request";
 import DefaultPage from "./Pages/DefaultPage";
 import AdminPage from "./Pages/AdminPage";
 import NotFound from "./Pages/NotFound";
+import RedirectPage from "./Pages/RedirectPage";
 
 const Router = (props) => {
+
+  function isAuthenticatedAdmin() {
+    // TODO: jwt verification endpoint
+    // if ()
+    return false;
+  }
 
   function getCompanyInfo() {
     return new Promise((resolve, reject) => {
@@ -26,7 +33,7 @@ const Router = (props) => {
         .catch((err) => { reject(err); })
     })
   }
-  
+
   function getPages(companyId) {
     return new Promise((resolve, reject) => {
       request.get(`/pages/${companyId}`)
@@ -46,13 +53,23 @@ const Router = (props) => {
     }
   }, []);
 
+  const ProtectedRoute = ({ Component, ...rest }) => {
+    //TODO: Create a redirect page to put into else clause
+    return (
+      <Route
+        {...rest}
+        component={isAuthenticatedAdmin() ? AdminPage : RedirectPage}
+      />
+    )
+  }
+
 
   return (
     <HashRouter>
       <Switch>
         <Route exact path="/" component={DefaultPage} />
-        <Route path="/admin" component={AdminPage} />
-        <Route component={NotFound} />
+        <ProtectedRoute path="/admin" />
+        <Route component={RedirectPage} />
         {props.pageList && props.pageList.map((value) => {
           return new PageFactory(value, value.id);
         })}
