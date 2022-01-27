@@ -17,6 +17,7 @@ import AdminPage from "./Pages/AdminPage";
 import NotFound from "./Pages/NotFound";
 
 const Router = (props) => {
+
   function getCompanyInfo() {
     return new Promise((resolve, reject) => {
       let subDomain = "antoniogally";
@@ -25,6 +26,7 @@ const Router = (props) => {
         .catch((err) => { reject(err); })
     })
   }
+  
   function getPages(companyId) {
     return new Promise((resolve, reject) => {
       request.get(`/pages/${companyId}`)

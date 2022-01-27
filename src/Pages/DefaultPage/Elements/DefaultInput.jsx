@@ -2,7 +2,7 @@ import React from "react"
 
 import "./Elements.style.css"
 
-const PasswordInput = (props) => {
+const DefaultInput = (props) => {
   return (
     <div className="password-input subdomain-input" style={{ marginBottom: 0 }}>
       <input {...props} />
@@ -10,4 +10,4 @@ const PasswordInput = (props) => {
   )
 }
 
-export default PasswordInput
+export default DefaultInput
