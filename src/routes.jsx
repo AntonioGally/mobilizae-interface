@@ -5,7 +5,7 @@ import { getPages } from "./scripts/utils";
 import PageFactory from "./scripts/PageFactory.js"
 
 import DefaultPage from "./Pages/DefaultPage";
-import AdminPage from "./Pages/AdminPage/Login.jsx";
+import AdminPage from "./Pages/AdminPage";
 
 const Router = () => {
   const [pages, setPages] = useState([]);

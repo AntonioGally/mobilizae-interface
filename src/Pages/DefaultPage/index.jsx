@@ -1,42 +1,50 @@
 //Libs
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //styles
 import "./DefaultPage.style.css";
 
-//Assets
-import logoImg from "../../assets/images/defaultPageLogo.png";
-
-//Components
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap"
+//Componets
+import NavbarComponent from "./Components/NavbarComponent";
+import InputArea from "./Components/InputArea";
+import TextContainerOutline from "./Components/TextContainerOutline";
+import TextContainerFilled from "./Components/TextContainerFilled";
+import ModalLogin from "./Components/ModalLogin";
 
 
 const DefaultPage = () => {
+  const history = useHistory()
+  const [subdomainInputValue, setSubdomainInputValue] = useState('');
+  const [passwordInputValue, setPasswordInputValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  function handleNextButtonClick() {
+    setShowModal(true)
+  }
+
+  function handleLoginButtonClick() {
+    console.log("Clicou")
+    history.push("/admin");
+  }
+
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
-        <Container>
-          <Navbar.Brand>
-            <img src={logoImg} alt="Mobilizae logo" className="default-page-navbar-image" />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link>
-                Listar usuários
-              </Nav.Link>
-              <NavDropdown title="Páginas" id="navbarScrollingDropdown">
-                <NavDropdown.Item >
-                  Listar páginas
-                </NavDropdown.Item>
-                <NavDropdown.Item >
-                  Criar páginas
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavbarComponent />
+      <div className="defaul-page-wrapper">
+        <InputArea subdomainInputValue={subdomainInputValue} setSubdomainInputValue={setSubdomainInputValue}
+          handleButtonClick={handleNextButtonClick} />
+
+        <TextContainerOutline title='Começando agora na mobilizae?'
+          description='Comece sua avaliação grátis! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ' />
+
+        <TextContainerFilled title='Evento virtual-novidades'
+          description='Junte-se aos especialistas da mobilizae para se aprofundar em nossas últimas atualizações e descbrir seu caminho para o sucesso!' />
+
+        <ModalLogin showModal={showModal} setShowModal={setShowModal} subdomainInputValue={subdomainInputValue}
+          passwordInputValue={passwordInputValue} setPasswordInputValue={setPasswordInputValue}
+          handleLoginButtonClick={handleLoginButtonClick} />
+      </div>
     </>
   )
 }

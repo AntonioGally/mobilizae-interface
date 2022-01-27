@@ -1,15 +1,16 @@
 body {
+  background-color: #f7f7f7 !important;
   overflow-x: hidden;
   margin: 0;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -23,4 +24,53 @@ code {
   font-size: 24px;
   margin: 0 8px 20px;
   color: #4c4c4c;
+}
+
+.secondary-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 23px;
+  color: var(--secondary-title);
+  margin: 0;
+}
+
+.input-subtitle {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: var(--secondary-title);
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: var(--primary-button-background);
+  border-radius: 3px;
+  height: 44px;
+  width: 235px;
+  border: none;
+  outline: 0;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .primary-button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+:root {
+  --navbar-background: #1dbf72;
+  --primary-button-background: #1dbf72;
+  --secondary-button-background: #1d9fbf;
+  --primary-title: #404040;
+  --secondary-title: #1dbf72;
+  --border-color: #9a9a9a;
+  --admin-background-color: #f6f6f6;
+  --admin-card-color: #fff;
 }
