@@ -12,24 +12,22 @@ export default class PageFactory {
 
 
 
-  constructor({ bannerImage, title, containerText, buttonText,
-    footerImage, modalImage, pathName, groupLink }, id) {
-
+  constructor(props, id) {
     function createComponent() {
       ReactGA.ga('set', 'new_page_path', `/${window.location.hash}`);
       ReactGA.pageview(`/${window.location.hash}`);
       return (
         <div >
-          <Banner imageSrc={bannerImage} />
-          <TextContainer titleText={title} containerText={containerText} />
-          <Button buttonText={buttonText} modalImage={modalImage} groupLink={groupLink} />
-          <FooterImage src={footerImage} />
+          <Banner imageSrc={props.bannerimage} />
+          <TextContainer titleText={props.title} containerText={props.containertext} />
+          <Button buttonText={props.buttontext} modalImage={props.footerimage} groupLink={props.grouplink} />
+          <FooterImage src={props.footerimage} />
         </div>
       )
     }
 
     return (
-      <Route key={id} path={`/${pathName}`} component={createComponent} />
+      <Route key={id} path={`/${props.pathname}`} component={createComponent} />
     )
   }
 }

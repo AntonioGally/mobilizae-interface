@@ -1,6 +1,6 @@
 //Libs
-import React, { useEffect } from "react";
-import { Route, HashRouter, Switch, Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, HashRouter, Switch } from "react-router-dom";
 import { connect } from "react-redux"
 
 //Actions
@@ -14,15 +14,14 @@ import request from "./scripts/http/request";
 //Pages
 import DefaultPage from "./Pages/DefaultPage";
 import AdminPage from "./Pages/AdminPage";
-import NotFound from "./Pages/NotFound";
 import RedirectPage from "./Pages/RedirectPage";
 
 const Router = (props) => {
 
   function isAuthenticatedAdmin() {
-    // TODO: jwt verification endpoint
-    // if ()
-    return false;
+    let token = localStorage.getItem("access_token");
+    if (!token) return false;
+    else return true
   }
 
   function getCompanyInfo() {
@@ -54,7 +53,6 @@ const Router = (props) => {
   }, []);
 
   const ProtectedRoute = ({ Component, ...rest }) => {
-    //TODO: Create a redirect page to put into else clause
     return (
       <Route
         {...rest}
@@ -69,10 +67,10 @@ const Router = (props) => {
       <Switch>
         <Route exact path="/" component={DefaultPage} />
         <ProtectedRoute path="/admin" />
-        <Route component={RedirectPage} />
         {props.pageList && props.pageList.map((value) => {
           return new PageFactory(value, value.id);
         })}
+        <Route component={RedirectPage} />
       </Switch>
     </HashRouter>
   );
@@ -81,6 +79,7 @@ const Router = (props) => {
 const mapStateToProps = state => {
   return {
     companyInfo: state.company.companyInfo,
+    adminInfo: state.admin.adminInfo,
     pageList: state.admin.pageList
   }
 }

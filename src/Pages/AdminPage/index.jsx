@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom"
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
@@ -7,6 +7,10 @@ import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
 import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
 import ListUser from './Tabs/ListUser/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
+
+//Auth
+import RedirectPage from "../RedirectPage/index.jsx";
+import request from "../../scripts/http/request";
 
 //Css
 import "./AdminPage.style.css";
@@ -39,6 +43,12 @@ const AdminPage = () => {
         return 'Default option'
     }
   }
+
+  useEffect(() => {
+    request.post("/validateToken", { token: localStorage.getItem("access_token") })
+      .then(() => { console.log("Authenticated") })
+      .catch(() => { return <RedirectPage /> })
+  }, [])
 
   return (
     <>
