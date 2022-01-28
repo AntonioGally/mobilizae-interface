@@ -6,9 +6,13 @@ import "./CreatePage.style.css";
 //Components
 import { Row, Col } from "react-bootstrap"
 
-const CreatePage = () => {
+const CreatePage = (props) => {
     return (
         <>
+            <div className="back-button" onClick={() => props.changeTab("listPages")}>
+                <i class="fas fa-arrow-left" style={{ marginRight: 5 }} />
+                Voltar
+            </div>
             <span className="secondary-title" style={{ marginBottom: 12 }}>
                 Criar mobilização
             </span>

@@ -23,7 +23,7 @@ const ModalLogin = (props) => {
           Senha
         </h3>
         <DefaultInput value={props.passwordInputValue} onChange={(e) => { props.setPasswordInputValue(e.target.value) }}
-          type="password" autoFocus />
+          type="password" autoFocus={true} id={"pass-input"}/>
         <span className="input-subtitle">Esqueceu a senha?</span>
       </div>
       <PrimaryButton text="Entrar" style={{ marginTop: 15 }} onClick={props.handleLoginButtonClick} />

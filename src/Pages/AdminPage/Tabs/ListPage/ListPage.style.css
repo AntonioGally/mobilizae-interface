@@ -94,6 +94,28 @@
   margin-bottom: 12px;
 }
 
+.admin-list-page-card-wrapper-loader {
+  min-height: 315px;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background-color: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+  background-size: 820px 315px;
+  height: 70px;
+  position: relative;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -820px 0
+  }
+  100% {
+    background-position: 820px 0
+  }
+}
 .card-wrapper-left-side > div > h5 {
   font-family: "Roboto";
   font-style: normal;

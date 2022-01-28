@@ -34,7 +34,7 @@ const AdminPage = () => {
       case 'listPages':
         return <ListPage changeTab={changeTab} />
       case 'createNewPages':
-        return <CreatePage />
+        return <CreatePage changeTab={changeTab} />
       case 'userGraph':
         return <UserGraph />
       case 'createQRCode':
