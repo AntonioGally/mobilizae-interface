@@ -22,6 +22,10 @@ const ListPage = (props) => {
         props.changeTab('createNewPages');
     }
 
+    function handleListUserButtonClick() {
+        props.changeTab('listUser');
+    }
+
     function onCardClick(content) {
         setModalData(content)
         setShowModal(true)
@@ -50,7 +54,7 @@ const ListPage = (props) => {
 
 
             <VisualizationModal showModal={showModal} setShowModal={setShowModal}
-                modalData={modalData} />
+                modalData={modalData} handleListUserButtonClick={handleListUserButtonClick} />
         </>
     )
 }

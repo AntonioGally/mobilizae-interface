@@ -48,7 +48,7 @@ const VisualizationModal = (props) => {
     }, [image, downloadQrCode]);
 
     function viewUsers() {
-        
+        props.handleListUserButtonClick()
     }
 
     function downloadCellPhones(pageId) {
@@ -128,7 +128,9 @@ const VisualizationModal = (props) => {
                         <h5>Participantes:</h5>
                         <span>{props.modalData.participants}</span>
                         <div className='admin-list-page-modal-btn-area'>
-                            <button>Visualizar</button>
+                            <button onClick={viewUsers}>
+                                Visualizar
+                            </button>
                             <button onClick={() => downloadCellPhones(props.modalData.id)}>
                                 Baixar telefones
                             </button>

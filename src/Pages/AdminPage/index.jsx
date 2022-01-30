@@ -68,13 +68,9 @@ const AdminPage = () => {
                   Criar Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>
-              {/* <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
-                >
-                Usuários
-              </Nav.Link> */}
               <NavDropdown title="Usuários" id="dropDownUser">
                 <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
-                  Clientes
+                  Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('listAdmins')} disabled>
                   Administradores

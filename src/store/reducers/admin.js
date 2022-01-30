@@ -4,6 +4,7 @@ const initialState = {
   pageList: null,
   userList: null,
   adminInfo: null,
+  filters: null
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -14,6 +15,8 @@ const adminReducer = (state = initialState, action) => {
       return { ...state, userList: action.data };
     case adminTypes.SET_ADMIN_INFO:
       return { ...state, adminInfo: action.data };
+    case adminTypes.SET_FILTERS:
+      return { ...state, filters: action.data };
     default:
       return state;
   }

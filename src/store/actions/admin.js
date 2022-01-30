@@ -20,3 +20,10 @@ export const setAdminInfo = (data) => {
     data: data,
   };
 };
+
+export const setFilters = (data) => {
+  return {
+    type: adminTypes.SET_FILTERS,
+    data: data,
+  }
+}
