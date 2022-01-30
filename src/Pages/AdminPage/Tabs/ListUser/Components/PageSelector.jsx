@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 //Components
 import { Form } from "react-bootstrap"
 import { toast } from "react-toastify"
 import Card from "./Card"
-import CardLoader from "../../ListPage/Components/CardLoader"
 
 //Scripts
 import authRequest from "../../../../../scripts/http/authRequest"
 
 const PageSelector = (props) => {
-  const [users, setUsers] = useState([])
 
   function onCardClick(pageId) {
     console.log(pageId)

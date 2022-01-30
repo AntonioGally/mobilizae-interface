@@ -108,7 +108,7 @@ const VisualizationModal = (props) => {
                     <div style={{ marginBottom: 15 }}>
                         <h5>
                             Link da página de captura:
-                            <i style={{ marginLeft: 12, fontSize: 12 }} class="fas fa-external-link-alt"></i>
+                            <i style={{ marginLeft: 12, fontSize: 12 }} className="fas fa-external-link-alt"></i>
                         </h5>
                         <span>
                             <a href={`${window.location.origin}/#/${props.modalData.pathname}`} target="_blank" rel="noreferrer">

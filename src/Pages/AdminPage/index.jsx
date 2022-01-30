@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useCallback, memo } from "react";
 import { useHistory } from "react-router-dom"
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
@@ -44,10 +44,14 @@ const AdminPage = () => {
     }
   }
 
-  useEffect(() => {
+  const auth = useCallback(() => {
     request.post("/validateToken", { token: localStorage.getItem("access_token") })
       .then(() => { console.log("Authenticated") })
       .catch(() => { return <RedirectPage /> })
+  }, [])
+
+  useLayoutEffect(() => {
+    auth()
   }, [])
 
   return (
@@ -101,4 +105,4 @@ const AdminPage = () => {
   )
 }
 
-export default AdminPage;
+export default memo(AdminPage);

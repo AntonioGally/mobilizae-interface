@@ -80,7 +80,6 @@
   padding: 20px;
   transform: scale(1);
   transition: all 0.15s ease-in-out;
-  cursor: pointer;
 }
 
 .admin-list-page-card-wrapper:hover {
@@ -180,4 +179,22 @@
   border: none;
   outline: 0;
   font-size: 13px;
+}
+
+.admin-list-page-card-header {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-list-page-card-header i {
+  font-size: 18px;
+  cursor: pointer;
+  color: #666666;
+  margin-left: 15px;
+}
+.admin-list-page-card-header button {
+  outline: 0;
+  padding: 4px 12px;
+  margin: 0;
+  width: fit-content;
 }
