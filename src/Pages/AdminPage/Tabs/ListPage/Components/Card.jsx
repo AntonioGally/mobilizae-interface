@@ -1,31 +1,56 @@
-import React, { memo } from 'react'
-
+import React, { memo, useEffect, useState } from 'react'
 //Components
 import { Row, Col } from "react-bootstrap"
 
-const Card = ({ content, onCardClick }) => {
+//Scripts
+import authRequest from "../../../../../scripts/http/authRequest";
+
+const Card = (props) => {
+
+    function getParticipantsCount() {
+        return new Promise((resolve, reject) => {
+            authRequest.get(`/usersByPage/${props.content.id}/true`).then((data) => {
+                resolve(data.data);
+            })
+        })
+    }
+
+    useEffect(() => {
+        if (!props.pageList[props.index].participants) {
+            getParticipantsCount().then((data) => {
+                var arr = props.pageList.slice();
+                arr[props.index].participants = data.usercount;
+                props.setPageList(arr);
+            })
+        }
+    }, [])
+
     return (
-        <div className='admin-list-page-card-wrapper' onClick={() => onCardClick(content)}>
+        <div className='admin-list-page-card-wrapper' onClick={() => props.onCardClick({ ...props.content, participants: props.content?.participants })}>
             <div style={{ textAlign: 'center', marginBottom: 10 }}>
-                <span className='secondary-title'>{content.segmentname}</span>
+                <span className='secondary-title'>{props.content.segmentname}</span>
             </div>
             <Row style={{ margin: 0 }}>
                 <Col sm={12} md={6} className='card-wrapper-left-side'>
                     <div>
                         <h5>Link da página de captura:</h5>
-                        <span>{window.location.origin}/#/{content.pathname}</span>
+                        <span>{window.location.origin}/#/{props.content.pathname}</span>
                     </div>
                     <div>
                         <h5>Participantes:</h5>
-                        <span>{content.participants}</span>
+                        <span>{props.content?.participants}</span>
                     </div>
                     <div>
                         <h5>Grupos preenchidos:</h5>
-                        <span>{content.filledGroups}</span>
+                        <span>{Math.round(Number(props.content?.participants) / 250)}</span>
                     </div>
                     <div>
                         <h5>Acessos na página:</h5>
-                        <span>{content.pageAccess}</span>
+                        <span>{props.content.pageAccess}</span>
+                    </div>
+                    <div>
+                        <h5>Criada por:</h5>
+                        <span>{props.content["admin_name"]}</span>
                     </div>
                     {/* <div>
                         <h5>Cadastrou na página e não participa do grupo:</h5>
@@ -33,7 +58,7 @@ const Card = ({ content, onCardClick }) => {
                     </div> */}
                 </Col>
                 <Col sm={12} md={6} className='card-wrapper-right-side'>
-                    <img src={content.footerimage} alt="Segment ilustration" />
+                    <img src={props.content.footerimage} alt="Segment ilustration" />
                 </Col>
             </Row>
         </div>

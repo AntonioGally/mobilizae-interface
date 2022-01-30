@@ -150,7 +150,7 @@
 }
 
 .admin-list-page-card-wrapper .card-wrapper-right-side > img {
-  max-width: 150px;
+  max-width: 100%;
 }
 @media (max-width: 768px) {
   .admin-list-page-card-wrapper .card-wrapper-right-side > img {

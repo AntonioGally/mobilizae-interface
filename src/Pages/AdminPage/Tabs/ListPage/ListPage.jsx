@@ -10,20 +10,21 @@ import VisualizationModal from './Components/VisualizationModal'
 //Style
 import "./ListPage.style.css"
 
-//Data
-import { pages } from "../../../../scripts/api"
+//Script
+import { setPageList } from "../../../../store/actions/admin";
 
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState({})
+
     function handleCreateMobilizationButtonClick() {
         props.changeTab('createNewPages');
     }
-    function onCardClick(content) {
 
-        setShowModal(true);
+    function onCardClick(content) {
         setModalData(content)
+        setShowModal(true)
     }
     return (
         <>
@@ -37,8 +38,10 @@ const ListPage = (props) => {
             {props.pageList
                 ?
                 (<>
-                    {props.pageList.map((value, index) => (
-                        <Card content={value} key={index} onCardClick={onCardClick} />
+                    {props.pageList?.map((value, index) => (
+                        <Card content={value} key={index} pageList={props.pageList}
+                            setPageList={props.setPageList}
+                            onCardClick={onCardClick} index={index} />
                     ))}
                 </>)
                 :
@@ -58,4 +61,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(ListPage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setPageList: (data) => dispatch(setPageList(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListPage);

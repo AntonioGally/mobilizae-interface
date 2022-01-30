@@ -70,7 +70,7 @@ const Router = (props) => {
         {props.pageList && props.pageList.map((value) => {
           return new PageFactory(value, value.id);
         })}
-        <Route component={RedirectPage} />
+        {/* <Route component={RedirectPage} /> */}
       </Switch>
     </HashRouter>
   );

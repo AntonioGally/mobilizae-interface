@@ -68,19 +68,27 @@ const AdminPage = () => {
                   Criar Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
-                onClick={() => setTabNavigation('listUser')}>
-                Participantes
-              </Nav.Link>
-              <NavDropdown title="Gráficos" id="navbarScrollingDropdown">
+              {/* <Nav.Link className={tabNavigation === 'listUser' ? 'active' : ''}
+                >
+                Usuários
+              </Nav.Link> */}
+              <NavDropdown title="Usuários" id="dropDownUser">
+                <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
+                  Clientes
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setTabNavigation('listAdmins')} disabled>
+                  Administradores
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Gráficos" id="dropDownGraph">
                 <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
                   Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
-                  Páginas
+                  Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Ferramentas" id="navbarScrollingDropdown">
+              <NavDropdown title="Ferramentas" id="dropDownTools">
                 <NavDropdown.Item onClick={() => setTabNavigation('createQRCode')}>
                   Gerar QR Code
                 </NavDropdown.Item>
