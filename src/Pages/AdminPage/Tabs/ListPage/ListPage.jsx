@@ -10,8 +10,8 @@ import VisualizationModal from './Components/VisualizationModal'
 //Style
 import "./ListPage.style.css"
 
-//Script
-import { setPageList } from "../../../../store/actions/admin";
+//Store
+import { setPageList, setFilters } from "../../../../store/actions/admin";
 
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
@@ -26,14 +26,26 @@ const ListPage = (props) => {
         props.changeTab('listUser');
     }
 
+    function handleEditPageClick(content) {
+        props.setFilters({ ...props.filters, selectedPage: { pageId: content.id, info: content } })
+        props.changeTab('editPage');
+    }
+
     function onCardClick(content) {
         setModalData(content)
         setShowModal(true)
     }
+
+    function filterPageList() {
+        return props.pageList.filter((el) => {
+            return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
+        })
+    }
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
-                inputFilterValue={inputFilterValue} setInputFilterValue={setInputFilterValue} />
+                companyInfo={props.companyInfo} inputFilterValue={inputFilterValue}
+                setInputFilterValue={setInputFilterValue} />
             <div style={{ marginBottom: 10 }}>
                 <span className='secondary-title'>
                     Suas mobilizações ({props.pageList?.length})
@@ -42,9 +54,9 @@ const ListPage = (props) => {
             {props.pageList
                 ?
                 (<>
-                    {props.pageList?.map((value, index) => (
+                    {filterPageList()?.map((value, index) => (
                         <Card content={value} key={index} pageList={props.pageList}
-                            setPageList={props.setPageList}
+                            setPageList={props.setPageList} handleEditPageClick={handleEditPageClick}
                             onCardClick={onCardClick} index={index} />
                     ))}
                 </>)
@@ -61,13 +73,16 @@ const ListPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        pageList: state.admin.pageList
+        pageList: state.admin.pageList,
+        filters: state.admin.filters,
+        companyInfo: state.company.companyInfo
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setPageList: (data) => dispatch(setPageList(data))
+        setPageList: (data) => dispatch(setPageList(data)),
+        setFilters: (data) => dispatch(setFilters(data))
     }
 }
 

@@ -4,7 +4,9 @@ const Header = (props) => {
     return (
         <div className='admin-list-page-header'>
             <div className='admin-list-page-header-left-side'>
-                <span className='secondary-title'>Olá f5mkt</span>
+                <span className='secondary-title'>
+                    Olá {props.companyInfo?.name}
+                </span>
                 <div>
                     <button onClick={props.onBtnClick}>Criar mobilização</button>
                     <button>Assistir ao vídio tutorial</button>

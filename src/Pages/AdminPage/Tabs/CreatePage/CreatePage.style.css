@@ -45,6 +45,7 @@
 }
 
 .admin-create-page-right-side .input-subtitle {
+  cursor: unset;
   font-style: normal;
   font-weight: 300;
   color: var(--primary-title);
@@ -85,4 +86,10 @@
   .admin-create-page-btn-submit {
     width: 93%;
   }
+}
+.admin-create-page-wrapper .input-error {
+  color: red;
+}
+.admin-create-page-wrapper .input-error::placeholder {
+  color: red;
 }

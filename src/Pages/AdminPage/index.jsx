@@ -1,9 +1,11 @@
 import React, { useState, useLayoutEffect, useCallback, memo } from "react";
 import { useHistory } from "react-router-dom"
+
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import ListPage from "./Tabs/ListPage/ListPage.jsx";
 import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
+import EditPage from "./Tabs/EditPage/EditPage.jsx";
 import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
 import ListUser from './Tabs/ListUser/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
@@ -35,6 +37,8 @@ const AdminPage = () => {
         return <ListPage changeTab={changeTab} />
       case 'createNewPages':
         return <CreatePage changeTab={changeTab} />
+      case 'editPage':
+        return <EditPage changeTab={changeTab} />
       case 'userGraph':
         return <UserGraph />
       case 'createQRCode':
@@ -69,7 +73,10 @@ const AdminPage = () => {
                   Listar Mobilizações
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
-                  Criar Mobilizações
+                  Criar Mobilização
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => setTabNavigation('editPage')} disabled>
+                  Editar Mobilização
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Usuários" id="dropDownUser">

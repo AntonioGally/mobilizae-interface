@@ -43,7 +43,7 @@ const Card = (props) => {
         <div className='admin-list-page-card-wrapper'>
             <div className='admin-list-page-card-header'>
                 <div>
-                    <i className="fas fa-pen"></i>
+                    <i className="fas fa-pen" onClick={() => { props.handleEditPageClick(props.content) }}></i>
                     <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
                 </div>
                 <button className='admin-create-page-btn-submit'
