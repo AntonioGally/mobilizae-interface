@@ -21,7 +21,7 @@ const Header = (props) => {
           </div>
         </div>
         <div className='admin-list-page-header-right-side'>
-          <input placeholder='Pesquisar pela mobilização' value={props.inputFilterValue}
+          <input placeholder='Pesquisar pelo nome' value={props.inputFilterValue}
             onChange={(e) => props.setInputFilterValue(e.target.value)} />
         </div>
       </div>

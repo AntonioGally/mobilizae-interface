@@ -12,7 +12,6 @@ const PageSelector = (props) => {
 
   function onCardClick(pageId) {
     console.log(pageId)
-    // getUsers(pageId)
   }
 
   function getUsers(pageId) {
@@ -26,12 +25,6 @@ const PageSelector = (props) => {
       })
   }
 
-  // useEffect(() => {
-  //   if (props.filters?.selectedPage) {
-
-  //   }
-
-  // }, [props.filters])
 
   return (
     <>

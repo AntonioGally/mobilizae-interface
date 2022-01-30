@@ -18,13 +18,14 @@ import "./ListUser.style.css"
 import PageSelector from "./Components/PageSelector";
 
 const ListUser = (props) => {
+  const [inputFilterValue, setInputFilterValue] = useState('');
   const [filter, setFilter] = useState("all")
 
   function getTabTemplate() {
     switch (filter) {
       case "all":
-        return props.userList.map((value, index) => (
-          <Card key={index} content={value} onCardClick={onCardClick} />
+        return filterUserList().map((value, index) => (
+          <Card key={index} content={value} handleDeleteUser={handleDeleteUser} />
         ))
       case "page":
         return <PageSelector pageList={props.pageList} setPageList={props.setPageList}
@@ -47,12 +48,29 @@ const ListUser = (props) => {
     }
   }, [])
 
-  function onCardClick(content) {
-    console.log(content)
+  function handleDeleteUser(content) {
+    authRequest.delete(`/users/${content.id}`)
+      .then(() => {
+        var newArr = props.userList.slice();
+        newArr = newArr.filter((el) => el.id !== content.id);
+        props.setUserList(newArr);
+        toast.success("Usuário deletado com sucesso")
+      })
+      .catch((err) => {
+        toast.error("Houve algum erro ao deletar usuário")
+      })
+
+  }
+
+  function filterUserList() {
+    return props.userList.filter((el) => {
+      return el.name.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
+    })
   }
   return (
     <>
-      <Header filter={filter} setFilter={setFilter} />
+      <Header filter={filter} setFilter={setFilter} inputFilterValue={inputFilterValue}
+        setInputFilterValue={setInputFilterValue} />
       {!props.userList ? (
         <CardLoader />
       ) : (

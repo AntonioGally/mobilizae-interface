@@ -1,10 +1,12 @@
-import React, { memo } from "react"
+import React, { memo, useState } from "react"
 
 //Components
 import { Row, Col } from "react-bootstrap"
+import ConfirmModal from "./ConfirmModal";
 
 
 const Card = (props) => {
+  const [showModal, setShowModal] = useState()
   function formatDate(date) {
     var formattedDate = new Date(date);
     var day = formattedDate.getDate();
@@ -18,8 +20,15 @@ const Card = (props) => {
 
     return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours()}h${formattedDate.getMinutes()}`
   }
+
   return (
-    <div className='admin-list-page-card-wrapper' onClick={() => props.onCardClick(props.content)}>
+    <div className='admin-list-page-card-wrapper' >
+      <div className='admin-list-page-card-header' style={{ marginBottom: 20 }}>
+        <div>
+          <i className="fas fa-pen" ></i>
+          <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
+        </div>
+      </div>
       <Row style={{ margin: 0 }}>
         <Col sm={12} md={6} className='card-wrapper-left-side'>
           <div>
@@ -64,6 +73,8 @@ const Card = (props) => {
           </div>
         </Col>
       </Row>
+      <ConfirmModal title={props.content.name} showModal={showModal} setShowModal={setShowModal}
+        btnClick={() => props.handleDeleteUser(props.content)} />
     </div>
   )
 }
