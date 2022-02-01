@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux"
 import { useForm } from "react-hook-form";
 
 //Components
-import { Row, Col, Form } from "react-bootstrap"
+import { Row, Col, Form, Spinner } from "react-bootstrap"
+import { toast } from "react-toastify"
 
 //Scripts
 import authRequest from "../../../../scripts/http/authRequest"
@@ -13,31 +14,57 @@ import { setFilters } from "../../../../store/actions/admin"
 
 const EditPage = (props) => {
   const { register, formState: { errors }, handleSubmit } = useForm();
+  const [loading, setLoading] = useState();
 
   async function onSubmit(data) {
-    data.bannerImage = data.bannerImage[0];
-    data.footerImage = data.footerImage[0];
+    setLoading(true)
     const formData = new FormData();
+    var photos = []
+    photos.push(data.bannerImage[0], data.footerImage[0])
+    delete data.bannerImage;
+    delete data.footerImage;
     var headers = Object.getOwnPropertyNames(data);
     headers.forEach((value) => {
       formData.append(value, data[value])
     });
-    console.log(data)
-    // authRequest.post("/teste", formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then((data) => {
-    //   console.log(data)
-    // })
+    for (const image of photos) {
+      formData.append("files", image)
+    }
+    formData.append("companyId", props.filters?.selectedPage.info.companyid);
+    formData.append("adminId", props.filters?.selectedPage.info.adminid);
+
+
+    authRequest.put(`/pages/${props.filters?.selectedPage.info.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then((data) => {
+        toast.success("Página atualizada com sucesso!")
+        console.log(data.data)
+      })
+      .catch((err) => {
+        const errorMap = {
+          500: toast.error("Houve algum erro nos nossos servidores"),
+          404: toast.error("Essa página não existe existe"),
+          403: toast.warning(`Essa página já existe (${props.filters?.selectedPage.info.pathname})`),
+          400: toast.error("Houve um problema ao enviar as imagens para os nossos servidores")
+        }
+        if (err.response.status) {
+          return errorMap[err.response.status]
+        }
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
   return (
     <>
       <div className="back-button" onClick={() => props.changeTab("listPages")}>
-        <i class="fas fa-arrow-left" style={{ marginRight: 5 }} />
+        <i className="fas fa-arrow-left" style={{ marginRight: 5 }} />
         Voltar
       </div>
       <span className="secondary-title">
         Editar mobilização <strong>{props.filters?.selectedPage.info.segmentname}</strong>
       </span>
       <div className="admin-create-page-wrapper" style={{ marginTop: 20 }}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
           <Row style={{ margin: 0 }}>
             <Col sm={12} md={6} className="admin-create-page-left-side">
               <input placeholder="Nome da mobilização" type="text"
@@ -66,7 +93,7 @@ const EditPage = (props) => {
 
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label style={{ margin: 0 }} className={errors.bannerImage ? "input-error" : ""}>
-                  Banner
+                  Banner e Logo
                 </Form.Label>
                 <Form.Control style={{ margin: 0, padding: 9 }}
                   type="file" accept="image/*"
@@ -118,7 +145,7 @@ const EditPage = (props) => {
 
             </Col>
             <button className="admin-create-page-btn-submit">
-              Atualizar
+              {loading ? <Spinner animation="border" size="sm" /> : "Atualizar"}
             </button>
           </Row>
         </form>

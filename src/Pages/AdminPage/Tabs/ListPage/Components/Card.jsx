@@ -6,6 +6,7 @@ import { toast } from "react-toastify"
 import ConfirmModal from "./ConfirmModal";
 
 //Scripts
+import server from "../../../../../scripts/http/config"
 import authRequest from "../../../../../scripts/http/authRequest";
 
 const Card = (props) => {
@@ -82,7 +83,7 @@ const Card = (props) => {
                     </div> */}
                 </Col>
                 <Col sm={12} md={6} className='card-wrapper-right-side'>
-                    <img src={props.content.footerimage} alt="Segment ilustration" />
+                    <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" />
                 </Col>
             </Row>
             <ConfirmModal title={props.content.title} showModal={showModal} setShowModal={setShowModal} btnClick={deletePage} />

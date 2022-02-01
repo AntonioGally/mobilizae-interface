@@ -3,6 +3,8 @@ import { Route } from "react-router-dom";
 
 import ReactGA from 'react-ga';
 
+import server from "./http/config";
+
 import Banner from "../Components/Banner.jsx";
 import TextContainer from "../Components/TextContainer.jsx";
 import Button from "../Components/Button.jsx";
@@ -17,11 +19,11 @@ export default class PageFactory {
       ReactGA.ga('set', 'new_page_path', `/${window.location.hash}`);
       ReactGA.pageview(`/${window.location.hash}`);
       return (
-        <div >
-          <Banner imageSrc={props.bannerimage} />
+        <div>
+          <Banner imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
           <TextContainer titleText={props.title} containerText={props.containertext} />
           <Button buttonText={props.buttontext} modalImage={props.footerimage} groupLink={props.grouplink} />
-          <FooterImage src={props.footerimage} />
+          <FooterImage src={`${server.host}/getImage/${props.footerimage}`} />
         </div>
       )
     }
