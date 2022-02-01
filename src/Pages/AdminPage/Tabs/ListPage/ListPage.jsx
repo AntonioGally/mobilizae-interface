@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from "react-redux";
 
 //Components
@@ -11,7 +11,10 @@ import VisualizationModal from './Components/VisualizationModal'
 import "./ListPage.style.css"
 
 //Store
-import { setPageList, setFilters } from "../../../../store/actions/admin";
+import { setPageList, setFilters, setAdminInfo } from "../../../../store/actions/admin";
+
+//Script
+import auth from "../../../../scripts/http/request"
 
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
@@ -41,6 +44,24 @@ const ListPage = (props) => {
             return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
         })
     }
+
+    function postToken() {
+        return new Promise((resolve) => {
+            auth.post("/validateToken", { token: localStorage.getItem("access_token") })
+                .then((data) => {
+                    resolve(data.data)
+                })
+                .catch((err) => {
+
+                })
+        })
+    }
+
+    useEffect(() => {
+        if (!props.adminInfo) {
+            postToken().then((data) => props.setAdminInfo(data))
+        }
+    }, [])
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
@@ -51,18 +72,20 @@ const ListPage = (props) => {
                     Suas mobilizações ({props.pageList?.length})
                 </span>
             </div>
-            {props.pageList
-                ?
-                (<>
-                    {filterPageList()?.map((value, index) => (
-                        <Card content={value} key={index} pageList={props.pageList}
-                            setPageList={props.setPageList} handleEditPageClick={handleEditPageClick}
-                            onCardClick={onCardClick} index={index} />
-                    ))}
-                </>)
-                :
-                (<CardLoader />)
-            }
+            <div className='admin-page-scroll'>
+                {props.pageList
+                    ?
+                    (<>
+                        {filterPageList()?.map((value, index) => (
+                            <Card content={value} key={index} pageList={props.pageList}
+                                setPageList={props.setPageList} handleEditPageClick={handleEditPageClick}
+                                onCardClick={onCardClick} index={index} />
+                        ))}
+                    </>)
+                    :
+                    (<CardLoader />)
+                }
+            </div>
 
 
             <VisualizationModal showModal={showModal} setShowModal={setShowModal}
@@ -75,14 +98,16 @@ const mapStateToProps = (state) => {
     return {
         pageList: state.admin.pageList,
         filters: state.admin.filters,
-        companyInfo: state.company.companyInfo
+        adminInfo: state.admin.adminInfo,
+        companyInfo: state.company.companyInfo,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setPageList: (data) => dispatch(setPageList(data)),
-        setFilters: (data) => dispatch(setFilters(data))
+        setFilters: (data) => dispatch(setFilters(data)),
+        setAdminInfo: (data) => dispatch(setAdminInfo(data))
     }
 }
 

@@ -75,6 +75,9 @@ const EditPage = (props) => {
                 defaultValue={props.filters?.selectedPage.info.segmentname}
                 className={errors.segmentName ? "input-error" : ""}
               />
+              <span className="input-subtitle">
+                Nome que vai aparecer na plataforma
+              </span>
               <input placeholder="Texto do título" type="text"
                 {...register("containerText", {
                   required: true,
@@ -82,6 +85,9 @@ const EditPage = (props) => {
                 defaultValue={props.filters?.selectedPage.info.containertext}
                 className={errors.containerText ? "input-error" : ""}
               />
+              <span className="input-subtitle">
+                Texto descritivo opcional
+              </span>
               <input placeholder="Link de grupo de whatsapp" type="text"
                 {...register("groupLink", {
                   required: true,
@@ -93,7 +99,7 @@ const EditPage = (props) => {
 
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label style={{ margin: 0 }} className={errors.bannerImage ? "input-error" : ""}>
-                  Banner e Logo
+                  Banner
                 </Form.Label>
                 <Form.Control style={{ margin: 0, padding: 9 }}
                   type="file" accept="image/*"

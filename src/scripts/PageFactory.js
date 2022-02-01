@@ -22,7 +22,9 @@ export default class PageFactory {
         <div>
           <Banner imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
           <TextContainer titleText={props.title} containerText={props.containertext} />
-          <Button buttonText={props.buttontext} modalImage={props.footerimage} groupLink={props.grouplink} />
+          <Button buttonText={props.buttontext} modalImage={`${server.host}/getImage/${props.footerimage}`} 
+          modalPageInfo={props} groupLink={props.grouplink} />
+          
           <FooterImage src={`${server.host}/getImage/${props.footerimage}`} />
         </div>
       )

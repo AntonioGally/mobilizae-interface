@@ -1,56 +1,59 @@
 //Libs
 import React, { useState } from "react";
 import ReactDOM from 'react-dom';
+import { useForm } from "react-hook-form";
 
 //Components
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
+import { toast } from "react-toastify"
 
 //Scripts
-import { useForm } from "react-hook-form";
+import request from "../scripts/http/request";
+import { generateDate } from "../scripts/utils"
 
 //Css
 import "../styles/formModal.css";
 
-//Data Base
-import { db } from "../firebase-config"
-import { collection, addDoc } from "firebase/firestore"
 
-
-
-const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
-  const [radioValue, setRadioValue] = useState(false);
+const FormModal = ({ show, closeModal, modalImage, groupLink, pageInfo }) => {
   const [loading, setLoading] = useState(false);
+  const [radioValue, setRadioValue] = useState(false);
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const usersCollectionRef = collection(db, "users");
 
-  async function createUser(obj) {
-    await addDoc(usersCollectionRef, obj);
-  }
+
 
   function onSubmit(value) {
-    setLoading(true);
     const newUser = {
-      ...value,
-      pagePath: window.location.hash.replace(/[#/]{2}/, ""),
-      createdDate: new Date(),
-      wantReceiveSMS: radioValue,
-      groupLink: groupLink
+      createdAt: generateDate(),
+      name: value.name,
+      email: value.email,
+      number: value.number,
+      segmentName: pageInfo.pathname,
+      isNewsLetterActive: radioValue,
+      groupLink: pageInfo.grouplink,
+      pageId: pageInfo.id
     }
-    createUser(newUser).then((data) => {
-      setLoading(false);
-      window.location.href = groupLink;
-    }).catch(() => {
-      setLoading(false);
-    })
-
+    request.post("/users", newUser)
+      .then((data) => {
+        console.log(data)
+        window.location.href = data.data.grouplink
+      }).catch((err) => {
+        if (err.response.status === 400) {
+          toast.warning("Esse email já está cadastrado")
+        } else {
+          toast.error("Houve algum problema em nossos servidores")
+        }
+      }).finally(() => {
+        setLoading(false);
+      })
   }
 
   return ReactDOM.createPortal(
     <Modal show={show} onHide={closeModal} centered className="form-modal-container">
       <img src={modalImage} alt="Header logo" />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-modal-input-area">
           <div>
             <label className={errors.name ? "text-danger" : ""}>Seu nome:</label>
@@ -94,7 +97,7 @@ const FormModal = ({ show, closeModal, modalImage, groupLink }) => {
             <Spinner animation="border" size="lg" />
           )}
         </div>
-      </form>
+      </Form>
     </Modal>, document.getElementById('modal-root')
   )
 }

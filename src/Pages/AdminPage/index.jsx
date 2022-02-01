@@ -1,5 +1,6 @@
-import React, { useState, useLayoutEffect, useCallback, memo } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { useHistory } from "react-router-dom"
+import { connect } from "react-redux"
 
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
@@ -20,8 +21,11 @@ import "./AdminPage.style.css";
 //Assets
 import logoImg from "../../assets/images/defaultPageLogo.png";
 
+//Scripts
+import { setAdminInfo } from "../../store/actions/admin";
 
-const AdminPage = () => {
+
+const AdminPage = (props) => {
   const history = useHistory();
   const [tabNavigation, setTabNavigation] = useState('listPages');
 
@@ -47,17 +51,6 @@ const AdminPage = () => {
         return 'Default option'
     }
   }
-
-  const auth = useCallback(() => {
-    request.post("/validateToken", { token: localStorage.getItem("access_token") })
-      .then(() => { console.log("Authenticated") })
-      .catch(() => { return <RedirectPage /> })
-  }, [])
-
-  useLayoutEffect(() => {
-    auth()
-  }, [])
-
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
@@ -75,9 +68,9 @@ const AdminPage = () => {
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
                   Criar Mobilização
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setTabNavigation('editPage')} disabled>
+                {/* <NavDropdown.Item onClick={() => setTabNavigation('editPage')} disabled>
                   Editar Mobilização
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
               </NavDropdown>
               <NavDropdown title="Usuários" id="dropDownUser">
                 <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
@@ -88,7 +81,7 @@ const AdminPage = () => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Gráficos" id="dropDownGraph">
-                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
+                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')} disabled>
                   Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
@@ -112,4 +105,10 @@ const AdminPage = () => {
   )
 }
 
-export default memo(AdminPage);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAdminInfo: (data) => dispatch(setAdminInfo(data))
+  }
+}
+
+export default connect(null, mapDispatchToProps)((AdminPage));

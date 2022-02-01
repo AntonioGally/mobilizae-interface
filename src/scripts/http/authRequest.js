@@ -16,14 +16,16 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response.status === 401) {
+    if (error.response.status === 403 || error.response.status === 403) {
       if (typeof window.appWebView !== "undefined") {
-        window.appWebView.requestStatus(401);
+        window.appWebView.requestStatus(403);
       }
       if (error.response.data?.error_description) {
         window.logoutErrorCause = error.response.data.error_description;
       }
       // When a request is not made from /logout, redirect to /login and clear all user data
+      localStorage.removeItem("access_token");
+      document.location.reload();
     }
     return Promise.reject(error);
   }

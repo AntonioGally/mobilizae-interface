@@ -44,7 +44,8 @@
   color: #ffffff;
 }
 
-.admin-create-page-right-side .input-subtitle {
+.admin-create-page-right-side .input-subtitle,
+.admin-create-page-left-side .input-subtitle {
   cursor: unset;
   font-style: normal;
   font-weight: 300;

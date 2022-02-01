@@ -83,7 +83,7 @@ const Card = (props) => {
                     </div> */}
                 </Col>
                 <Col sm={12} md={6} className='card-wrapper-right-side'>
-                    <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" />
+                    <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" loading="lazy" />
                 </Col>
             </Row>
             <ConfirmModal title={props.content.title} showModal={showModal} setShowModal={setShowModal} btnClick={deletePage} />
