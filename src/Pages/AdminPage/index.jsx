@@ -56,7 +56,7 @@ const AdminPage = (props) => {
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
         <Container>
           <Navbar.Brand>
-            <img src={logoImg} alt="Mobilizae logo" className="default-page-navbar-image" onClick={() => history.push("/")} />
+            <img src={logoImg} alt="Mobilizae logo" className="default-page-navbar-image" onClick={() => setTabNavigation("listPages")} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">

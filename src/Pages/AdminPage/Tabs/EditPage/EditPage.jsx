@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux"
 import { useForm } from "react-hook-form";
 
@@ -7,37 +7,43 @@ import { Row, Col, Form, Spinner } from "react-bootstrap"
 import { toast } from "react-toastify"
 
 //Scripts
+import server from "../../../../scripts/http/config"
 import authRequest from "../../../../scripts/http/authRequest"
 
 //Store
 import { setFilters } from "../../../../store/actions/admin"
 
 const EditPage = (props) => {
+  const bannerImageRef = useRef(null);
+  const footerImageRef = useRef(null);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const [loading, setLoading] = useState();
+  const [imageSelected, setImageSelected] = useState({ banner: false, footer: false });
 
-  async function onSubmit(data) {
+  function onSubmit(data) {
     setLoading(true)
-    const formData = new FormData();
+    const imageData = new FormData();
     var photos = []
-    photos.push(data.bannerImage[0], data.footerImage[0])
+    photos.push(
+      { image: data.bannerImage[0], oldBanner: props.filters?.selectedPage.info.bannerimage },
+      { image: data.footerImage[0], oldFooter: props.filters?.selectedPage.info.footerimage }
+    )
     delete data.bannerImage;
     delete data.footerImage;
-    var headers = Object.getOwnPropertyNames(data);
-    headers.forEach((value) => {
-      formData.append(value, data[value])
-    });
-    for (const image of photos) {
-      formData.append("files", image)
+    const newPage = {
+      ...data,
+      companyId: props.filters?.selectedPage.info.companyid,
+      adminId: props.filters?.selectedPage.info.adminid
     }
-    formData.append("companyId", props.filters?.selectedPage.info.companyid);
-    formData.append("adminId", props.filters?.selectedPage.info.adminid);
 
-
-    authRequest.put(`/pages/${props.filters?.selectedPage.info.id}`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+    authRequest.put(`/pages/${props.filters?.selectedPage.info.id}`, newPage)
       .then((data) => {
-        toast.success("Página atualizada com sucesso!")
-        console.log(data.data)
+        photos.length > 0 ?
+          authRequest.put(`pages/image/${props.filters?.selectedPage.info.id}`, imageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+            .then((data) => {
+              toast.success("Página atualizada com sucesso!");
+              setLoading(false);
+            }) : toast.success("Página atualizada com sucesso!"); setLoading(false)
       })
       .catch((err) => {
         const errorMap = {
@@ -49,10 +55,34 @@ const EditPage = (props) => {
         if (err.response.status) {
           return errorMap[err.response.status]
         }
-      })
-      .finally(() => {
         setLoading(false)
       })
+
+    for (const image of photos) {
+      imageData.append("files", image.image)
+    }
+
+    imageSelected.banner && imageData.append("banner", true);
+    imageSelected.banner && imageData.append("oldBanner", photos[0].oldBanner);
+    imageSelected.footer && imageData.append("footer", true);
+    imageSelected.footer && imageData.append("oldFooter", photos[1].oldFooter);
+  }
+
+  function readURL(input, imageInputName) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        if (imageInputName === "bannerImage") {
+          setImageSelected((prev) => ({ ...prev, banner: true }))
+          bannerImageRef.current.src = e.target.result;
+        } else {
+          setImageSelected((prev) => ({ ...prev, footer: true }))
+          footerImageRef.current.src = e.target.result;
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
   }
   return (
     <>
@@ -102,13 +132,19 @@ const EditPage = (props) => {
                   Banner
                 </Form.Label>
                 <Form.Control style={{ margin: 0, padding: 9 }}
-                  type="file" accept="image/*"
+                  type="file" accept="image/*" onChangeCapture={(e) => { readURL(e.target, "bannerImage") }}
                   {...register("bannerImage", {
-                    required: true,
+                    required: false,
                   })}
                 />
               </Form.Group>
-              {/* <div className="banner-image-dnd"></div> */}
+              <div className="banner-image-dnd">
+                {imageSelected.banner ? (
+                  <img ref={bannerImageRef} src="#" alt="Banner Preview" />
+                ) : (
+                  <img src={`${server.host}/getImage/${props.filters?.selectedPage.info.bannerimage}`} alt="Banner Preview" />
+                )}
+              </div>
             </Col>
             <Col sm={12} md={6} className="admin-create-page-right-side">
               <input placeholder="Texto para chamada de ação" type="text"
@@ -141,14 +177,19 @@ const EditPage = (props) => {
                   Logo
                 </Form.Label>
                 <Form.Control style={{ margin: 0, padding: 9 }}
-                  type="file" accept="image/*"
+                  type="file" accept="image/*" onChangeCapture={(e) => readURL(e.target, "footerImage")}
                   {...register("footerImage", {
-                    required: true,
+                    required: false,
                   })}
                 />
               </Form.Group>
-              {/* <div className="logo-image-dnd" ></div> */}
-
+              <div className="logo-image-dnd">
+                {imageSelected.footer ? (
+                  <img ref={footerImageRef} src="#" alt="Logo Preview" />
+                ) : (
+                  <img src={`${server.host}/getImage/${props.filters?.selectedPage.info.footerimage}`} alt="Logo Preview" />
+                )}
+              </div>
             </Col>
             <button className="admin-create-page-btn-submit">
               {loading ? <Spinner animation="border" size="sm" /> : "Atualizar"}

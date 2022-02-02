@@ -58,8 +58,15 @@ const Card = (props) => {
             <Row style={{ margin: 0 }}>
                 <Col sm={12} md={6} className='card-wrapper-left-side'>
                     <div>
-                        <h5>Link da página de captura:</h5>
-                        <span>{window.location.origin}/#/{props.content.pathname}</span>
+                        <h5>
+                            Link da página de captura:
+                            <i style={{ marginLeft: 12, fontSize: 12 }} className="fas fa-external-link-alt"></i>
+                        </h5>
+                        <span>
+                            <a href={`${window.location.origin}/#/${props.content.pathname}`} target="_blank" rel="noreferrer">
+                                {window.location.origin}/#/{props.content.pathname}
+                            </a>
+                        </span>
                     </div>
                     <div>
                         <h5>Participantes:</h5>
