@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 //Components
 import { Form } from "react-bootstrap"
@@ -25,6 +25,12 @@ const PageSelector = (props) => {
       })
   }
 
+  useEffect(() => {
+    if (props.filters?.selectedPage) {
+      getUsers(props.filters?.selectedPage?.pageId);
+    }
+  }, [])
+
 
   return (
     <>
@@ -43,11 +49,17 @@ const PageSelector = (props) => {
         </div>
       )}
 
-      {props.filters?.selectedPage?.filteredUsers?.map((value, index) => (
-        <Card content={value} key={index} pageList={props.pageList}
-          setPageList={props.setPageList}
-          onCardClick={onCardClick} index={index} />
-      ))}
+      {props.filters?.selectedPage?.filteredUsers?.length > 0 ? (
+        <>
+          {props.filterUserList(props.filters?.selectedPage?.filteredUsers)?.map((value, index) => (
+            <Card content={value} key={index} pageList={props.pageList}
+              setPageList={props.setPageList}
+              onCardClick={onCardClick} index={index} />
+          ))}
+        </>
+      ) : (
+        <div style={{ textAlign: 'center', fontSize: 20 }}>Nenhum usuário encontrado nessa página</div>
+      )}
     </>
   )
 }

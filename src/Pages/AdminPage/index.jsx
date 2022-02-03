@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
-import { useHistory } from "react-router-dom"
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux"
 
 //Components
@@ -12,7 +11,6 @@ import ListUser from './Tabs/ListUser/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
 //Auth
-import RedirectPage from "../RedirectPage/index.jsx";
 import request from "../../scripts/http/request";
 
 //Css
@@ -21,12 +19,13 @@ import "./AdminPage.style.css";
 //Assets
 import logoImg from "../../assets/images/defaultPageLogo.png";
 
-//Scripts
+//Store
 import { setAdminInfo } from "../../store/actions/admin";
+import { setCompanyInfo } from "../../store/actions/company";
+
 
 
 const AdminPage = (props) => {
-  const history = useHistory();
   const [tabNavigation, setTabNavigation] = useState('listPages');
 
   function changeTab(tab) {
@@ -51,6 +50,34 @@ const AdminPage = (props) => {
         return 'Default option'
     }
   }
+
+  function postToken() {
+    return new Promise((resolve, reject) => {
+      request.post("/validateToken", { token: localStorage.getItem("access_token"), companyInfo: props.companyInfo })
+        .then((data) => { resolve(data.data) })
+        .catch((err) => { reject(err) })
+    })
+  }
+
+  function getCompanyInfo() {
+    return new Promise((resolve, reject) => {
+      let subDomain = "antoniogally";
+      request.get(`/companyInfo/${subDomain}`)
+        .then((data) => { resolve(data.data); })
+        .catch((err) => { reject(err); })
+    })
+  }
+
+  useEffect(() => {
+    if (!props.companyInfo) {
+      getCompanyInfo().then((data) => {
+        props.setCompanyInfo(data)
+      })
+    }
+    if (props.companyInfo && !props.adminInfo) {
+      postToken().then((data) => props.setAdminInfo(data))
+    }
+  }, [])
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
@@ -105,10 +132,18 @@ const AdminPage = (props) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
   return {
-    setAdminInfo: (data) => dispatch(setAdminInfo(data))
+    adminInfo: state.admin.adminInfo,
+    companyInfo: state.company.companyInfo
   }
 }
 
-export default connect(null, mapDispatchToProps)((AdminPage));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setAdminInfo: (data) => dispatch(setAdminInfo(data)),
+    setCompanyInfo: (data) => dispatch(setCompanyInfo(data))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPage);

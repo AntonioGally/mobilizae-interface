@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux"
 
@@ -20,6 +20,10 @@ import "./CreatePage.style.css";
 const CreatePage = (props) => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState();
+    const [imageSelected, setImageSelected] = useState({ banner: false, footer: false });
+
+    const bannerImageRef = useRef(null)
+    const footerImageRef = useRef(null)
 
     function onSubmit(data) {
         setLoading(true);
@@ -61,6 +65,23 @@ const CreatePage = (props) => {
 
     }
 
+    function readURL(input, imageInputName) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                if (imageInputName === "bannerImage") {
+                    setImageSelected((prev) => ({ ...prev, banner: true }))
+                    bannerImageRef.current.src = e.target.result;
+                } else {
+                    setImageSelected((prev) => ({ ...prev, footer: true }))
+                    footerImageRef.current.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
     return (
         <>
             <div className="back-button" onClick={() => props.changeTab("listPages")}>
@@ -74,25 +95,19 @@ const CreatePage = (props) => {
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
                     <Row style={{ margin: 0 }}>
                         <Col sm={12} md={6} className="admin-create-page-left-side">
-                            <input placeholder="Nome da mobilização" type="text"
+                            <input placeholder="Titulo da mobilização" type="text"
                                 {...register("segmentName", {
                                     required: true,
                                     maxLength: 50
                                 })}
                                 className={errors.segmentName ? "input-error" : ""}
                             />
-                            <span className="input-subtitle">
-                                Nome que vai aparecer na plataforma
-                            </span>
-                            <input placeholder="Texto do título" type="text"
+                            <input placeholder="Texto de descrição" type="text"
                                 {...register("containerText", {
                                     required: true,
                                 })}
                                 className={errors.containerText ? "input-error" : ""}
                             />
-                            <span className="input-subtitle">
-                                Texto descritivo opcional
-                            </span>
                             <input placeholder="Link de grupo de whatsapp" type="text"
                                 {...register("groupLink", {
                                     required: true,
@@ -106,12 +121,17 @@ const CreatePage = (props) => {
                                     Banner
                                 </Form.Label>
                                 <Form.Control style={{ margin: 0, padding: 9 }}
-                                    type="file" accept="image/*"
+                                    type="file" accept="image/*" onChangeCapture={(e) => readURL(e.target, "bannerImage")}
                                     {...register("bannerImage", {
                                         required: true,
                                     })}
                                 />
                             </Form.Group>
+                            <div className="banner-image-dnd">
+                                {imageSelected.banner && (
+                                    <img ref={bannerImageRef} src="#" alt="Banner Preview" />
+                                )}
+                            </div>
                         </Col>
                         <Col sm={12} md={6} className="admin-create-page-right-side">
                             <input placeholder="Texto para chamada de ação" type="text"
@@ -142,13 +162,17 @@ const CreatePage = (props) => {
                                     Logo
                                 </Form.Label>
                                 <Form.Control style={{ margin: 0, padding: 9 }}
-                                    type="file" accept="image/*"
+                                    type="file" accept="image/*" onChangeCapture={(e) => readURL(e.target, "footerImage")}
                                     {...register("footerImage", {
                                         required: true,
                                     })}
                                 />
                             </Form.Group>
-
+                            <div className="logo-image-dnd" style={{ height: 131 }}>
+                                {imageSelected.footer && (
+                                    <img ref={footerImageRef} src="#" alt="Logo Preview" />
+                                )}
+                            </div>
                         </Col>
                         <button className="admin-create-page-btn-submit">
                             {loading ? <Spinner animation="border" size="sm" /> : "Tudo certo, vamos mobilizar!"}

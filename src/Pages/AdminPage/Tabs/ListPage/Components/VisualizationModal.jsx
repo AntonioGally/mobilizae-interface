@@ -47,8 +47,8 @@ const VisualizationModal = (props) => {
         }
     }, [image, downloadQrCode]);
 
-    function viewUsers() {
-        props.handleListUserButtonClick()
+    function viewUsers(content) {
+        props.handleListUserButtonClick(content)
     }
 
     function downloadCellPhones(pageId) {
@@ -95,6 +95,10 @@ const VisualizationModal = (props) => {
         })
     }
 
+    function groupLinkBtnClick() {
+        window.location.href = props.modalData.grouplink
+    }
+
     return (
         <>
             <Modal show={props.showModal} onHide={() => props.setShowModal(false)}
@@ -128,7 +132,7 @@ const VisualizationModal = (props) => {
                         <h5>Participantes:</h5>
                         <span>{props.modalData.participants}</span>
                         <div className='admin-list-page-modal-btn-area'>
-                            <button onClick={viewUsers}>
+                            <button onClick={() => { viewUsers(props.modalData) }}>
                                 Visualizar
                             </button>
                             <button onClick={() => downloadCellPhones(props.modalData.id)}>
@@ -147,7 +151,7 @@ const VisualizationModal = (props) => {
                         </div>
                     </div>
                     <div className='admin-list-page-modal-btn-area'>
-                        <button style={{ width: "85%", margin: "20px auto 0" }}>
+                        <button style={{ width: "85%", margin: "20px auto 0" }} onClick={groupLinkBtnClick}>
                             Interagir no grupo
                         </button>
                     </div>

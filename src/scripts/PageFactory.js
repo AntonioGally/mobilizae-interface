@@ -21,7 +21,7 @@ export default class PageFactory {
       return (
         <div>
           <Banner imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
-          <TextContainer titleText={props.title} containerText={props.containertext} />
+          <TextContainer titleText={props.segmentname} containerText={props.containertext} />
           <Button buttonText={props.buttontext} modalImage={`${server.host}/getImage/${props.footerimage}`} 
           modalPageInfo={props} groupLink={props.grouplink} />
           

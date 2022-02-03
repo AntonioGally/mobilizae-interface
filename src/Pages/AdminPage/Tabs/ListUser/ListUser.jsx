@@ -21,15 +21,26 @@ const ListUser = (props) => {
   const [inputFilterValue, setInputFilterValue] = useState('');
   const [filter, setFilter] = useState("all")
 
+  useEffect(() => {
+    if (props.filters?.selectedPage) {
+      setFilter("page")
+    }
+  }, [])
+
   function getTabTemplate() {
     switch (filter) {
       case "all":
-        return filterUserList().map((value, index) => (
-          <Card key={index} content={value} handleDeleteUser={handleDeleteUser} />
-        ))
+        if (props.userList?.length > 0) {
+          return filterUserList(props.userList).map((value, index) => (
+            <Card key={index} content={value} handleDeleteUser={handleDeleteUser} />
+          ))
+        } else {
+          return <div style={{ textAlign: 'center', fontSize: 20 }}>Nenhum usuário encontrado</div>
+        }
+
       case "page":
         return <PageSelector pageList={props.pageList} setPageList={props.setPageList}
-          filters={props.filters} setFilters={props.setFilters} />
+          filters={props.filters} setFilters={props.setFilters} filterUserList={filterUserList} />
       default:
         return <h1>Default Option</h1>
     }
@@ -62,8 +73,8 @@ const ListUser = (props) => {
 
   }
 
-  function filterUserList() {
-    return props.userList.filter((el) => {
+  function filterUserList(arr) {
+    return arr.filter((el) => {
       return el.name.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
     })
   }

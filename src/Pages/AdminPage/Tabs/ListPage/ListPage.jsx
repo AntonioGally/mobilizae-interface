@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from "react-redux";
 
 //Components
@@ -13,8 +13,6 @@ import "./ListPage.style.css"
 //Store
 import { setPageList, setFilters, setAdminInfo } from "../../../../store/actions/admin";
 
-//Script
-import auth from "../../../../scripts/http/request"
 
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
@@ -25,7 +23,8 @@ const ListPage = (props) => {
         props.changeTab('createNewPages');
     }
 
-    function handleListUserButtonClick() {
+    function handleListUserButtonClick(content) {
+        props.setFilters({ ...props.filters, selectedPage: { pageId: content.id, info: content } })
         props.changeTab('listUser');
     }
 
@@ -44,24 +43,6 @@ const ListPage = (props) => {
             return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
         })
     }
-
-    function postToken() {
-        return new Promise((resolve) => {
-            auth.post("/validateToken", { token: localStorage.getItem("access_token") })
-                .then((data) => {
-                    resolve(data.data)
-                })
-                .catch((err) => {
-
-                })
-        })
-    }
-
-    useEffect(() => {
-        if (!props.adminInfo) {
-            postToken().then((data) => props.setAdminInfo(data))
-        }
-    }, [])
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
