@@ -1,11 +1,11 @@
 .admin-page-wrapper {
-  max-width: 820px;
+  max-width: 890px;
   margin: 50px auto;
 }
 
 @media (max-width: 768px) {
   .admin-page-wrapper {
-      padding: 24px;
+    padding: 24px;
   }
 }
 
@@ -32,4 +32,23 @@
 
 .my-col {
   margin: 450px auto 30px !important;
+}
+
+.admin-page-scroll {
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 700px;
+}
+
+.admin-page-scroll::-webkit-scrollbar {
+  width: 6px;
+  background-color: #ddd;
+}
+
+.admin-page-scroll::-webkit-scrollbar-thumb {
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 3px solid #1dbf73;
+  /* creates padding around scroll thumb */
 }

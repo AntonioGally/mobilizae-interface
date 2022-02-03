@@ -57,6 +57,21 @@ code {
   color: white;
 }
 
+.back-button {
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 3px;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  color: #ffffff;
+  background-color: var(--secondary-button-background);
+}
+
 @media (max-width: 768px) {
   .primary-button {
     margin-top: 10px;

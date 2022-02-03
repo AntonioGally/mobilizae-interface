@@ -4,8 +4,7 @@ import React from "react";
 import { Modal } from "react-bootstrap"
 
 //Elements
-import SubdomainInput from "../Elements/SubdomainInput";
-import PasswordInput from "../Elements/PasswordInput";
+import DefaultInput from "../Elements/DefaultInput";
 import PrimaryButton from "../Elements/PrimaryButton";
 
 const ModalLogin = (props) => {
@@ -15,16 +14,16 @@ const ModalLogin = (props) => {
       className="default-page-modal" centered={windowWidth > 768 ? false : true}>
       <div>
         <h3 className="secondary-title">
-          Subdomíno
+          Email
         </h3>
-        <SubdomainInput disabled={true} value={props.subdomainInputValue} style={{ background: '#f4f4f4' }} />
+        <DefaultInput disabled={true} value={props.emailInput} style={{ background: '#f4f4f4' }} />
       </div>
       <div style={{ marginTop: 15 }}>
         <h3 className="secondary-title">
           Senha
         </h3>
-        <PasswordInput value={props.passwordInputValue} onChange={(e) => { props.setPasswordInputValue(e.target.value) }}
-          type="password" />
+        <DefaultInput value={props.passwordInputValue} onChange={(e) => { props.setPasswordInputValue(e.target.value) }}
+          type="password" autoFocus={true} id={"pass-input"}/>
         <span className="input-subtitle">Esqueceu a senha?</span>
       </div>
       <PrimaryButton text="Entrar" style={{ marginTop: 15 }} onClick={props.handleLoginButtonClick} />

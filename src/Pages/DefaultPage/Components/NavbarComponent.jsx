@@ -4,7 +4,7 @@ import React from "react"
 import logoImg from "../../../assets/images/defaultPageLogo.png";
 
 //Components
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 
 const NavbarComponent = () => {
   return (
@@ -14,16 +14,13 @@ const NavbarComponent = () => {
           <img src={logoImg} alt="Mobilizae logo" className="default-page-navbar-image" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link>
-              Topic one
-            </Nav.Link>
-            <NavDropdown title="Dropdown topic" id="navbarScrollingDropdown">
-              <NavDropdown.Item >
-                Topic two
-              </NavDropdown.Item>
-            </NavDropdown>
+        <Navbar.Collapse id="responsive-navbar-nav" style={{ justifyContent: "flex-end" }}>
+          <Nav>
+            {localStorage.getItem("access_token") && (
+              <Nav.Link href="#/admin">
+                Administração
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

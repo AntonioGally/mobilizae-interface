@@ -4,7 +4,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import thunk from "redux-thunk";
+
+//Reducers
 import adminReducer from "./store/reducers/admin";
+import companyReducer from "./store/reducers/company";
+
 //Css
 import './styles/global.css';
 import 'antd/dist/antd.css';
@@ -17,7 +21,8 @@ import Routes from "./routes";
 const composeEnhancers = typeof window !== undefined && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  admin: adminReducer
+  admin: adminReducer,
+  company: companyReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

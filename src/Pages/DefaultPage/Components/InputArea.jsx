@@ -4,11 +4,18 @@ import React from "react";
 import { Row, Col } from "react-bootstrap"
 
 //Elements
-import SubdomainInput from "../Elements/SubdomainInput";
 import PrimaryButton from "../Elements/PrimaryButton";
+import DefaultInput from "../Elements/DefaultInput";
 
 
 const InputArea = (props) => {
+
+  function handleKeyPress(event) {
+    if (event.charCode === 13) {
+      props.handleButtonClick()
+    }
+  }
+
   return (
     <Row style={{ margin: "40px 0 62px" }}>
       <Col sm={12} md={6} style={{ padding: 0 }}>
@@ -16,13 +23,15 @@ const InputArea = (props) => {
           <h3 className="secondary-title">
             Entrar na mobilizae
           </h3>
-          <SubdomainInput value={props.subdomainInputValue} type={'text'}
-            onChange={(e) => props.setSubdomainInputValue(e.target.value)} />
-          <span className="input-subtitle">Esqueceu o subdomínio?</span>
+          <DefaultInput value={props.emailInput} type={'text'}
+            onChange={(e) => props.setEmailInput(e.target.value)}
+            onKeyPress={(e) => handleKeyPress(e)}
+            placeholder="Email..." />
+          <span className="input-subtitle">Esqueceu o email?</span>
         </div>
       </Col>
       <Col sm={12} md={6} className="default-page-subdomain-button" style={{ padding: 0 }}>
-        <PrimaryButton text="Próximo" onClick={props.handleButtonClick} />
+        <PrimaryButton type="submit" text="Próximo" onClick={props.handleButtonClick} />
       </Col>
     </Row>
   )

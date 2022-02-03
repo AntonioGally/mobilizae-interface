@@ -4,7 +4,8 @@ import "./Elements.style.css"
 
 const PrimaryButton = (props) => {
   return (
-    <button className="primary-button" onClick={props.onClick} style={props.style}>{props.text}</button>
+    <button type={props.type} className="primary-button"
+      onClick={props.onClick} style={props.style}>{props.text}</button>
   )
 };
 
