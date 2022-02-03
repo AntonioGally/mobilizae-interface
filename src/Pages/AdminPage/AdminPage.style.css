@@ -1,0 +1,54 @@
+.admin-page-wrapper {
+  max-width: 890px;
+  margin: 50px auto;
+}
+
+@media (max-width: 768px) {
+  .admin-page-wrapper {
+    padding: 24px;
+  }
+}
+
+.upload__image-wrapper {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ddd;
+  border-style: dashed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+}
+
+.my-image-div {
+  position: absolute;
+  left: 0;
+  width: 100vw !important;
+  padding: 0px !important;
+}
+
+.my-col {
+  margin: 450px auto 30px !important;
+}
+
+.admin-page-scroll {
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 700px;
+}
+
+.admin-page-scroll::-webkit-scrollbar {
+  width: 6px;
+  background-color: #ddd;
+}
+
+.admin-page-scroll::-webkit-scrollbar-thumb {
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 3px solid #1dbf73;
+  /* creates padding around scroll thumb */
+}

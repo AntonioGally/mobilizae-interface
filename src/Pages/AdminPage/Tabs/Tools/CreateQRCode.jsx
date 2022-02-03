@@ -41,13 +41,14 @@ const CreateQRCode = () => {
             <Button type="button" variant="primary" onClick={getImage} style={{ marginRigth: 10 }}>
               Salvar
             </Button>
-            {downloadState && <Spinner animation="border" size="lg" />}
+            <br />
+            {downloadState && <Spinner style={{ marginLeft: 15 }} animation="border" size="lg" />}
           </div>
 
 
         </Col>
         <Col md={6} sm={12}>
-          <div ref={ref} style={{ width: 'fit-content' }}>
+          <div ref={ref} style={{ width: 'fit-content', margin: 'auto' }}>
             <QRCode value={inputValue} />
           </div>
 

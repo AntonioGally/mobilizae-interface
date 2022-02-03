@@ -1,0 +1,40 @@
+.subdomain-input {
+  display: flex;
+  align-items: center;
+}
+
+.subdomain-input>input {
+  background: #FFFFFF;
+  border: 1px solid #1DBF72;
+  box-sizing: border-box;
+  border-radius: 3px 0 0 3px;
+  border-right: none;
+  outline: 0;
+  height: 44px;
+  padding-left: 14px;
+  width: 76%;
+}
+
+.subdomain-input>div {
+  width: 24%;
+  background: #F1F0EE;
+  border: 1px solid #1DBF72;
+  border-left: none;
+  box-sizing: border-box;
+  border-radius: 0px 3px 3px 0px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #404040;
+}
+
+.password-input>input {
+  width: 100%;
+  border-right: 1px solid #1DBF72;
+}

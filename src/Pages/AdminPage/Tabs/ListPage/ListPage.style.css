@@ -1,0 +1,201 @@
+.admin-list-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .admin-list-page-header {
+    flex-direction: column;
+  }
+  .admin-list-page-header-left-side {
+    width: 100%;
+  }
+  .admin-list-page-header-left-side > div {
+    justify-content: space-between;
+  }
+  .admin-list-page-header-left-side > div > button {
+    margin-right: 0 !important;
+  }
+  .admin-list-page-header-right-side {
+    margin-top: 12px;
+    width: 100%;
+  }
+  .admin-list-page-header-right-side > input {
+    width: 100%;
+    height: 40px !important;
+  }
+}
+.admin-list-page-header-left-side {
+  display: flex;
+  flex-direction: column;
+}
+.admin-list-page-header-left-side > span {
+  font-size: 20px;
+}
+.admin-list-page-header-left-side > div {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+.admin-list-page-header-left-side > div > button:nth-child(1) {
+  background-color: var(--primary-button-background);
+  padding: 7px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: white;
+  border: none;
+  outline: 0;
+}
+.admin-list-page-header-left-side > div > button:nth-child(2) {
+  background-color: white;
+  border: 1px solid var(--primary-button-background);
+  padding: 7px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: var(--secondary-title);
+  outline: 0;
+}
+.admin-list-page-header-right-side > input {
+  background-color: #ffffff;
+  border: 1px solid #d2d2d2;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #404040;
+  height: 30px;
+  min-width: 250px;
+  padding-left: 14px;
+  border-radius: 3px;
+}
+
+.admin-list-page-card-wrapper {
+  width: 100%;
+  filter: drop-shadow(2px 3px 4px rgba(97, 97, 97, 0.25));
+  border-radius: 3px;
+  background-color: var(--admin-card-color);
+  margin-bottom: 25px;
+  padding: 20px;
+  transform: scale(1);
+  transition: all 0.15s ease-in-out;
+}
+
+.admin-list-page-card-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.admin-list-page-card-wrapper .card-wrapper-left-side > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.admin-list-page-card-wrapper-loader {
+  min-height: 315px;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background-color: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #bbbbbb 18%, #eeeeee 33%);
+  background-size: 820px 315px;
+  height: 70px;
+  position: relative;
+}
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -820px 0
+  }
+  100% {
+    background-position: 820px 0
+  }
+}
+.card-wrapper-left-side > div > h5 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--primary-title);
+  margin-bottom: 1px;
+}
+
+.card-wrapper-left-side > div > span {
+  margin-left: 6px;
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--primary-title);
+}
+@media (max-width: 768px) {
+  .card-wrapper-left-side > div > span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.admin-list-page-card-wrapper .card-wrapper-right-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-list-page-card-wrapper .card-wrapper-right-side > img {
+  max-width: 100%;
+  max-height: 260px;
+}
+@media (max-width: 768px) {
+  .admin-list-page-card-wrapper .card-wrapper-right-side > img {
+    max-height: 150px;
+  }
+}
+.admin-list-page-modal .modal-content {
+  padding: 24px;
+}
+
+.admin-list-page-modal .modal-content .subdomain-input {
+  margin: 7px auto;
+}
+
+.admin-list-page-modal-btn-area {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.admin-list-page-modal-btn-area button {
+  background-color: var(--primary-button-background);
+  padding: 7px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: white;
+  font-weight: bold;
+  border: none;
+  outline: 0;
+  font-size: 13px;
+}
+
+.admin-list-page-card-header {
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-list-page-card-header i {
+  font-size: 18px;
+  cursor: pointer;
+  color: #666666;
+  margin-left: 15px;
+}
+.admin-list-page-card-header button {
+  outline: 0;
+  padding: 4px 12px;
+  margin: 0;
+  width: fit-content;
+}
