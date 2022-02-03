@@ -58,8 +58,7 @@ const Card = (props) => {
             <Row style={{ margin: 0 }}>
                 <Col sm={12} md={6} className='card-wrapper-left-side'>
                     <div>
-                        <h5>
-                            Link da página de captura:
+                        <h5>Link da página de captura:
                             <i style={{ marginLeft: 12, fontSize: 12 }} className="fas fa-external-link-alt"></i>
                         </h5>
                         <span>
@@ -93,7 +92,7 @@ const Card = (props) => {
                     <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" loading="lazy" />
                 </Col>
             </Row>
-            <ConfirmModal title={props.content.title} showModal={showModal} setShowModal={setShowModal} btnClick={deletePage} />
+            <ConfirmModal title={props.content.segmentname} showModal={showModal} setShowModal={setShowModal} btnClick={deletePage} />
         </div>
     )
 }
