@@ -1,8 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import ReactGA from 'react-ga';
-
 import server from "./http/config";
 
 import Banner from "../Components/Banner.jsx";
@@ -16,8 +14,6 @@ export default class PageFactory {
 
   constructor(props, id) {
     function createComponent() {
-      ReactGA.ga('set', 'new_page_path', `/${window.location.hash}`);
-      ReactGA.pageview(`/${window.location.hash}`);
       return (
         <div>
           <Banner imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
