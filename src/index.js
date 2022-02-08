@@ -11,7 +11,6 @@ import companyReducer from "./store/reducers/company";
 
 //Css
 import './styles/global.css';
-import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
