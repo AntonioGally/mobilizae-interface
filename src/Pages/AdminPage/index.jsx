@@ -9,6 +9,8 @@ import EditPage from "./Tabs/EditPage/EditPage.jsx";
 import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
 import ListUser from './Tabs/ListUser/ListUser.jsx';
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
+import ListAdmin from './Tabs/ListAdmin/ListAdmin.jsx';
+import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
 
 //Auth
 import request from "../../scripts/http/request";
@@ -36,6 +38,10 @@ const AdminPage = (props) => {
     switch (tabNavigation) {
       case 'listUser':
         return <ListUser />
+      case 'listAdmin':
+        return <ListAdmin changeTab={changeTab}/>
+      case 'createNewAdmin':
+        return <CreateAdmin changeTab={changeTab}/>
       case 'listPages':
         return <ListPage changeTab={changeTab} />
       case 'createNewPages':
@@ -103,7 +109,7 @@ const AdminPage = (props) => {
                 <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
                   Participantes
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setTabNavigation('listAdmins')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('listAdmin')}>
                   Administradores
                 </NavDropdown.Item>
               </NavDropdown>

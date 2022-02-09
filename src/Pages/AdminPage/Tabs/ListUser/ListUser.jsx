@@ -81,7 +81,7 @@ const ListUser = (props) => {
   return (
     <>
       <Header filter={filter} setFilter={setFilter} inputFilterValue={inputFilterValue}
-        setInputFilterValue={setInputFilterValue} />
+        setInputFilterValue={setInputFilterValue} usersArray={props.userList}/>
       {!props.userList ? (
         <CardLoader />
       ) : (

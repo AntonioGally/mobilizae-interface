@@ -4,22 +4,12 @@ import React, { memo, useState } from "react"
 import { Row, Col } from "react-bootstrap"
 import ConfirmModal from "./ConfirmModal";
 
+//Scripts
+import { formatDate } from "../../../../../scripts/utils"
+
 
 const Card = (props) => {
   const [showModal, setShowModal] = useState()
-  function formatDate(date) {
-    var formattedDate = new Date(date);
-    var day = formattedDate.getDate();
-    var month = formattedDate.getMonth() + 1
-    if (day < 10) {
-      day = `0${day}`
-    }
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours()}h${formattedDate.getMinutes()}`
-  }
 
   return (
     <div className='admin-list-page-card-wrapper' >

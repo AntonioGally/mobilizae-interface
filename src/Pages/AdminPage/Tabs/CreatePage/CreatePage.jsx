@@ -62,7 +62,6 @@ const CreatePage = (props) => {
             .finally(() => {
                 setLoading(false)
             })
-
     }
 
     function readURL(input, imageInputName) {

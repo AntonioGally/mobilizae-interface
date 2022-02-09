@@ -9,7 +9,7 @@ const Header = (props) => {
                 </span>
                 <div>
                     <button onClick={props.onBtnClick}>Criar mobilização</button>
-                    <button>Assistir ao vídio tutorial</button>
+                    <button>Assistir ao vídeo tutorial</button>
                 </div>
             </div>
             <div className='admin-list-page-header-right-side'>

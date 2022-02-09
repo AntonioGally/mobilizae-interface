@@ -25,5 +25,12 @@ export const setFilters = (data) => {
   return {
     type: adminTypes.SET_FILTERS,
     data: data,
-  }
-}
+  };
+};
+
+export const setAdminList = (data) => {
+  return {
+    type: adminTypes.SET_ADMIN_LIST,
+    data: data,
+  };
+};

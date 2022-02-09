@@ -4,7 +4,7 @@ const Header = (props) => {
   return (
     <>
       <span className="secondary-title" style={{ marginBottom: 12 }}>
-        Listar usuários
+        Usuários ({props.usersArray?.length})
       </span>
       <div className='admin-list-page-header'>
 

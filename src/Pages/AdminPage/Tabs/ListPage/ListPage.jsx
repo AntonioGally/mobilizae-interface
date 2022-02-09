@@ -17,7 +17,7 @@ import { setPageList, setFilters, setAdminInfo } from "../../../../store/actions
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const [modalData, setModalData] = useState({})
+    const [modalData, setModalData] = useState({});
 
     function handleCreateMobilizationButtonClick() {
         props.changeTab('createNewPages');

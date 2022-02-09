@@ -26,9 +26,9 @@ const Card = (props) => {
                 var newArr = props.pageList.slice();
                 newArr = newArr.filter((el) => el.id !== props.content.id)
                 props.setPageList(newArr);
-                toast.success("Página deletada!")
+                toast.success("Página deletada")
             })
-            .catch((err) => { toast.error("Unable to delete this page") })
+            .catch((err) => { toast.error("Houve um erro ao deletar a página") })
     }
 
     useEffect(() => {
