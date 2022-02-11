@@ -26,8 +26,12 @@ const Router = (props) => {
 
   function getCompanyInfo() {
     return new Promise((resolve, reject) => {
-      let subDomain = "antoniogally";
-      request.get(`/companyInfo/${subDomain}`)
+      var host = window.location.host
+      var subdomain = host.split('.')[0];
+      if (subdomain === undefined || subdomain === "www" || subdomain.indexOf("localhost") > -1) {
+        subdomain = "antoniogally"
+      }
+      request.get(`/companyInfo/${subdomain}`)
         .then((data) => { resolve(data.data); })
         .catch((err) => { reject(err); })
     })

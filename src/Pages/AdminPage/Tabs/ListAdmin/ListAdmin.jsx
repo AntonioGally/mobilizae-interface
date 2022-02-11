@@ -15,7 +15,7 @@ import "./ListAdmin.style.css"
 import authRequest from "../../../../scripts/http/authRequest"
 
 //Store
-import { setAdminList } from "../../../../store/actions/admin";
+import { setAdminList, setSelectedAdmin } from "../../../../store/actions/admin";
 
 
 const ListAdmin = (props) => {
@@ -23,7 +23,7 @@ const ListAdmin = (props) => {
 
     function getAdminList() {
         return new Promise((resolve, reject) => {
-            authRequest.get("/mobilizae/admin")
+            authRequest.get(`/mobilizae/admin/${props.companyInfo.id}`)
                 .then((data) => resolve(data.data))
                 .catch((err) => reject(err))
         })
@@ -40,11 +40,11 @@ const ListAdmin = (props) => {
     }
 
     function handleEditAdminClick(content) {
-        console.log(content)
+        props.changeTab('editAdmin');
+        props.setSelectedAdmin(content);
     }
 
     function handleOnCardClick(content) {
-
     }
 
     useEffect(() => {
@@ -91,13 +91,15 @@ const ListAdmin = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        adminList: state.admin.adminList
+        adminList: state.admin.adminList,
+        companyInfo: state.company.companyInfo,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setAdminList: (data) => dispatch(setAdminList(data))
+        setAdminList: (data) => dispatch(setAdminList(data)),
+        setSelectedAdmin: (data) => dispatch(setSelectedAdmin(data))
     }
 }
 

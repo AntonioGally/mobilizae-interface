@@ -11,16 +11,11 @@ import authRequest from "../../../../../scripts/http/authRequest";
 
 const Card = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [deleteLoading, setDeleteLoading] = useState(false);
 
-    function getParticipantsCount() {
-        return new Promise((resolve, reject) => {
-            authRequest.get(`/usersByPage/${props.content.id}/true`).then((data) => {
-                resolve(data.data);
-            })
-        })
-    }
 
     function deletePage() {
+        setDeleteLoading(true);
         authRequest.delete(`/pages/${props.content.id}`)
             .then(() => {
                 var newArr = props.pageList.slice();
@@ -29,17 +24,9 @@ const Card = (props) => {
                 toast.success("Página deletada")
             })
             .catch((err) => { toast.error("Houve um erro ao deletar a página") })
+            .finally(() => setDeleteLoading(false))
     }
 
-    useEffect(() => {
-        if (!props.pageList[props.index].participants) {
-            getParticipantsCount().then((data) => {
-                var arr = props.pageList.slice();
-                arr[props.index].participants = data.usercount;
-                props.setPageList(arr);
-            })
-        }
-    }, [])
     return (
         <div className='admin-list-page-card-wrapper'>
             <div className='admin-list-page-card-header'>
@@ -48,7 +35,7 @@ const Card = (props) => {
                     <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
                 </div>
                 <button className='admin-create-page-btn-submit'
-                    onClick={() => props.onCardClick({ ...props.content, participants: props.content?.participants })}>
+                    onClick={() => props.onCardClick({ ...props.content, participants: props.auxParticipants[props.index] })}>
                     Visualizar
                 </button>
             </div>
@@ -69,11 +56,11 @@ const Card = (props) => {
                     </div>
                     <div>
                         <h5>Participantes:</h5>
-                        <span>{props.content?.participants}</span>
+                        <span>{props.auxParticipants[props.index]}</span>
                     </div>
                     <div>
                         <h5>Grupos preenchidos:</h5>
-                        <span>{(Math.round(Number(props.content?.participants) / 250)).toString()}</span>
+                        <span>{(Math.round(Number(props.auxParticipants[props.index]) / 250)).toString()}</span>
                     </div>
                     <div>
                         <h5>Acessos na página:</h5>
@@ -92,7 +79,8 @@ const Card = (props) => {
                     <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" loading="lazy" />
                 </Col>
             </Row>
-            <ConfirmModal title={props.content.segmentname} showModal={showModal} setShowModal={setShowModal} btnClick={deletePage} />
+            <ConfirmModal title={props.content.segmentname} showModal={showModal} setShowModal={setShowModal}
+                btnClick={deletePage} deleteLoading={deleteLoading} />
         </div>
     )
 }

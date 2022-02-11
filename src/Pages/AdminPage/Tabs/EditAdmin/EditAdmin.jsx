@@ -8,13 +8,12 @@ import { toast } from "react-toastify"
 
 //Scripts
 import authRequest from "../../../../scripts/http/authRequest"
-import { generateDate } from "../../../../scripts/utils"
 
 //Store
-import { setAdminList } from "../../../../store/actions/admin"
+import { setAdminList } from "../../../../store/actions/admin";
 
 
-const CreateAdmin = (props) => {
+const EditAdmin = (props) => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [loading, setLoading] = useState();
 
@@ -22,16 +21,15 @@ const CreateAdmin = (props) => {
         setLoading(true);
         const newAdmin =
         {
-            createdAt: generateDate(),
+            createdAt: props.selectedAdmin.createdat,
             ...data,
             companyId: props.companyInfo.id
         }
-        authRequest.post("/mobilizae/admin", { ...newAdmin })
+        authRequest.put(`/mobilizae/admin/${props.selectedAdmin.id}`, { ...newAdmin })
             .then((data) => {
-                props.setAdminList([data.data, ...props.adminList]);
-                toast.success("Administrador criado com sucesso!")
+                toast.success("Administrador atualizado com sucesso!")
             })
-            .catch((err) => { toast.error("Houve um erro ao criar o admin"); console.log(err) })
+            .catch((err) => { toast.error("Houve um erro ao atualizar o admin"); console.log(err) })
             .finally(() => { setLoading(false) })
     }
 
@@ -41,9 +39,6 @@ const CreateAdmin = (props) => {
                 <i className="fas fa-arrow-left" style={{ marginRight: 5 }} />
                 Voltar
             </div>
-            <span className="secondary-title">
-                Criar Administrador
-            </span>
 
             <div className="admin-create-page-wrapper" style={{ marginTop: 20 }}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,12 +50,14 @@ const CreateAdmin = (props) => {
                                     maxLength: 50
                                 })}
                                 className={errors.name ? "input-error" : ""}
+                                defaultValue={props.selectedAdmin?.name}
                             />
                             <input placeholder="Email" type="text"
                                 {...register("email", {
                                     required: true,
                                 })}
                                 className={errors.email ? "input-error" : ""}
+                                defaultValue={props.selectedAdmin?.email}
                             />
                             <span className="input-subtitle">
                                 (Será usado para login na plataforma)
@@ -78,7 +75,7 @@ const CreateAdmin = (props) => {
                         </Col>
 
                         <button className="admin-create-page-btn-submit">
-                            {loading ? <Spinner animation="border" size="sm" /> : "Criar"}
+                            {loading ? <Spinner animation="border" size="sm" /> : "Atualizar"}
                         </button>
                     </Row>
                 </form>
@@ -90,14 +87,16 @@ const CreateAdmin = (props) => {
 const mapStateToProps = (state) => {
     return {
         companyInfo: state.company.companyInfo,
+        selectedAdmin: state.admin.selectedAdmin,
         adminList: state.admin.adminList
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setAdminList: (data) => dispatch(setAdminList(data))
+        setAdminList: (data) => dispatch(setAdminList(data)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateAdmin);
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditAdmin);

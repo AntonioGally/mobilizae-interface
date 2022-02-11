@@ -11,8 +11,9 @@ import authRequest from "../../../../../scripts/http/authRequest";
 
 const Card = (props) => {
     const [showModal, setShowModal] = useState(false);
-
+    const [deleteLoading, setDeleteLoading] = useState(false)
     function deleteAdmin() {
+        setDeleteLoading(true);
         authRequest.delete(`/mobilizae/admin/${props.content.id}`)
             .then(() => {
                 var newArr = props.adminList.slice();
@@ -22,6 +23,7 @@ const Card = (props) => {
                 toast.success("Administrador deletado");
             })
             .catch((err) => { toast.error("Houve um erro ao deletar o administrador") })
+            .finally(() => { setDeleteLoading(false) })
     }
     return (
         <div className='admin-list-page-card-wrapper'>
@@ -30,10 +32,6 @@ const Card = (props) => {
                     <i className="fas fa-pen" onClick={() => { props.handleEditAdminClick(props.content) }}></i>
                     <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
                 </div>
-                <button className='admin-create-page-btn-submit' disabled
-                    onClick={() => props.onCardClick(props.content)}>
-                    Visualizar
-                </button>
             </div>
             <div style={{ textAlign: 'center', marginBottom: 10 }}>
                 <span className='secondary-title'>{props.content.segmentname}</span>
@@ -58,7 +56,8 @@ const Card = (props) => {
                     </div> */}
                 </Col>
             </Row>
-            <ConfirmModal name={props.content.name} showModal={showModal} setShowModal={setShowModal} btnClick={deleteAdmin} />
+            <ConfirmModal name={props.content.name} showModal={showModal} setShowModal={setShowModal}
+                btnClick={deleteAdmin} deleteLoading={deleteLoading} />
         </div>
     )
 }

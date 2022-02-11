@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Modal, Button } from "react-bootstrap"
+import { Modal, Button, Spinner } from "react-bootstrap"
 
 const ConfirmModal = (props) => {
     return (
@@ -20,7 +20,7 @@ const ConfirmModal = (props) => {
                     Cancelar
                 </Button>
                 <Button variant="danger" onClick={props.btnClick}>
-                    Deletar
+                    {props.deleteLoading ? <Spinner animation="border" size="sm" /> : "Deletar"}
                 </Button>
             </Modal.Footer>
         </Modal>

@@ -34,3 +34,10 @@ export const setAdminList = (data) => {
     data: data,
   };
 };
+
+export const setSelectedAdmin = (data) => {
+  return {
+    type: adminTypes.SET_SELECTED_ADMIN,
+    data: data,
+  };
+};

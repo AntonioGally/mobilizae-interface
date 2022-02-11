@@ -6,6 +6,7 @@ const initialState = {
   adminInfo: null,
   filters: null,
   adminList: null,
+  selectedAdmin: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const adminReducer = (state = initialState, action) => {
       return { ...state, filters: action.data };
     case adminTypes.SET_ADMIN_LIST:
       return { ...state, adminList: action.data };
+    case adminTypes.SET_SELECTED_ADMIN:
+      return { ...state, selectedAdmin: action.data };
     default:
       return state;
   }

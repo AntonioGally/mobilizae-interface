@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux"
+import { useHistory } from "react-router-dom";
 
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+//page
 import ListPage from "./Tabs/ListPage/ListPage.jsx";
 import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
 import EditPage from "./Tabs/EditPage/EditPage.jsx";
-import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+//user
 import ListUser from './Tabs/ListUser/ListUser.jsx';
-import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
+//Graph
+import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+//admin
 import ListAdmin from './Tabs/ListAdmin/ListAdmin.jsx';
 import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
+import EditAdmin from './Tabs/EditAdmin/EditAdmin.jsx';
+//tools
+import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
 //Auth
 import request from "../../scripts/http/request";
@@ -29,7 +36,7 @@ import { setCompanyInfo } from "../../store/actions/company";
 
 const AdminPage = (props) => {
   const [tabNavigation, setTabNavigation] = useState('listPages');
-
+  const history = useHistory()
   function changeTab(tab) {
     setTabNavigation(tab)
   }
@@ -39,9 +46,11 @@ const AdminPage = (props) => {
       case 'listUser':
         return <ListUser />
       case 'listAdmin':
-        return <ListAdmin changeTab={changeTab}/>
+        return <ListAdmin changeTab={changeTab} />
+      case 'editAdmin':
+        return <EditAdmin changeTab={changeTab} />
       case 'createNewAdmin':
-        return <CreateAdmin changeTab={changeTab}/>
+        return <CreateAdmin changeTab={changeTab} />
       case 'listPages':
         return <ListPage changeTab={changeTab} />
       case 'createNewPages':
@@ -72,6 +81,11 @@ const AdminPage = (props) => {
         .then((data) => { resolve(data.data); })
         .catch((err) => { reject(err); })
     })
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("access_token");
+    history.push("/");
   }
 
   useEffect(() => {
@@ -126,6 +140,9 @@ const AdminPage = (props) => {
                   Gerar QR Code
                 </NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link onClick={handleLogout}>
+                Logout
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

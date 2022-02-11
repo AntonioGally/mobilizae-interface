@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Modal, Button } from "react-bootstrap"
+import { Modal, Button, Spinner } from "react-bootstrap"
 
 const ConfirmModal = (props) => {
   return (
@@ -11,7 +11,8 @@ const ConfirmModal = (props) => {
 
       <Modal.Body>
         <p>
-          Tem certeza que deseja deletar a página {props.title}?
+          Tem certeza que deseja deletar a página {props.title}? <br />
+          Se essa página for deletada, todos os participantes dela também serão apagados.
         </p>
       </Modal.Body>
 
@@ -20,7 +21,7 @@ const ConfirmModal = (props) => {
           Cancelar
         </Button>
         <Button variant="danger" onClick={props.btnClick}>
-          Deletar
+          {props.deleteLoading ? <Spinner animation="border" size="sm" /> : "Deletar"}
         </Button>
       </Modal.Footer>
     </Modal>

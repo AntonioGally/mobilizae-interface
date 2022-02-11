@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from "react-redux";
 
 //Components
@@ -13,11 +13,16 @@ import "./ListPage.style.css"
 //Store
 import { setPageList, setFilters, setAdminInfo } from "../../../../store/actions/admin";
 
+//Scripts
+import authRequest from "../../../../scripts/http/authRequest";
+
 
 const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState({});
+    const [alreadyCalled, setAlreadCalled] = useState(false);
+    const [auxParticipants, setAuxParticipants] = useState([])
 
     function handleCreateMobilizationButtonClick() {
         props.changeTab('createNewPages');
@@ -38,11 +43,29 @@ const ListPage = (props) => {
         setShowModal(true)
     }
 
+    function getParticipantsCount(content, index, count) {
+        setAlreadCalled(true)
+        if (content) {
+            if (index < props.pageList.length) {
+                authRequest.get(`/usersByPage/${content.id}/true`).then((data) => {
+                    setAuxParticipants((prev) => ([...prev, data.data.usercount]))
+                })
+            }
+            getParticipantsCount(props.pageList[index + 1], index + 1)
+        }
+    }
+
     function filterPageList() {
         return props.pageList.filter((el) => {
             return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
         })
     }
+
+    useEffect(() => {
+        if (props.pageList && alreadyCalled === false) {
+            getParticipantsCount(props.pageList[0], 0)
+        }
+    }, [props.pageList, alreadyCalled])
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
@@ -57,11 +80,11 @@ const ListPage = (props) => {
                 {props.pageList
                     ?
                     (<>
-                        {filterPageList()?.map((value, index) => (
-                            <Card content={value} key={index} pageList={props.pageList}
+                        {filterPageList()?.map((value, index) => {
+                            return (<Card content={value} key={index} pageList={props.pageList}
                                 setPageList={props.setPageList} handleEditPageClick={handleEditPageClick}
-                                onCardClick={onCardClick} index={index} />
-                        ))}
+                                onCardClick={onCardClick} index={index} auxParticipants={auxParticipants} />)
+                        })}
                     </>)
                     :
                     (<CardLoader />)
