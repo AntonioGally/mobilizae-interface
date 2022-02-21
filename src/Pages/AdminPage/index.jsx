@@ -115,9 +115,6 @@ const AdminPage = (props) => {
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
                   Criar Mobilização
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item onClick={() => setTabNavigation('editPage')} disabled>
-                  Editar Mobilização
-                </NavDropdown.Item> */}
               </NavDropdown>
               <NavDropdown title="Usuários" id="dropDownUser">
                 <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
@@ -128,7 +125,7 @@ const AdminPage = (props) => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Gráficos" id="dropDownGraph">
-                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
                   Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
@@ -140,10 +137,10 @@ const AdminPage = (props) => {
                   Gerar QR Code
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link onClick={handleLogout}>
-                Logout
-              </Nav.Link>
             </Nav>
+            <Nav.Link onClick={handleLogout}>
+              Sair
+            </Nav.Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>

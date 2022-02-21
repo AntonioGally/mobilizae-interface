@@ -81,5 +81,5 @@ export function formatDate(date) {
     month = `0${month}`;
   }
 
-  return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours()}h${formattedDate.getMinutes()}`;
+  return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours() + 3}h${formattedDate.getMinutes()}`;
 }

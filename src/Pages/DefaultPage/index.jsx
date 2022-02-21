@@ -64,8 +64,8 @@ const DefaultPage = (props) => {
         <InputArea emailInput={emailInput} setEmailInput={setEmailInput}
           handleButtonClick={handleNextButtonClick} />
 
-        <TextContainerOutline title='Começando agora na mobilizae?'
-          description='Comece sua avaliação grátis! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ' />
+        {/* <TextContainerOutline title='Começando agora na mobilizae?'
+          description='Comece sua avaliação grátis entrando em contato conosco: antonio.gally@gmail.com' /> */}
 
         <TextContainerFilled title='Evento virtual-novidades'
           description='Junte-se aos especialistas da mobilizae para se aprofundar em nossas últimas atualizações e descbrir seu caminho para o sucesso!' />
