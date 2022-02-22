@@ -9,7 +9,7 @@ import {
     BarChart, Bar,
     ResponsiveContainer,
     Legend, Tooltip, CartesianGrid,
-    XAxis, YAxis,
+    XAxis, YAxis, Cell, LabelList,
 } from 'recharts';
 
 //Components
@@ -23,6 +23,7 @@ import authRequest from "../../../../scripts/http/authRequest"
 import { setUserList } from "../../../../store/actions/admin";
 
 const UserGraph = (props) => {
+    const __pie_colors = ['#82ca9d', '#8884d8'];
     //CHART DATA FUNCTIONS
     function getUserPerDayData() {
         var orderedUserList = props.userList.slice().sort((a, b) => {
@@ -67,31 +68,24 @@ const UserGraph = (props) => {
         })
         return finalData
     }
+
     function getUserPercentData() {
         var copy = props.userList.slice();
         var acceptedSMS = copy.filter((el) => el.isnewsletteractive);
         var refusedSMS = copy.filter((el) => !el.isnewsletteractive);
-        const dataInNumbers = [
-            {
-                Grupo: "N Ativos",
-                valueNumber: acceptedSMS.length,
-            },
-            {
-                Grupo: "N Desativos",
-                valueNumber: refusedSMS.length,
-            }
-        ];
         const dataInPercent = [
             {
                 Grupo: "Ativos",
                 valuePercent: Number(((acceptedSMS.length * 100) / (copy.length)).toFixed(2)),
+                valueNumber: acceptedSMS.length,
             },
             {
                 Grupo: "Desativos",
                 valuePercent: Number(((refusedSMS.length * 100) / (copy.length)).toFixed(2)),
+                valueNumber: refusedSMS.length,
             }
         ]
-        return { dataInNumbers, dataInPercent };
+        return { dataInPercent };
     }
     function getUserPerSegmentData() {
         var labelsArr = [];
@@ -157,7 +151,8 @@ const UserGraph = (props) => {
                                     <Tooltip />
                                     <Legend />
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <Area type="monotone" dataKey="Quantidade" stroke="#82ca9d" fillOpacity={1} fill="url(#Quantidade)" />
+                                    <Area type="monotone" dataKey="Quantidade" stroke="#82ca9d" fillOpacity={1}
+                                        fill="url(#Quantidade)" />
                                 </AreaChart>
                             </ResponsiveContainer>
                         </Col>
@@ -166,9 +161,15 @@ const UserGraph = (props) => {
                             <ResponsiveContainer width={'100%'} height="90%">
                                 <PieChart>
                                     <Tooltip isAnimationActive={true}
-                                        formatter={(value, name, params) => params.dataKey === "valuePercent" ? [`%${value}`, name] : [value, name]} />
-                                    <Pie data={getUserPercentData().dataInNumbers} dataKey="valueNumber" nameKey="Grupo" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" />
-                                    <Pie data={getUserPercentData().dataInPercent} dataKey="valuePercent" nameKey="Grupo" innerRadius={60} outerRadius={80} fill="#82ca9d" label />
+                                        formatter={(value, name, params) => ([`${value}% - (${params.payload.payload.valueNumber})`, name])} />
+                                    <Pie data={getUserPercentData().dataInPercent} dataKey="valuePercent" nameKey="Grupo"
+                                        cx="50%" cy="50%" outerRadius={80} fill="#82ca9d"
+                                        label={(value) => (`${value.payload.payload.valuePercent}%`)}
+                                    >
+                                        {getUserPercentData().dataInPercent.map((entry, index) => {
+                                            return <Cell key={`cell-${index}`} fill={__pie_colors[index % __pie_colors.length]} />
+                                        })}
+                                    </Pie>
                                 </PieChart>
                             </ResponsiveContainer>
                         </Col>
