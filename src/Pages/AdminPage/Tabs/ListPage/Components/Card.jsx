@@ -35,7 +35,8 @@ const Card = (props) => {
                     <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
                 </div>
                 <button className='admin-create-page-btn-submit'
-                    onClick={() => props.onCardClick({ ...props.content, participants: props.auxParticipants[props.index] })}>
+                    onClick={() => props.onCardClick({ ...props.content, participants: props.content.userCount })}
+                >
                     Visualizar
                 </button>
             </div>
@@ -56,11 +57,11 @@ const Card = (props) => {
                     </div>
                     <div>
                         <h5>Participantes:</h5>
-                        <span>{props.auxParticipants[props.index]}</span>
+                        <span>{props.content.userCount}</span>
                     </div>
                     <div>
                         <h5>Grupos preenchidos:</h5>
-                        <span>{(Math.round(Number(props.auxParticipants[props.index]) / 250)).toString()}</span>
+                        <span>{(Math.round(Number(props.content.userCount) / 250)).toString()}</span>
                     </div>
                     <div>
                         <h5>Acessos na página:</h5>

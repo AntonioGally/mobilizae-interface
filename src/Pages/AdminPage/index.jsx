@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux"
 import { useHistory } from "react-router-dom";
 
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+
 //page
 import ListPage from "./Tabs/ListPage/ListPage.jsx";
 import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
@@ -41,7 +42,7 @@ const AdminPage = (props) => {
     setTabNavigation(tab)
   }
 
-  function getTabTemplate() {
+  const getTabTemplate = useMemo(() => {
     switch (tabNavigation) {
       case 'listUser':
         return <ListUser />
@@ -64,7 +65,7 @@ const AdminPage = (props) => {
       default:
         return 'Default option'
     }
-  }
+  }, [tabNavigation])
 
   function postToken() {
     return new Promise((resolve, reject) => {
@@ -97,7 +98,8 @@ const AdminPage = (props) => {
     if (props.companyInfo && !props.adminInfo) {
       postToken().then((data) => props.setAdminInfo(data))
     }
-  }, [props.companyInfo])
+  }, [props.companyInfo]);
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
@@ -146,7 +148,7 @@ const AdminPage = (props) => {
       </Navbar>
 
       <div className="admin-page-wrapper">
-        {getTabTemplate()}
+        {getTabTemplate}
       </div>
     </>
   )

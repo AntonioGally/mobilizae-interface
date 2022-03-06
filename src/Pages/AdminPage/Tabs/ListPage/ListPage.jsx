@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo } from 'react'
 import { connect } from "react-redux";
 
 //Components
+import { toast } from 'react-toastify';
 import Header from './Components/Header';
 import Card from './Components/Card';
 import CardLoader from "./Components/CardLoader"
@@ -11,7 +12,7 @@ import VisualizationModal from './Components/VisualizationModal'
 import "./ListPage.style.css"
 
 //Store
-import { setPageList, setFilters, setAdminInfo } from "../../../../store/actions/admin";
+import { setFilters, setAdminInfo, setPrivatePageList } from "../../../../store/actions/admin";
 
 //Scripts
 import authRequest from "../../../../scripts/http/authRequest";
@@ -21,8 +22,6 @@ const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState({});
-    const [alreadyCalled, setAlreadCalled] = useState(false);
-    const [auxParticipants, setAuxParticipants] = useState([])
 
     function handleCreateMobilizationButtonClick() {
         props.changeTab('createNewPages');
@@ -43,29 +42,22 @@ const ListPage = (props) => {
         setShowModal(true)
     }
 
-    function getParticipantsCount(content, index, count) {
-        setAlreadCalled(true)
-        if (content) {
-            if (index < props.pageList.length) {
-                authRequest.get(`/usersByPage/${content.id}/true`).then((data) => {
-                    setAuxParticipants((prev) => ([...prev, data.data.usercount]))
-                })
-            }
-            getParticipantsCount(props.pageList[index + 1], index + 1)
-        }
-    }
-
     function filterPageList() {
-        return props.pageList.filter((el) => {
+        return props.privatePageList.filter((el) => {
             return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
         })
     }
 
+    function getPageList() {
+        props.companyInfo && authRequest.get(`/pages/${props.companyInfo.id}`)
+            .then((data) => { props.setPrivatePageList(data.data) })
+            .catch((err) => { toast.error("Erro ao listar segmentos"); console.log(err) })
+    }
+
     useEffect(() => {
-        if (props.pageList && alreadyCalled === false) {
-            getParticipantsCount(props.pageList[0], 0)
-        }
-    }, [props.pageList, alreadyCalled])
+        if (!props.privatePageList) getPageList();
+    }, [props.companyInfo])
+
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
@@ -73,17 +65,17 @@ const ListPage = (props) => {
                 setInputFilterValue={setInputFilterValue} />
             <div style={{ marginBottom: 10 }}>
                 <span className='secondary-title'>
-                    Suas mobilizações ({props.pageList?.length})
+                    Suas mobilizações ({props.privatePageList?.length})
                 </span>
             </div>
             <div className='admin-page-scroll'>
-                {props.pageList
+                {props.privatePageList
                     ?
                     (<>
                         {filterPageList()?.map((value, index) => {
-                            return (<Card content={value} key={index} pageList={props.pageList}
-                                setPageList={props.setPageList} handleEditPageClick={handleEditPageClick}
-                                onCardClick={onCardClick} index={index} auxParticipants={auxParticipants} />)
+                            return (<Card content={value} key={index} pageList={props.privatePageList}
+                                setPageList={props.privatePageList} handleEditPageClick={handleEditPageClick}
+                                onCardClick={onCardClick} index={index} />)
                         })}
                     </>)
                     :
@@ -100,7 +92,7 @@ const ListPage = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        pageList: state.admin.pageList,
+        privatePageList: state.admin.privatePageList,
         filters: state.admin.filters,
         adminInfo: state.admin.adminInfo,
         companyInfo: state.company.companyInfo,
@@ -109,10 +101,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setPageList: (data) => dispatch(setPageList(data)),
+        setPrivatePageList: (data) => dispatch(setPrivatePageList(data)),
         setFilters: (data) => dispatch(setFilters(data)),
         setAdminInfo: (data) => dispatch(setAdminInfo(data))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(memo(ListPage));
