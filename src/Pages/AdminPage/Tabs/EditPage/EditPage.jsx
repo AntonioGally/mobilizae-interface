@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux"
 import { useForm } from "react-hook-form";
 
@@ -20,30 +20,47 @@ const EditPage = (props) => {
   const [loading, setLoading] = useState();
   const [imageSelected, setImageSelected] = useState({ banner: false, footer: false });
 
+  const [groupLinkArray, setGroupLinkArray] = useState([]);
+
   function onSubmit(data) {
     setLoading(true)
     const imageData = new FormData();
     var photos = []
+    var groupLinkArr = [];
+    var groupLinkString;
     photos.push(
       { image: data.bannerImage[0], oldBanner: props.filters?.selectedPage.info.bannerimage },
       { image: data.footerImage[0], oldFooter: props.filters?.selectedPage.info.footerimage }
     )
     delete data.bannerImage;
     delete data.footerImage;
+    var headers = Object.getOwnPropertyNames(data);
+    headers.forEach((value) => {
+      if (value.indexOf("groupLink-") > -1) {
+        groupLinkArr.push(data[value])
+        delete data[value]
+      }
+    });
+    groupLinkString = groupLinkArr.join(";")
     const newPage = {
       ...data,
+      groupLink: groupLinkString,
       companyId: props.filters?.selectedPage.info.companyid,
       adminId: props.filters?.selectedPage.info.adminid
     }
 
     authRequest.put(`/pages/${props.filters?.selectedPage.info.id}`, newPage)
       .then((data) => {
-        photos.length > 0 ?
+        if (photos[0].image !== undefined || photos[1].image !== undefined) {
           authRequest.put(`pages/image/${props.filters?.selectedPage.info.id}`, imageData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then((data) => {
               toast.success("Página atualizada com sucesso!");
               setLoading(false);
-            }) : toast.success("Página atualizada com sucesso!"); setLoading(false)
+            })
+        } else {
+          toast.success("Página atualizada com sucesso!");
+          setLoading(false)
+        }
       })
       .catch((err) => {
         const errorMap = {
@@ -84,6 +101,9 @@ const EditPage = (props) => {
       reader.readAsDataURL(input.files[0]);
     }
   }
+  useEffect(() => {
+    setGroupLinkArray(props.filters?.selectedPage.info.grouplink.split(";"))
+  }, [props.filters])
   return (
     <>
       <div className="back-button" onClick={() => props.changeTab("listPages")}>
@@ -118,14 +138,35 @@ const EditPage = (props) => {
               <span className="input-subtitle">
                 Texto descritivo opcional
               </span>
-              <input placeholder="Link de grupo de whatsapp" type="text"
+              <div style={{ marginTop: 12, maxHeight: 150, overflowY: "auto" }}>
+                {groupLinkArray.map((value, index) => {
+                  return (
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }}
+                      key={index}>
+                      <input style={{ marginTop: 0, width: "90%" }}
+                        placeholder="Link de grupo de whatsapp" type="text"
+                        defaultValue={value}
+                        {...register(`groupLink-${index}`, {
+                          required: true,
+                          minLength: 3,
+                        })}
+                        className={errors.groupLink ? "input-error" : ""}
+                      />
+                      <i className="add-group-link-button fas fa-plus"
+                        style={index === groupLinkArray.length - 1 ? { display: "flex" } : { display: "none" }}
+                        onClick={() => { setGroupLinkArray((prev) => ([...prev, ""])) }} />
+                    </div>
+                  )
+                })}
+              </div>
+              {/* <input placeholder="Link de grupo de whatsapp" type="text"
                 {...register("groupLink", {
                   required: true,
                   minLength: 3,
                 })}
                 defaultValue={props.filters?.selectedPage.info.grouplink}
                 className={errors.groupLink ? "input-error" : ""}
-              />
+              /> */}
 
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label style={{ margin: 0 }} className={errors.bannerImage ? "input-error" : ""}>

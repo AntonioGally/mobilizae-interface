@@ -122,7 +122,7 @@ const CreatePage = (props) => {
                             <div style={{ marginTop: 12, maxHeight: 150, overflowY: "auto" }}>
                                 {new Array(groupLinkArray).fill("-").map((value, index) => {
                                     return (
-                                        <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }}>
+                                        <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }} key={index}>
                                             <input style={{ marginTop: 0, width: "90%" }} placeholder="Link de grupo de whatsapp" type="text"
                                                 {...register(`groupLink-${index}`, {
                                                     required: true,
