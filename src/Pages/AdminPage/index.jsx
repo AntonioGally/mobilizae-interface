@@ -97,7 +97,7 @@ const AdminPage = (props) => {
     if (props.companyInfo && !props.adminInfo) {
       postToken().then((data) => props.setAdminInfo(data))
     }
-  }, [])
+  }, [props.companyInfo])
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">

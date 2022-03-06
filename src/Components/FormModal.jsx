@@ -1,5 +1,5 @@
 //Libs
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
 import { useForm } from "react-hook-form";
 
@@ -17,7 +17,7 @@ import { generateDate } from "../scripts/utils"
 import "../styles/formModal.css";
 
 
-const FormModal = ({ show, closeModal, modalImage, groupLink, pageInfo }) => {
+const FormModal = ({ show, closeModal, modalImage, groupLink, pageInfo, content }) => {
   const [loading, setLoading] = useState(false);
   const [radioValue, setRadioValue] = useState(false);
   const { register, formState: { errors }, handleSubmit } = useForm();
@@ -49,6 +49,16 @@ const FormModal = ({ show, closeModal, modalImage, groupLink, pageInfo }) => {
         setLoading(false);
       })
   }
+
+  useEffect(() => {
+    show && request.post("/log/button", {
+      segment: content.pathname,
+      companyId: content.companyid,
+      pageId: content.id,
+      viwedAt: new Date() - 3,
+      description: "CTA button that stays on auto generated pages"
+    })
+  }, [show])
 
   return ReactDOM.createPortal(
     <Modal show={show} onHide={closeModal} centered className="form-modal-container">

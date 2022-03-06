@@ -92,10 +92,8 @@ const UserGraph = (props) => {
         var dataArr = [];
         var copy = props.userList.slice();
 
-        copy.forEach((value) => {
-            if (!labelsArr.find((el) => el.includes(value.segmentname))) {
-                labelsArr.push(value.segmentname)
-            }
+        props.pageList.forEach((value) => {
+            labelsArr.push(value.pathname)
         })
         labelsArr.forEach((value) => {
             var auxArr = [];
@@ -200,7 +198,8 @@ const UserGraph = (props) => {
 const mapStateToProps = state => {
     return {
         companyInfo: state.company.companyInfo,
-        userList: state.admin.userList
+        userList: state.admin.userList,
+        pageList: state.admin.pageList
     }
 }
 

@@ -45,7 +45,7 @@ const Router = (props) => {
 
   function getPages(companyId) {
     return new Promise((resolve, reject) => {
-      request.get(`/pages/${companyId}`)
+      request.get(`/public/pages/${companyId}`)
         .then((data) => { resolve(data.data) })
         .catch((err) => { reject(err) })
     })
