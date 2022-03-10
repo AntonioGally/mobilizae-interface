@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { toast } from 'react-toastify';
 import Header from './Components/Header';
 import Card from './Components/Card';
+import Table from './Components/Table';
 import CardLoader from "./Components/CardLoader"
 import VisualizationModal from './Components/VisualizationModal'
 
@@ -22,6 +23,9 @@ const ListPage = (props) => {
     const [inputFilterValue, setInputFilterValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [modalData, setModalData] = useState({});
+    const [visualizationType, setVisualizationType] = useState('cards');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletePageLoading, setDeletePageLoading] = useState(false);
 
     function handleCreateMobilizationButtonClick() {
         props.changeTab('createNewPages');
@@ -42,45 +46,63 @@ const ListPage = (props) => {
         setShowModal(true)
     }
 
+    function handleDeletePage() {
+        setDeletePageLoading(true);
+        authRequest.delete(`/pages/${props.content.id}`)
+            .then(() => {
+                var newArr = props.pageList.slice();
+                newArr = newArr.filter((el) => el.id !== props.content.id)
+                props.setPageList(newArr);
+                toast.success("Página deletada")
+            })
+            .catch((err) => { toast.error("Houve um erro ao deletar a página") })
+            .finally(() => setDeletePageLoading(false))
+    }
+
     function filterPageList() {
         return props.privatePageList.filter((el) => {
             return el.segmentname.toLowerCase().indexOf(inputFilterValue.toLowerCase()) > -1
         })
     }
 
-    function getPageList() {
+    function getPrivatePageList() {
         props.companyInfo && authRequest.get(`/pages/${props.companyInfo.id}`)
             .then((data) => { props.setPrivatePageList(data.data) })
             .catch((err) => { toast.error("Erro ao listar segmentos"); console.log(err) })
     }
 
     useEffect(() => {
-        if (!props.privatePageList) getPageList();
+        if (!props.privatePageList) getPrivatePageList();
     }, [props.companyInfo])
 
     return (
         <>
             <Header onBtnClick={handleCreateMobilizationButtonClick}
                 companyInfo={props.companyInfo} inputFilterValue={inputFilterValue}
-                setInputFilterValue={setInputFilterValue} />
+                setInputFilterValue={setInputFilterValue} setVisualizationType={setVisualizationType}
+                visualizationType={visualizationType} />
             <div style={{ marginBottom: 10 }}>
                 <span className='secondary-title'>
                     Suas mobilizações ({props.privatePageList?.length})
                 </span>
             </div>
             <div className='admin-page-scroll'>
-                {props.privatePageList
-                    ?
-                    (<>
-                        {filterPageList()?.map((value, index) => {
-                            return (<Card content={value} key={index} pageList={props.privatePageList}
-                                setPageList={props.privatePageList} handleEditPageClick={handleEditPageClick}
-                                onCardClick={onCardClick} index={index} />)
-                        })}
-                    </>)
-                    :
-                    (<CardLoader />)
-                }
+                {props.privatePageList ? (
+                    <>
+                        {visualizationType === "table" ?
+                            (<Table dataSource={props.privatePageList} handleEditPageClick={handleEditPageClick}
+                                handleDeletePage={handleDeletePage} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />)
+                            : (
+                                <>
+                                    {filterPageList()?.map((value, index) => {
+                                        return (<Card content={value} key={index} handleEditPageClick={handleEditPageClick}
+                                            onCardClick={onCardClick} handleDeletePage={handleDeletePage} deletePageLoading={deletePageLoading}
+                                            showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} />)
+                                    })}
+                                </>
+                            )}
+                    </>
+                ) : (<CardLoader />)}
             </div>
 
 

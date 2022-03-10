@@ -11,7 +11,7 @@ import authRequest from "../../../../scripts/http/authRequest"
 import { generateDate } from "../../../../scripts/utils"
 
 //Store
-import { setPageList } from "../../../../store/actions/admin"
+import { setPrivatePageList } from "../../../../store/actions/admin"
 
 //Css
 import "./CreatePage.style.css";
@@ -217,7 +217,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setPageList: (data) => dispatch(setPageList(data))
+        setPrivatePageList: (data) => dispatch(setPrivatePageList(data))
     }
 }
 
