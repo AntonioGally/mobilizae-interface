@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { connect } from "react-redux"
+import { useHistory } from "react-router-dom";
 
 //Components
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+
+//page
 import ListPage from "./Tabs/ListPage/ListPage.jsx";
 import CreatePage from './Tabs/CreatePage/CreatePage.jsx';
 import EditPage from "./Tabs/EditPage/EditPage.jsx";
-import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+//user
 import ListUser from './Tabs/ListUser/ListUser.jsx';
+//Graph
+import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+//admin
+import ListAdmin from './Tabs/ListAdmin/ListAdmin.jsx';
+import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
+import EditAdmin from './Tabs/EditAdmin/EditAdmin.jsx';
+//tools
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
 
 //Auth
@@ -27,15 +37,21 @@ import { setCompanyInfo } from "../../store/actions/company";
 
 const AdminPage = (props) => {
   const [tabNavigation, setTabNavigation] = useState('listPages');
-
+  const history = useHistory()
   function changeTab(tab) {
     setTabNavigation(tab)
   }
 
-  function getTabTemplate() {
+  const getTabTemplate = useMemo(() => {
     switch (tabNavigation) {
       case 'listUser':
         return <ListUser />
+      case 'listAdmin':
+        return <ListAdmin changeTab={changeTab} />
+      case 'editAdmin':
+        return <EditAdmin changeTab={changeTab} />
+      case 'createNewAdmin':
+        return <CreateAdmin changeTab={changeTab} />
       case 'listPages':
         return <ListPage changeTab={changeTab} />
       case 'createNewPages':
@@ -49,7 +65,7 @@ const AdminPage = (props) => {
       default:
         return 'Default option'
     }
-  }
+  }, [tabNavigation])
 
   function postToken() {
     return new Promise((resolve, reject) => {
@@ -68,6 +84,11 @@ const AdminPage = (props) => {
     })
   }
 
+  function handleLogout() {
+    localStorage.removeItem("access_token");
+    history.push("/");
+  }
+
   useEffect(() => {
     if (!props.companyInfo) {
       getCompanyInfo().then((data) => {
@@ -77,7 +98,8 @@ const AdminPage = (props) => {
     if (props.companyInfo && !props.adminInfo) {
       postToken().then((data) => props.setAdminInfo(data))
     }
-  }, [])
+  }, [props.companyInfo]);
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="default-page-navbar">
@@ -95,20 +117,17 @@ const AdminPage = (props) => {
                 <NavDropdown.Item onClick={() => setTabNavigation('createNewPages')}>
                   Criar Mobilização
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item onClick={() => setTabNavigation('editPage')} disabled>
-                  Editar Mobilização
-                </NavDropdown.Item> */}
               </NavDropdown>
               <NavDropdown title="Usuários" id="dropDownUser">
                 <NavDropdown.Item onClick={() => setTabNavigation('listUser')}>
                   Participantes
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setTabNavigation('listAdmins')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('listAdmin')}>
                   Administradores
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Gráficos" id="dropDownGraph">
-                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
                   Participantes
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
@@ -121,12 +140,15 @@ const AdminPage = (props) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+            <Nav.Link onClick={handleLogout}>
+              Sair
+            </Nav.Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
       <div className="admin-page-wrapper">
-        {getTabTemplate()}
+        {getTabTemplate}
       </div>
     </>
   )

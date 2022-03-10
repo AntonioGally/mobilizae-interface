@@ -22,17 +22,28 @@ const CreatePage = (props) => {
     const [loading, setLoading] = useState();
     const [imageSelected, setImageSelected] = useState({ banner: false, footer: false });
 
+    const [groupLinkArray, setGroupLinkArray] = useState(1)
+
     const bannerImageRef = useRef(null)
     const footerImageRef = useRef(null)
 
     function onSubmit(data) {
         setLoading(true);
         const formData = new FormData();
-        var photos = []
+        var photos = [];
+        var groupLinkArr = [];
+        var groupLinkString;
         photos.push(data.bannerImage[0], data.footerImage[0])
         delete data.bannerImage;
         delete data.footerImage;
         var headers = Object.getOwnPropertyNames(data);
+        headers.forEach((value) => {
+            if (value.indexOf("groupLink-") > -1) {
+                groupLinkArr.push(data[value])
+                delete data[value]
+            }
+        });
+        groupLinkString = groupLinkArr.join(";")
         headers.forEach((value) => {
             formData.append(value, data[value])
         });
@@ -42,6 +53,7 @@ const CreatePage = (props) => {
         formData.append("companyId", props.companyInfo.id);
         formData.append("adminId", props.adminInfo.id);
         formData.append("createdAt", generateDate())
+        formData.append("groupLink", groupLinkString)
 
         authRequest.post(`/pages`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then((data) => {
@@ -62,7 +74,6 @@ const CreatePage = (props) => {
             .finally(() => {
                 setLoading(false)
             })
-
     }
 
     function readURL(input, imageInputName) {
@@ -108,13 +119,25 @@ const CreatePage = (props) => {
                                 })}
                                 className={errors.containerText ? "input-error" : ""}
                             />
-                            <input placeholder="Link de grupo de whatsapp" type="text"
-                                {...register("groupLink", {
-                                    required: true,
-                                    minLength: 3,
+                            <div style={{ marginTop: 12, maxHeight: 150, overflowY: "auto" }}>
+                                {new Array(groupLinkArray).fill("-").map((value, index) => {
+                                    return (
+                                        <div style={{ display: "flex", alignItems: "center", marginBottom: 12 }} key={index}>
+                                            <input style={{ marginTop: 0, width: "90%" }} placeholder="Link de grupo de whatsapp" type="text"
+                                                {...register(`groupLink-${index}`, {
+                                                    required: true,
+                                                    minLength: 3,
+                                                })}
+                                                className={errors.groupLink ? "input-error" : ""}
+                                            />
+                                            <i className="add-group-link-button fas fa-plus"
+                                                onClick={() => { setGroupLinkArray((prev) => prev + 1) }} />
+                                        </div>
+                                    )
                                 })}
-                                className={errors.groupLink ? "input-error" : ""}
-                            />
+                            </div>
+
+
 
                             <Form.Group controlId="formFile" className="mb-3">
                                 <Form.Label style={{ margin: 0 }} className={errors.bannerImage ? "input-error" : ""}>
