@@ -147,7 +147,7 @@ const Table = (props) => {
             var isDataFiltered = false;
             Object.getOwnPropertyNames(el).forEach((header) => {
                 if (el[header] && typeof el[header] === 'string' && header !== "grouplink") {
-                    if (el[header].indexOf(searchInputValue) > -1) isDataFiltered = true;
+                    if (el[header].toLowerCase().trim().indexOf(searchInputValue.toLocaleLowerCase().trim()) > -1) isDataFiltered = true;
                 }
             })
             return isDataFiltered

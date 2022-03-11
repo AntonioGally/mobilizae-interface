@@ -35,6 +35,9 @@ const VisualizationModal = (props) => {
     function generateQrCode() {
         setDownloadQrCode(true)
         takeScreenShot(qrCodeImage.current);
+        setTimeout(() => {
+            takeScreenShot(qrCodeImage.current);
+        }, 300)
     }
 
     useEffect(() => {
@@ -96,7 +99,8 @@ const VisualizationModal = (props) => {
     }
 
     function groupLinkBtnClick() {
-        window.location.href = props.modalData.grouplink
+        var realLink = props.modalData.grouplink?.split(";")[Math.round(props.modalData.userCount / 250)]
+        return realLink;
     }
 
     return (
@@ -146,14 +150,13 @@ const VisualizationModal = (props) => {
                     <div style={{ marginBottom: 15 }}>
                         <h5>Criado por:</h5>
                         <span>{props.modalData["admin_name"]}</span>
-                        <div className='admin-list-page-modal-btn-area'>
-                            <button>Visualizar</button>
-                        </div>
                     </div>
                     <div className='admin-list-page-modal-btn-area'>
-                        <button style={{ width: "85%", margin: "20px auto 0" }} onClick={groupLinkBtnClick}>
-                            Interagir no grupo
-                        </button>
+                        <a href={groupLinkBtnClick()} target="_blank" rel="noreferrer" style={{ width: "85%", margin: "20px auto 0" }}>
+                            <button style={{ width: "100%" }}>
+                                Interagir no grupo
+                            </button>
+                        </a>
                     </div>
                 </div>
 

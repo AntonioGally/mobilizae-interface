@@ -1,12 +1,12 @@
 //Libs
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //Components
 import { Table as TableAntd, Input } from "antd"
 import { FilterOutlined } from '@ant-design/icons';
 
 //Scripts
-import { formatDate, sort } from "../../../../../scripts/utils";
+import { formatDate, sort, downloadToCsv, copyToClipBoard } from "../../../../../scripts/utils";
 
 const Table = (props) => {
     const [filteredValue, setFilteredValue] = useState({
@@ -23,6 +23,8 @@ const Table = (props) => {
         company_subdomain: "",
         segmentname: ""
     });
+    const [searchInputValue, setSearchInputValue] = useState("");
+    const [copy, setCopy] = useState(false);
 
     const getColumnFilterProps = (dataIndex) => {
         return {
@@ -184,9 +186,55 @@ const Table = (props) => {
             },
         ]
     }
+
+
+    function filteredData() {
+        return props.dataSource.filter((el) => {
+            console.log("oi")
+            var isDataFiltered = false;
+            Object.getOwnPropertyNames(el).forEach((header) => {
+                if (el[header] && typeof el[header] === 'string' && header !== "grouplink") {
+                    if (el[header].toLowerCase().trim().indexOf(searchInputValue.toLocaleLowerCase().trim()) > -1) isDataFiltered = true;
+                }
+            })
+            return isDataFiltered
+        });
+    }
+
+
+    function handleButtonClick(shouldDownload) {
+        var arrHeaders = Object.getOwnPropertyNames(props.dataSource[0]);
+        var objHeaders = {}
+        arrHeaders.forEach((value) => {
+            objHeaders[value] = value;
+        })
+        var body = props.dataSource;
+        shouldDownload && downloadToCsv(objHeaders, body, "tabela_paginas");
+        !shouldDownload && copyToClipBoard(objHeaders, body, ";");
+    }
+
+    useEffect(() => {
+        if (copy) {
+            setTimeout(() => {
+                setCopy(false);
+            }, 2000)
+        }
+    }, [copy])
     return (
-        <TableAntd dataSource={props.dataSource} columns={getTableColumns()} scroll={{ x: 2500, y: "auto" }}
-            className="list-page-table" />
+        <>
+            <div className="table-header">
+                <input value={searchInputValue} onChange={(e) => setSearchInputValue(e.target.value)}
+                    className="table-input" placeholder="Pesquisar na tabela" />
+                <div>
+                    <button onClick={() => { handleButtonClick(false); setCopy(true) }}>
+                        {copy ? "Copiado!" : "Copiar"}
+                    </button>
+                    <button onClick={() => handleButtonClick(true)}>Baixar CSV</button>
+                </div>
+            </div>
+            <TableAntd dataSource={filteredData()} columns={getTableColumns()} scroll={{ x: 2500, y: "auto" }}
+                className="list-page-table" />
+        </>
     )
 }
 
