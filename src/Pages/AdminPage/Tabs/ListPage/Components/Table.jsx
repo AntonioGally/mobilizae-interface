@@ -183,15 +183,9 @@ const Table = (props) => {
             },
         ]
     }
-    function getTableData() {
-        var contentArray = props.dataSource.slice();
-        return contentArray;
-    }
     return (
-        <>
-            <TableAntd dataSource={getTableData()} columns={getTableColumns()} scroll={{ x: 2500, y: "auto" }}
-                className="list-page-table" />
-        </>
+        <TableAntd dataSource={props.dataSource} columns={getTableColumns()} scroll={{ x: 2500, y: "auto" }}
+            className="list-page-table" />
     )
 }
 
