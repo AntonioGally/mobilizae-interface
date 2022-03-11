@@ -4,22 +4,12 @@ import React, { memo, useState } from "react"
 import { Row, Col } from "react-bootstrap"
 import ConfirmModal from "./ConfirmModal";
 
+//Scripts
+import { formatDate } from "../../../../../scripts/utils"
+
 
 const Card = (props) => {
   const [showModal, setShowModal] = useState()
-  function formatDate(date) {
-    var formattedDate = new Date(date);
-    var day = formattedDate.getDate();
-    var month = formattedDate.getMonth() + 1
-    if (day < 10) {
-      day = `0${day}`
-    }
-    if (month < 10) {
-      month = `0${month}`
-    }
-
-    return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours()}h${formattedDate.getMinutes()}`
-  }
 
   return (
     <div className='admin-list-page-card-wrapper' >
@@ -56,8 +46,15 @@ const Card = (props) => {
             </span>
           </div>
           <div>
-            <h5>Link do grupo:</h5>
-            <span>{props.content.grouplink}</span>
+            <h5>
+              Link do grupo:
+              <i style={{ marginLeft: 12, fontSize: 12 }} className="fas fa-external-link-alt"></i>
+            </h5>
+            <a onClick={(e) => e.stopPropagation()}
+              href={`${props.content.grouplink}`} target="_blank" rel="noreferrer"
+            >
+              {props.content.grouplink}
+            </a>
           </div>
         </Col>
         <Col sm={12} md={6} className='card-wrapper-left-side'>
@@ -69,7 +66,11 @@ const Card = (props) => {
           </div>
           <div>
             <h5>Permissão SMS:</h5>
-            <span>{props.content.isnewsletteractive ? "Ativo" : "Desabilitado"}</span>
+            <span>{props.content.isnewsletteractive ? "Ativo" : "Desativo"}</span>
+          </div>
+          <div>
+            <h5>Nome do segmento:</h5>
+            <span>{props.content.segmentname}</span>
           </div>
         </Col>
       </Row>

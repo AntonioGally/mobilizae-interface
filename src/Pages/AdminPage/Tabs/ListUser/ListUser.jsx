@@ -16,10 +16,12 @@ import authRequest from "../../../../scripts/http/authRequest";
 //Css
 import "./ListUser.style.css"
 import PageSelector from "./Components/PageSelector";
+import Table from "./Components/Table";
 
 const ListUser = (props) => {
   const [inputFilterValue, setInputFilterValue] = useState('');
   const [filter, setFilter] = useState("all")
+  const [visualizationType, setVisualizationType] = useState('cards')
 
   useEffect(() => {
     if (props.filters?.selectedPage) {
@@ -31,9 +33,10 @@ const ListUser = (props) => {
     switch (filter) {
       case "all":
         if (props.userList?.length > 0) {
-          return filterUserList(props.userList).map((value, index) => (
-            <Card key={index} content={value} handleDeleteUser={handleDeleteUser} />
-          ))
+          return visualizationType === "table" ? (<Table dataSource={props.userList} />) :
+            filterUserList(props.userList).map((value, index) => (
+              <Card key={index} content={value} handleDeleteUser={handleDeleteUser} />
+            ))
         } else {
           return <div style={{ textAlign: 'center', fontSize: 20 }}>Nenhum usuário encontrado</div>
         }
@@ -81,7 +84,8 @@ const ListUser = (props) => {
   return (
     <>
       <Header filter={filter} setFilter={setFilter} inputFilterValue={inputFilterValue}
-        setInputFilterValue={setInputFilterValue} />
+        setInputFilterValue={setInputFilterValue} usersArray={props.userList}
+        visualizationType={visualizationType} setVisualizationType={setVisualizationType} />
       {!props.userList ? (
         <CardLoader />
       ) : (

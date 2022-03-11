@@ -1,13 +1,13 @@
-import React from "react"
+import React, { forwardRef } from "react"
 
 import "./Elements.style.css"
 
-const DefaultInput = (props) => {
+const DefaultInput = forwardRef((props, ref) => {
   return (
     <div className="password-input subdomain-input" style={{ marginBottom: 0 }}>
-      <input {...props} />
+      <input {...props} ref={ref} />
     </div>
   )
-}
+})
 
 export default DefaultInput

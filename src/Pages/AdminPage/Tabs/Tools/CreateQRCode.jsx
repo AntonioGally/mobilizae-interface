@@ -33,7 +33,7 @@ const CreateQRCode = () => {
       <Row>
         <Col md={6} sm={12}>
           <Form.Group className="mb-3">
-            <Form.Label>Valor do QR Code</Form.Label>
+            <Form.Label>Texto do QR Code</Form.Label>
             <Form.Control type="text" placeholder="Enter QR Code text" value={inputValue}
               onChange={(e) => { setInputValue(e.target.value) }} />
           </Form.Group>

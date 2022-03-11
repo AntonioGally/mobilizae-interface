@@ -4,7 +4,7 @@ const Header = (props) => {
   return (
     <>
       <span className="secondary-title" style={{ marginBottom: 12 }}>
-        Listar usuários
+        Usuários ({props.usersArray?.length})
       </span>
       <div className='admin-list-page-header'>
 
@@ -17,6 +17,16 @@ const Header = (props) => {
             <button onClick={() => props.setFilter("page")}
               className={props.filter === "page" ? "admin-list-user-button-active admin-list-user-button" : "admin-list-user-button"}>
               Participantes por mobilização
+            </button>
+          </div>
+          <div>
+            <button onClick={() => props.setVisualizationType("cards")}
+              className={props.visualizationType === "cards" ? "active" : ""} >
+              Cards
+            </button>
+            <button onClick={() => props.setVisualizationType("table")}
+              className={props.visualizationType === "table" ? "active" : ""}>
+              Tabela
             </button>
           </div>
         </div>

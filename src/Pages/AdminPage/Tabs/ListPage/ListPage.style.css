@@ -38,16 +38,19 @@
   display: flex;
   align-items: center;
 }
-.admin-list-page-header-left-side > div > button:nth-child(1) {
-  background-color: var(--primary-button-background);
+.admin-list-page-header-left-side > div > button {
   padding: 7px;
   border-radius: 3px;
   margin-right: 10px;
-  color: white;
+  
   border: none;
   outline: 0;
 }
-.admin-list-page-header-left-side > div > button:nth-child(2) {
+.admin-list-page-header-left-side > div > button.active {
+  background-color: var(--primary-button-background);
+  color: white;
+}
+.admin-list-page-header-left-side > div > button {
   background-color: white;
   border: 1px solid var(--primary-button-background);
   padding: 7px;
@@ -109,10 +112,10 @@
 
 @keyframes placeHolderShimmer {
   0% {
-    background-position: -820px 0
+    background-position: -820px 0;
   }
   100% {
-    background-position: 820px 0
+    background-position: 820px 0;
   }
 }
 .card-wrapper-left-side > div > h5 {
@@ -183,7 +186,7 @@
 }
 
 .admin-list-page-card-header {
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: space-between;
 }
@@ -198,4 +201,12 @@
   padding: 4px 12px;
   margin: 0;
   width: fit-content;
+}
+.list-page-table .ant-table-thead > tr > th {
+  padding: 10px;
+  font-size: 15px;
+}
+
+.list-page-table .ant-table-tbody > tr > td {
+  padding: 6px;
 }

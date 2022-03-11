@@ -7,6 +7,13 @@ export const setPageList = (data) => {
   };
 };
 
+export const setPrivatePageList = (data) => {
+  return {
+    type: adminTypes.SET_PRIVATE_PAGE_LIST,
+    data: data,
+  };
+};
+
 export const setUserList = (data) => {
   return {
     type: adminTypes.SET_USER_LIST,
@@ -25,5 +32,19 @@ export const setFilters = (data) => {
   return {
     type: adminTypes.SET_FILTERS,
     data: data,
-  }
-}
+  };
+};
+
+export const setAdminList = (data) => {
+  return {
+    type: adminTypes.SET_ADMIN_LIST,
+    data: data,
+  };
+};
+
+export const setSelectedAdmin = (data) => {
+  return {
+    type: adminTypes.SET_SELECTED_ADMIN,
+    data: data,
+  };
+};
