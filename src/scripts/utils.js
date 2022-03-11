@@ -70,10 +70,13 @@ export function generateDate() {
   return `${date.getFullYear()}-${month}-${day} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 }
 
-export function formatDate(date) {
+export function formatDate(date, shouldAddThreeHours = true) {
   var formattedDate = new Date(date);
   var day = formattedDate.getDate();
   var month = formattedDate.getMonth() + 1;
+  var hours = shouldAddThreeHours
+    ? formattedDate.getHours() + 3
+    : formattedDate.getHours();
   if (day < 10) {
     day = `0${day}`;
   }
@@ -81,5 +84,7 @@ export function formatDate(date) {
     month = `0${month}`;
   }
 
-  return `${day}/${month}/${formattedDate.getFullYear()} ${formattedDate.getHours() + 3}h${formattedDate.getMinutes()}`;
+  return `${day}/${month}/${formattedDate.getFullYear()} 
+  ${hours}h
+  ${formattedDate.getMinutes()}`;
 }

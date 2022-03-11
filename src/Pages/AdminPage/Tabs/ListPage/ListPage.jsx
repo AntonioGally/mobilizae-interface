@@ -46,17 +46,17 @@ const ListPage = (props) => {
         setShowModal(true)
     }
 
-    function handleDeletePage() {
+    function handleDeletePage(id) {
         setDeletePageLoading(true);
-        authRequest.delete(`/pages/${props.content.id}`)
+        authRequest.delete(`/pages/${id}`)
             .then(() => {
-                var newArr = props.pageList.slice();
-                newArr = newArr.filter((el) => el.id !== props.content.id)
-                props.setPageList(newArr);
+                var newArr = props.privatePageList.slice();
+                newArr = newArr.filter((el) => el.id !== id)
+                props.setPrivatePageList(newArr);
                 toast.success("Página deletada")
             })
             .catch((err) => { toast.error("Houve um erro ao deletar a página") })
-            .finally(() => setDeletePageLoading(false))
+            .finally(() => { setDeletePageLoading(false); setShowDeleteModal(false) })
     }
 
     function filterPageList() {

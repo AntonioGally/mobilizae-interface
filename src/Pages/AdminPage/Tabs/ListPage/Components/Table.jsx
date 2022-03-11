@@ -118,7 +118,7 @@ const Table = (props) => {
                 title: "Data de criação",
                 key: "createdat",
                 dataIndex: "createdat",
-                render: (text) => (formatDate(text)),
+                render: (text) => (formatDate(text, false)),
                 sorter: (a, b) => new Date(Number(a.createdat) * 1000) - new Date(Number(b.createdat) * 1000),
                 ...getColumnFilterProps("createdat"),
             },

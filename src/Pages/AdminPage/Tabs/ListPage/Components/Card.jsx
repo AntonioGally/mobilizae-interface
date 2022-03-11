@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 
 //Components
 import { Row, Col } from "react-bootstrap"
@@ -52,7 +52,7 @@ const Card = (props) => {
                     </div>
                     <div>
                         <h5>Data de cadastro:</h5>
-                        <span>{formatDate(props.content.createdat)}</span>
+                        <span>{formatDate(props.content.createdat, false)}</span>
                     </div>
                 </Col>
                 <Col sm={12} md={6} className='card-wrapper-right-side'>
@@ -60,7 +60,7 @@ const Card = (props) => {
                 </Col>
             </Row>
             <ConfirmModal title={props.content.segmentname} showModal={props.showDeleteModal} setShowModal={props.setShowDeleteModal}
-                btnClick={props.handleDeletePage} deleteLoading={props.deletePageLoading} />
+                btnClick={() => { props.handleDeletePage(props.content.id) }} deleteLoading={props.deletePageLoading} />
         </div>
     )
 }

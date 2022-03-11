@@ -58,7 +58,7 @@ const CreatePage = (props) => {
         authRequest.post(`/pages`, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
             .then((data) => {
                 toast.success("Página criada com sucesso!");
-                props.setPageList([data.data, ...props.pageList])
+                props.setPrivatePageList([data.data, ...props.pageList])
             })
             .catch((err) => {
                 const errorMap = {
@@ -67,7 +67,7 @@ const CreatePage = (props) => {
                     403: toast.warning(`Essa página já existe (${props.filters?.selectedPage.info.pathname})`),
                     400: toast.error("Houve um problema ao enviar as imagens para os nossos servidores")
                 }
-                if (err.response.status) {
+                if (err?.response?.status) {
                     return errorMap[err.response.status]
                 }
             })
