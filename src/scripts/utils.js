@@ -62,6 +62,43 @@ export const downloadToCsv = (headers, body, fileTitle = "arq") => {
   }
 };
 
+function regexReplacer(str) {
+  function replacer(match, p1, p2, p3) {
+    return p1 + "," + p3;
+  }
+  return str.replace(/(\d+)(\.)(\d+)/gm, replacer);
+}
+
+export function copyToClipBoard(headers, items, decSeparator) {
+  var newArr = items.slice();
+  if (headers) {
+    newArr.unshift(headers);
+  }
+  // Convert Object to JSON
+  var objArray = JSON.stringify(newArr);
+  var array = typeof objArray != "object" ? JSON.parse(objArray) : objArray;
+  var str = "";
+  for (var i = 0; i < array.length; i++) {
+    var line = "";
+    for (var index in array[i]) {
+      if (line != "") line += "\t";
+      line += `${array[i][index]}`;
+    }
+    str += line + "\r\n";
+  }
+  if (decSeparator === ",") {
+    str = regexReplacer(str);
+  }
+  navigator.clipboard.writeText(str).then(
+    function () {
+      console.log("Async: Copying to clipboard was successful!");
+    },
+    function (err) {
+      console.error("Async: Could not copy text: ", err);
+    }
+  );
+}
+
 export function generateDate() {
   var date = new Date();
   var day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();

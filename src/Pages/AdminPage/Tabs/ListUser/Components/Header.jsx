@@ -5,6 +5,7 @@ const Header = (props) => {
     <>
       <span className="secondary-title" style={{ marginBottom: 12 }}>
         Usuários ({props.usersArray?.length})
+        <i style={{ marginLeft: 10, cursor: "pointer" }} className="fas fa-redo" onClick={props.getUsers} />
       </span>
       <div className='admin-list-page-header'>
 
@@ -19,13 +20,15 @@ const Header = (props) => {
               Participantes por mobilização
             </button>
           </div>
-          <div>
+          <div style={{ marginTop: 4 }}>
             <button onClick={() => props.setVisualizationType("cards")}
-              className={props.visualizationType === "cards" ? "active" : ""} >
+              className={props.visualizationType === "cards" ? "active" : ""}
+              style={{ padding: "2px 10px", marginRight: 4 }}>
               Cards
             </button>
             <button onClick={() => props.setVisualizationType("table")}
-              className={props.visualizationType === "table" ? "active" : ""}>
+              className={props.visualizationType === "table" ? "active" : ""}
+              style={{ padding: "2px 10px" }}>
               Tabela
             </button>
           </div>

@@ -20,8 +20,9 @@ import Table from "./Components/Table";
 
 const ListUser = (props) => {
   const [inputFilterValue, setInputFilterValue] = useState('');
-  const [filter, setFilter] = useState("all")
-  const [visualizationType, setVisualizationType] = useState('cards')
+  const [filter, setFilter] = useState("all");
+  const [visualizationType, setVisualizationType] = useState('cards');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (props.filters?.selectedPage) {
@@ -49,16 +50,27 @@ const ListUser = (props) => {
     }
   }
 
-  useEffect(() => {
-    if (!props.userList) {
+  function getUsers() {
+    setLoading(true)
+    return new Promise((resolve, reject) => {
       authRequest.get(`users/${props.companyInfo.id}`)
         .then((data) => {
           props.setUserList(data.data);
+          resolve(data.data)
         })
         .catch((err) => {
-          toast.error("Unable to load users")
+          reject(err);
           console.log(err)
+          toast.error("Unable to load users")
+        }).finally(() => {
+          setLoading(false);
         })
+    })
+  }
+
+  useEffect(() => {
+    if (!props.userList) {
+      getUsers()
     }
   }, [])
 
@@ -84,9 +96,9 @@ const ListUser = (props) => {
   return (
     <>
       <Header filter={filter} setFilter={setFilter} inputFilterValue={inputFilterValue}
-        setInputFilterValue={setInputFilterValue} usersArray={props.userList}
+        setInputFilterValue={setInputFilterValue} usersArray={props.userList} getUsers={getUsers}
         visualizationType={visualizationType} setVisualizationType={setVisualizationType} />
-      {!props.userList ? (
+      {!props.userList || loading ? (
         <CardLoader />
       ) : (
         <>

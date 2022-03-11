@@ -112,6 +112,7 @@ const Table = (props) => {
                 sorter: {
                     compare: (a, b) => sort(a.containertext, b.containertext)
                 },
+                className: "list-page-table-cell-ellipsis",
                 ...getColumnFilterProps("containertext"),
             },
             {
