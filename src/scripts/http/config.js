@@ -2,5 +2,5 @@
 export default {
   //https://mobilizae-api.herokuapp.com
   //http://localhost:8080
-  host: "http://localhost:8080",
+  host: "https://mobilizae-api.herokuapp.com",
 };

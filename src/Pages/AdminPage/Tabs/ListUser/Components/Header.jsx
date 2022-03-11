@@ -19,6 +19,16 @@ const Header = (props) => {
               Participantes por mobilização
             </button>
           </div>
+          <div>
+            <button onClick={() => props.setVisualizationType("cards")}
+              className={props.visualizationType === "cards" ? "active" : ""} >
+              Cards
+            </button>
+            <button onClick={() => props.setVisualizationType("table")}
+              className={props.visualizationType === "table" ? "active" : ""}>
+              Tabela
+            </button>
+          </div>
         </div>
         <div className='admin-list-page-header-right-side'>
           <input placeholder='Pesquisar pelo nome' value={props.inputFilterValue}

@@ -1,38 +1,21 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo } from 'react'
 
 //Components
 import { Row, Col } from "react-bootstrap"
-import { toast } from "react-toastify"
 import ConfirmModal from "./ConfirmModal";
 
 //Scripts
 import server from "../../../../../scripts/http/config"
-import authRequest from "../../../../../scripts/http/authRequest";
+import { formatDate } from "../../../../../scripts/utils"
 
 const Card = (props) => {
-    const [showModal, setShowModal] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
-
-
-    function deletePage() {
-        setDeleteLoading(true);
-        authRequest.delete(`/pages/${props.content.id}`)
-            .then(() => {
-                var newArr = props.pageList.slice();
-                newArr = newArr.filter((el) => el.id !== props.content.id)
-                props.setPageList(newArr);
-                toast.success("Página deletada")
-            })
-            .catch((err) => { toast.error("Houve um erro ao deletar a página") })
-            .finally(() => setDeleteLoading(false))
-    }
 
     return (
         <div className='admin-list-page-card-wrapper'>
             <div className='admin-list-page-card-header'>
                 <div>
                     <i className="fas fa-pen" onClick={() => { props.handleEditPageClick(props.content) }}></i>
-                    <i className="fas fa-trash" onClick={() => setShowModal(true)}></i>
+                    <i className="fas fa-trash" onClick={() => props.setShowDeleteModal(true)}></i>
                 </div>
                 <button className='admin-create-page-btn-submit'
                     onClick={() => props.onCardClick({ ...props.content, participants: props.content.userCount })}
@@ -56,7 +39,7 @@ const Card = (props) => {
                         </span>
                     </div>
                     <div>
-                        <h5>Participantes:</h5>
+                        <h5 onClick={() => console.log(props)}>Participantes:</h5>
                         <span>{props.content.userCount}</span>
                     </div>
                     <div>
@@ -68,20 +51,16 @@ const Card = (props) => {
                         <span>{props.content.pageAccess}</span>
                     </div>
                     <div>
-                        <h5>Criada por:</h5>
-                        <span>{props.content["admin_name"]}</span>
+                        <h5>Data de cadastro:</h5>
+                        <span>{formatDate(props.content.createdat, false)}</span>
                     </div>
-                    {/* <div>
-                        <h5>Cadastrou na página e não participa do grupo:</h5>
-                        <span>{content.registeredOutsideGroup}</span>
-                    </div> */}
                 </Col>
                 <Col sm={12} md={6} className='card-wrapper-right-side'>
                     <img src={`${server.host}/getImage/${props.content.footerimage}`} alt="Segment ilustration" loading="lazy" />
                 </Col>
             </Row>
-            <ConfirmModal title={props.content.segmentname} showModal={showModal} setShowModal={setShowModal}
-                btnClick={deletePage} deleteLoading={deleteLoading} />
+            <ConfirmModal title={props.content.segmentname} showModal={props.showDeleteModal} setShowModal={props.setShowDeleteModal}
+                btnClick={() => { props.handleDeletePage(props.content.id) }} deleteLoading={props.deletePageLoading} />
         </div>
     )
 }
