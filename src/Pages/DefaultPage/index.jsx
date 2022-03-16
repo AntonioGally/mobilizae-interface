@@ -14,11 +14,17 @@ import { setAdminInfo, setPageList } from "../../store/actions/admin"
 //styles
 import "./DefaultPage.style.css";
 
+//Assets
+import defaultPageGraphsImage from "../../assets/images/defaultPageGraphsImage.png";
+import defaultPageCreatePageImage from "../../assets/images/defaultPageCreatePageImage.png";
+import defaultPageMoblizaeLogo from "../../assets/images/defaultPageMoblizaeLogo.png";
+
 //Componets
 import NavbarComponent from "./Components/NavbarComponent";
 import InputArea from "./Components/InputArea";
 import TextContainerOutline from "./Components/TextContainerOutline";
 import TextContainerFilled from "./Components/TextContainerFilled";
+import ColumnText from "./Components/ColumnText";
 import ModalLogin from "./Components/ModalLogin";
 import { setCompanyInfo } from "../../store/actions/company";
 
@@ -107,11 +113,15 @@ const DefaultPage = (props) => {
         <InputArea emailInput={emailInput} setEmailInput={setEmailInput}
           handleButtonClick={handleNextButtonClick} />
 
-        {/* <TextContainerOutline title='Começando agora na mobilizae?'
-          description='Comece sua avaliação grátis entrando em contato conosco: antonio.gally@gmail.com' /> */}
-
         <TextContainerFilled title='Evento virtual-novidades'
-          description='Junte-se aos especialistas da mobilizae para se aprofundar em nossas últimas atualizações e descbrir seu caminho para o sucesso!' />
+          description='Junte-se aos especialistas da moblizae para se aprofundar em nossas últimas atualizações e descbrir seu caminho para o sucesso!' />
+
+        <ColumnText textSide="right" image={defaultPageMoblizaeLogo} text="Moblizae, a plataforma de segmentação do seu público da maneira mais prática e rápida possível. Nós conseguimos segmentar seu público em nichos diferentes, exibindo relatórios e dados importantes para gerenciamento do seu público." />
+        <ColumnText textSide="left" image={defaultPageGraphsImage} text="Visualize gráficos importantes sobre seus usuários para ajudar na tomada de decição do seu comércio." />
+        <ColumnText textSide="right" image={defaultPageCreatePageImage} text="Crie diversos segmentos com grupos de WhatsApp linkado à página de forma prática, e distribua para o seu públcio, deixando sua comunicação com seu usuário final mais rápida, objetiva e efetiva." />
+
+        <TextContainerFilled title='Começando agora na moblizae?'
+          description='Entre em contato conosco. ' email="antonio.gally@gmail.com"/>
 
         <ModalLogin showModal={showModal} setShowModal={setShowModal} emailInput={emailInput}
           passwordInputValue={passwordInputValue} setPasswordInputValue={setPasswordInputValue}
