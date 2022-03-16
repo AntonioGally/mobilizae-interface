@@ -8,10 +8,10 @@ const ColumnText = (props) => {
         <Row className="defaul-page-column-text-row">
             {props.textSide === "left" ? (
                 <>
-                    <Col md={6} sm={12}>
+                    <Col md={5} sm={12}>
                         <p>{props.text}</p>
                     </Col>
-                    <Col md={6} sm={12}>
+                    <Col md={7} sm={12}>
                         <div>
                             <img src={props.image} alt="Text description" />
                         </div>

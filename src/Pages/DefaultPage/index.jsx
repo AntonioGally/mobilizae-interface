@@ -18,6 +18,7 @@ import "./DefaultPage.style.css";
 import defaultPageGraphsImage from "../../assets/images/defaultPageGraphsImage.png";
 import defaultPageCreatePageImage from "../../assets/images/defaultPageCreatePageImage.png";
 import defaultPageMoblizaeLogo from "../../assets/images/defaultPageMoblizaeLogo.png";
+import defaulPageListUser from "../../assets/images/defaulPageListUser.png";
 
 //Componets
 import NavbarComponent from "./Components/NavbarComponent";
@@ -119,6 +120,7 @@ const DefaultPage = (props) => {
         <ColumnText textSide="right" image={defaultPageMoblizaeLogo} text="Moblizae, a plataforma de segmentação do seu público da maneira mais prática e rápida possível. Nós conseguimos segmentar seu público em nichos diferentes, exibindo relatórios e dados importantes para gerenciamento do seu público." />
         <ColumnText textSide="left" image={defaultPageGraphsImage} text="Visualize gráficos importantes sobre seus usuários para ajudar na tomada de decição do seu comércio." />
         <ColumnText textSide="right" image={defaultPageCreatePageImage} text="Crie diversos segmentos com grupos de WhatsApp linkado à página de forma prática, e distribua para o seu públcio, deixando sua comunicação com seu usuário final mais rápida, objetiva e efetiva." />
+        <ColumnText textSide="left" image={defaulPageListUser} text="Tenha as informações dos usuários na palma da mão" />
 
         <TextContainerFilled title='Começando agora na moblizae?'
           description='Entre em contato conosco. ' email="antonio.gally@gmail.com"/>
