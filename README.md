@@ -33,10 +33,10 @@
 The project started with my brothe's idea of capture some data from different users and organize this data in segments. The capture of the data would need a custom page and for the data visualization, we'll need a platform to show all users and pages data in different ways. I developed one POC using ReactJS and firebase as "backend and DB". It worked until some point, but with a larger number of users, i needed to create our infrastructure using our database and API, and so i did all this alone :c. I learned a lot, i've never worked with backend applications, this was the first project on nodeJS and it was fine, i was able to do all the tasks and requirements. Down here you will find more information about the stacks that i used to build the app.
 
 <p style="width:100%; display: flex; flex-wrap:wrap; justify-content:center; align-items:center">
-    <img width=450 src="./src/assets/images/defaultPageGraphsImage.png" alt="print01"/>
-    <img width=450 src="./src/assets/images/defaulPageListUser.png" />
-    <img width=450 style="margin-right:10px" src="./src/assets/images/defaultPageCreatePageImage.png" />
-    <img width=450 style="margin-right:10px" src="./src/assets/images/readmePrint.png" />
+    <img width=350 src="./src/assets/images/defaultPageGraphsImage.png" alt="print01"/>
+    <img width=350 src="./src/assets/images/defaulPageListUser.png" />
+    <img width=350 style="margin-right:10px" src="./src/assets/images/defaultPageCreatePageImage.png" />
+    <img width=350 style="margin-right:10px" src="./src/assets/images/readmePrint.png" />
 
 </p>
 
