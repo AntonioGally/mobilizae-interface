@@ -11,12 +11,6 @@
   .admin-list-page-header-left-side {
     width: 100%;
   }
-  .admin-list-page-header-left-side > div {
-    justify-content: space-between;
-  }
-  .admin-list-page-header-left-side > div > button {
-    margin-right: 0 !important;
-  }
   .admin-list-page-header-right-side {
     margin-top: 12px;
     width: 100%;
@@ -33,6 +27,7 @@
 .admin-list-page-header-left-side > span {
   font-size: 20px;
 }
+
 .admin-list-page-header-left-side > div {
   margin-top: 10px;
   display: flex;
@@ -42,7 +37,7 @@
   padding: 7px;
   border-radius: 3px;
   margin-right: 10px;
-  
+
   border: none;
   outline: 0;
 }
@@ -203,10 +198,25 @@
   width: fit-content;
 }
 .list-page-table .ant-table-thead > tr > th {
-  padding: 10px;
-  font-size: 15px;
+  padding: 4px; 
+  font-size: 14px;
 }
 
 .list-page-table .ant-table-tbody > tr > td {
-  padding: 6px;
+  padding: 3px;
+  font-size: 13px;
+  font-family: "Roboto";
 }
+.list-page-table .list-page-table-cell-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-page-table .ant-table-tbody > tr:nth-child(2n + 1) > td {
+  background-color: #ebf8f2;
+}
+
+/* .list-page-table .ant-table-tbody > tr:hover > td {
+  background-color: #1dbf7347;
+} */

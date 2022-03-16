@@ -72,6 +72,39 @@ code {
   background-color: var(--secondary-button-background);
 }
 
+.table-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-header > div > button {
+  border: none;
+  outline: 0;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 13px;
+}
+
+.table-header > div > button:nth-child(1) {
+  margin-right: 10px;
+}
+
+.table-input {
+  background-color: #ffffff;
+  border: 1px solid #d2d2d2;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #404040;
+  height: 30px;
+  min-width: 250px;
+  padding-left: 14px;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
 @media (max-width: 768px) {
   .primary-button {
     margin-top: 10px;

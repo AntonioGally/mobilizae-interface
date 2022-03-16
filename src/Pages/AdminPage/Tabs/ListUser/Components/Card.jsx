@@ -61,7 +61,7 @@ const Card = (props) => {
           <div>
             <h5>Data de cadastro:</h5>
             <span>
-              {formatDate(props.content.createdat)}
+              {formatDate(props.content.createdat, false)}
             </span>
           </div>
           <div>

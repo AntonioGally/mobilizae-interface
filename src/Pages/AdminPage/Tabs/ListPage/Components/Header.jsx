@@ -11,13 +11,15 @@ const Header = (props) => {
                     <button onClick={props.onBtnClick} style={{ background: "var(--primary-button-background)", color: "white" }}>Criar mobilização</button>
                     <button>Assistir ao vídeo tutorial</button>
                 </div>
-                <div>
+                <div style={{ marginTop: 3 }}>
                     <button onClick={() => props.setVisualizationType("cards")}
-                        className={props.visualizationType === "cards" ? "active" : ""} >
+                        className={props.visualizationType === "cards" ? "active" : ""}
+                        style={{ padding: "2px 10px", marginRight: 4 }}>
                         Cards
                     </button>
                     <button onClick={() => props.setVisualizationType("table")}
-                        className={props.visualizationType === "table" ? "active" : ""}>
+                        className={props.visualizationType === "table" ? "active" : ""}
+                        style={{ padding: "2px 10px" }}>
                         Tabela
                     </button>
                 </div>
