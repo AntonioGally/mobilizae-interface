@@ -1,6 +1,7 @@
 //Libs
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux"
+
 
 //Graph
 import {
@@ -9,11 +10,14 @@ import {
     BarChart, Bar,
     ResponsiveContainer,
     Legend, Tooltip, CartesianGrid,
-    XAxis, YAxis, Cell, LabelList,
+    XAxis, YAxis, Cell,
 } from 'recharts';
+
+import locale from 'antd/es/date-picker/locale/pt_BR';
 
 //Components
 import { Row, Col } from "react-bootstrap"
+import DatePicker from '../../../../Elements/DatePicker.tsx';
 import { toast } from "react-toastify"
 
 //Script
@@ -22,10 +26,17 @@ import authRequest from "../../../../scripts/http/authRequest"
 //Store
 import { setUserList } from "../../../../store/actions/admin";
 
+const dayjs = require('dayjs')
+var isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
+
 const UserGraph = (props) => {
+
+    const [userPerDay, setUserPerDay] = useState([])
+
     const __pie_colors = ['#82ca9d', '#8884d8'];
     //CHART DATA FUNCTIONS
-    function getUserPerDayData() {
+    function getUserPerDayData(dateToFilter) {
         var orderedUserList = props.userList.slice().sort((a, b) => {
             var aDate = new Date(a.createdat);
             var bDate = new Date(b.createdat);
@@ -34,8 +45,19 @@ const UserGraph = (props) => {
             } else if (bDate > aDate) {
                 return -1;
             } else return 0;
-        })
-        var formattedList = orderedUserList.map((value) => {
+        });
+        var dateFilteredUserList = orderedUserList.filter((el) => {
+            if (dateToFilter) {
+                let _isBetween = dayjs(el.createdat).isBetween(dayjs(dateToFilter).startOf("week"), dayjs(dateToFilter).endOf("week"))
+                if (_isBetween) {
+                    return true
+                }
+                return false
+            }
+            return true;
+        });
+
+        var formattedList = dateFilteredUserList.map((value) => {
             var date = new Date(value.createdat);
             var strDate = `${date.getDate()}/${date.getMonth() + 1}`;
             return {
@@ -66,7 +88,7 @@ const UserGraph = (props) => {
                 Quantidade: dataArr[index]?.length
             }
         })
-        return finalData
+        setUserPerDay(finalData)
     }
 
     function getUserPercentData() {
@@ -127,17 +149,30 @@ const UserGraph = (props) => {
                     console.log(err)
                 })
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        props.userList && getUserPerDayData();
+    }, [props.userList]);
+
+    const customWeekStartEndFormat = value =>
+        `${dayjs(value).startOf('week').format("DD/MM")} ~ ${dayjs(value)
+            .endOf('week')
+            .format("DD/MM")}`;
 
     return (
         <>
             {props.userList ? (
                 <>
                     <Row style={{ minHeight: "40vh" }}>
-                        <Col sm={12} md={8} lg={8} xl={8}>
-                            <h5 className="text-center">Quandidade de usuários cadastrados por dia</h5>
+                        <Col sm={12} md={8} lg={8} xl={8} style={{ maxHeight: 340 }}>
+                            <div>
+                                <h5 className="text-center">Quandidade de usuários cadastrados por dia por semana</h5>
+                                <DatePicker onChange={getUserPerDayData} picker="week" locale={locale}
+                                    style={{ marginLeft: "7%" }} format={customWeekStartEndFormat} />
+                            </div>
                             <ResponsiveContainer width={'100%'} height="90%">
-                                <AreaChart data={getUserPerDayData()}>
+                                <AreaChart data={userPerDay}>
                                     <defs>
                                         <linearGradient id="Quantidade" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
