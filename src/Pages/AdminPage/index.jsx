@@ -13,6 +13,7 @@ import EditPage from "./Tabs/EditPage/EditPage.jsx";
 import ListUser from './Tabs/ListUser/ListUser.jsx';
 //Graph
 import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+import PageGraph from "./Tabs/PageGraph/PageGraph.jsx";
 //admin
 import ListAdmin from './Tabs/ListAdmin/ListAdmin.jsx';
 import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
@@ -60,6 +61,8 @@ const AdminPage = (props) => {
         return <EditPage changeTab={changeTab} />
       case 'userGraph':
         return <UserGraph />
+      case 'pageGraph':
+        return <PageGraph />
       case 'createQRCode':
         return <CreateQRCode />
       default:
@@ -130,7 +133,7 @@ const AdminPage = (props) => {
                 <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
                   Participantes
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')}>
                   Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>

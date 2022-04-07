@@ -2,7 +2,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { connect } from "react-redux"
 
-
 //Graph
 import {
     AreaChart, Area,
@@ -32,7 +31,7 @@ dayjs.extend(isBetween)
 
 const UserGraph = (props) => {
 
-    const [userPerDay, setUserPerDay] = useState([])
+    const [userPerDay, setUserPerDay] = useState([]);
 
     const __pie_colors = ['#82ca9d', '#8884d8'];
     //CHART DATA FUNCTIONS
@@ -59,7 +58,7 @@ const UserGraph = (props) => {
 
         var formattedList = dateFilteredUserList.map((value) => {
             var date = new Date(value.createdat);
-            var strDate = `${date.getDate()}/${date.getMonth() + 1}`;
+            var strDate = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1 < 10 ? "0"+date.getMonth()+1 : date.getMonth()+1}`;
             return {
                 ...value,
                 createdDate: strDate
