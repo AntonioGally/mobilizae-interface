@@ -12,6 +12,7 @@ const Table = (props) => {
     const [filteredValue, setFilteredValue] = useState({
         pathname: "",
         userCount: "",
+        viewCount: "",
         buttontext: "",
         containertext: "",
         createdat: "",
@@ -97,6 +98,13 @@ const Table = (props) => {
                 dataIndex: "userCount",
                 sorter: (a, b) => a.userCount - b.userCount,
                 ...getColumnFilterProps("userCount"),
+            },
+            {
+                title: "Quantidade visualização",
+                key: "log",
+                dataIndex: "log",
+                sorter: (a, b) => a.log.length - b.log.length,
+                render: (obj) => obj.length
             },
             {
                 title: "Texto botão",

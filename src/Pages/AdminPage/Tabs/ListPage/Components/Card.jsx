@@ -48,7 +48,7 @@ const Card = (props) => {
                     </div>
                     <div>
                         <h5>Acessos na página:</h5>
-                        <span>{props.content.pageAccess}</span>
+                        <span>{props.content.log.length}</span>
                     </div>
                     <div>
                         <h5>Data de cadastro:</h5>

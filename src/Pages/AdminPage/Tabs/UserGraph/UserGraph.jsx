@@ -58,7 +58,7 @@ const UserGraph = (props) => {
 
         var formattedList = dateFilteredUserList.map((value) => {
             var date = new Date(value.createdat);
-            var strDate = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1 < 10 ? "0"+date.getMonth()+1 : date.getMonth()+1}`;
+            var strDate = `${date.getDate() < 10 ? "0"+date.getDate() : date.getDate()}/${date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1}`;
             return {
                 ...value,
                 createdDate: strDate
@@ -166,7 +166,7 @@ const UserGraph = (props) => {
                     <Row style={{ minHeight: "40vh" }}>
                         <Col sm={12} md={8} lg={8} xl={8} style={{ maxHeight: 340 }}>
                             <div>
-                                <h5 className="text-center">Quandidade de usuários cadastrados por dia por semana</h5>
+                                <h5 className="text-center">Quandidade de usuários cadastrados por dia</h5>
                                 <DatePicker onChange={getUserPerDayData} picker="week" locale={locale}
                                     style={{ marginLeft: "7%" }} format={customWeekStartEndFormat} />
                             </div>
@@ -192,7 +192,7 @@ const UserGraph = (props) => {
                             <h5 className="text-center">SMS ativo e desativo</h5>
                             <ResponsiveContainer width={'100%'} height="90%">
                                 <PieChart>
-                                    <Tooltip isAnimationActive={true}
+                                    <Tooltip isAnimationActive
                                         formatter={(value, name, params) => ([`${value}% - (${params.payload.payload.valueNumber})`, name])} />
                                     <Pie data={getUserPercentData().dataInPercent} dataKey="valuePercent" nameKey="Grupo"
                                         cx="50%" cy="50%" outerRadius={80} fill="#82ca9d"
