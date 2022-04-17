@@ -20,6 +20,9 @@ import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
 import EditAdmin from './Tabs/EditAdmin/EditAdmin.jsx';
 //tools
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
+//Profile
+import Profile from "./Tabs/Profile/Profile.jsx";
+
 
 //Auth
 import request from "../../scripts/http/request";
@@ -63,6 +66,8 @@ const AdminPage = (props) => {
         return <UserGraph />
       case 'pageGraph':
         return <PageGraph />
+      case 'profileConfig':
+        return <Profile changeTab={changeTab} />
       case 'createQRCode':
         return <CreateQRCode />
       default:
@@ -143,9 +148,14 @@ const AdminPage = (props) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Nav.Link onClick={handleLogout}>
-              Sair
-            </Nav.Link>
+            <NavDropdown title="Perfil" id="dropDownProfile">
+              <NavDropdown.Item onClick={() => setTabNavigation('profileConfig')}>
+                Configurações
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>
+                Sair
+              </NavDropdown.Item>
+            </NavDropdown>
           </Navbar.Collapse>
         </Container>
       </Navbar>

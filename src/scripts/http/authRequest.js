@@ -23,7 +23,6 @@ instance.interceptors.response.use(
       if (error.response.data?.error_description) {
         window.logoutErrorCause = error.response.data.error_description;
       }
-      // When a request is not made from /logout, redirect to /login and clear all user data
       localStorage.removeItem("access_token");
       document.location.reload();
     }
