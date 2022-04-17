@@ -13,12 +13,16 @@ import EditPage from "./Tabs/EditPage/EditPage.jsx";
 import ListUser from './Tabs/ListUser/ListUser.jsx';
 //Graph
 import UserGraph from './Tabs/UserGraph/UserGraph.jsx'
+import PageGraph from "./Tabs/PageGraph/PageGraph.jsx";
 //admin
 import ListAdmin from './Tabs/ListAdmin/ListAdmin.jsx';
 import CreateAdmin from './Tabs/CreateAdmin/CreateAdmin.jsx';
 import EditAdmin from './Tabs/EditAdmin/EditAdmin.jsx';
 //tools
 import CreateQRCode from './Tabs/Tools/CreateQRCode.jsx';
+//Profile
+import Profile from "./Tabs/Profile/Profile.jsx";
+
 
 //Auth
 import request from "../../scripts/http/request";
@@ -60,6 +64,10 @@ const AdminPage = (props) => {
         return <EditPage changeTab={changeTab} />
       case 'userGraph':
         return <UserGraph />
+      case 'pageGraph':
+        return <PageGraph />
+      case 'profileConfig':
+        return <Profile changeTab={changeTab} />
       case 'createQRCode':
         return <CreateQRCode />
       default:
@@ -130,7 +138,7 @@ const AdminPage = (props) => {
                 <NavDropdown.Item onClick={() => setTabNavigation('userGraph')}>
                   Participantes
                 </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')} disabled>
+                <NavDropdown.Item onClick={() => setTabNavigation('pageGraph')}>
                   Mobilizações
                 </NavDropdown.Item>
               </NavDropdown>
@@ -140,9 +148,14 @@ const AdminPage = (props) => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Nav.Link onClick={handleLogout}>
-              Sair
-            </Nav.Link>
+            <NavDropdown title="Perfil" id="dropDownProfile">
+              <NavDropdown.Item onClick={() => setTabNavigation('profileConfig')}>
+                Configurações
+              </NavDropdown.Item>
+              <NavDropdown.Item onClick={handleLogout}>
+                Sair
+              </NavDropdown.Item>
+            </NavDropdown>
           </Navbar.Collapse>
         </Container>
       </Navbar>
