@@ -7,7 +7,7 @@ const TextContainer = ({ titleText, containerText }) => {
         {titleText}
       </h1>
       <p>
-        {containerText ? containerText : 'O novo programa irá acolher 500 novas famílias. Participe do grupo e saiba mais'}
+        {containerText ? containerText : 'Descrição'}
       </p>
     </div>
   )

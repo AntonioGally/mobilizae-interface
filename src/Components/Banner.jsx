@@ -5,12 +5,14 @@ import request from "../scripts/http/request"
 
 const Banner = (props) => {
   useEffect(() => {
-    request.post("/log/page", {
-      segment: props.content.pathname,
-      companyId: props.content.companyid,
-      pageId: props.content.id,
-      viwedAt: new Date() - 3
-    })
+    window.location.host.indexOf("localhost") < 0 &&
+      request.post("/log/page", {
+        segment: props.content.pathname,
+        companyId: props.content.companyid,
+        pageId: props.content.id,
+        viwedAt: new Date() - 3
+      });
+    
   }, [])
   return (
     <div className="banner-container" style={{ backgroundImage: `url(${props.imageSrc})` }} />

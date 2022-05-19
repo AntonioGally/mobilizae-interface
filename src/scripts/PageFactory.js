@@ -10,22 +10,27 @@ import FooterImage from "../Components/FooterImage.jsx";
 
 export default class PageFactory {
 
-  constructor(props, id) {
-    function createComponent() {
-      return (
-        <div>
-          <Banner content={props} imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
-          <TextContainer titleText={props.segmentname} containerText={props.containertext} />
-          <Button content={props} buttonText={props.buttontext} modalImage={`${server.host}/getImage/${props.footerimage}`} 
-          modalPageInfo={props} groupLink={props.grouplink} />
-          
-          <FooterImage src={`${server.host}/getImage/${props.footerimage}`} />
-        </div>
-      )
-    }
+  constructor(props) {
+    this.props = props;
+  }
 
+  createComponent() {
+    const bannerImage = this.props.bannerimage?.indexOf("data:image/") > -1 ? this.props.bannerimage : `${server.host}/getImage/${this.props.bannerimage}`
+    const footerImage = this.props.footerimage?.indexOf("data:image/") > -1 ? this.props.footerimage : `${server.host}/getImage/${this.props.footerimage}`
     return (
-      <Route key={id} path={`/${props.pathname}`} component={createComponent} />
+      <div>
+        <Banner content={this.props} imageSrc={this.props.bannerimage != undefined ? bannerImage : ""} />
+        <TextContainer titleText={this.props.segmentname} containerText={this.props.containertext} />
+        <Button content={this.props} buttonText={this.props.buttontext} modalImage={`${server.host}/getImage/${this.props.footerimage}`}
+          modalPageInfo={this.props} groupLink={this.props.grouplink} />
+        <FooterImage src={this.props.footerimage != undefined ? footerImage : ""} />
+      </div>
+    )
+  }
+
+  createRoute() {
+    return (
+      <Route key={this.props.id} path={`/${this.props.pathname}`} component={this.createComponent()} />
     )
   }
 }

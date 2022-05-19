@@ -15,6 +15,7 @@ import { setPrivatePageList } from "../../../../store/actions/admin"
 
 //Css
 import "./CreatePage.style.css";
+import PageLiveVisualization from "./PageLiveVisualization";
 
 
 const CreatePage = (props) => {
@@ -22,7 +23,9 @@ const CreatePage = (props) => {
     const [loading, setLoading] = useState();
     const [imageSelected, setImageSelected] = useState({ banner: false, footer: false });
 
-    const [groupLinkArray, setGroupLinkArray] = useState(1)
+    const [groupLinkArray, setGroupLinkArray] = useState(1);
+
+    const [liveData, setLiveData] = useState({});
 
     const bannerImageRef = useRef(null)
     const footerImageRef = useRef(null)
@@ -82,10 +85,12 @@ const CreatePage = (props) => {
 
             reader.onload = function (e) {
                 if (imageInputName === "bannerImage") {
-                    setImageSelected((prev) => ({ ...prev, banner: true }))
+                    setImageSelected((prev) => ({ ...prev, banner: true }));
+                    setLiveData((prev) => ({ ...prev, bannerImage: e.target.result }));
                     bannerImageRef.current.src = e.target.result;
                 } else {
-                    setImageSelected((prev) => ({ ...prev, footer: true }))
+                    setImageSelected((prev) => ({ ...prev, footer: true }));
+                    setLiveData((prev) => ({ ...prev, footerImage: e.target.result }));
                     footerImageRef.current.src = e.target.result;
                 }
             };
@@ -103,7 +108,7 @@ const CreatePage = (props) => {
                 Criar mobilização
             </span>
             <div className="admin-create-page-wrapper" style={{ marginTop: 20 }}>
-                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+                <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" >
                     <Row style={{ margin: 0 }}>
                         <Col sm={12} md={6} className="admin-create-page-left-side">
                             <input placeholder="Titulo da mobilização" type="text"
@@ -111,12 +116,14 @@ const CreatePage = (props) => {
                                     required: true,
                                     maxLength: 50
                                 })}
+                                onChange={(e) => setLiveData((prev) => ({ ...prev, segmentName: e.target.value }))}
                                 className={errors.segmentName ? "input-error" : ""}
                             />
                             <input placeholder="Texto de descrição" type="text"
                                 {...register("containerText", {
                                     required: true,
                                 })}
+                                onChange={(e) => setLiveData((prev) => ({ ...prev, containerText: e.target.value }))}
                                 className={errors.containerText ? "input-error" : ""}
                             />
                             <div style={{ marginTop: 12, maxHeight: 150, overflowY: "auto" }}>
@@ -163,6 +170,7 @@ const CreatePage = (props) => {
                                     minLength: 3,
                                     maxLength: 35
                                 })}
+                                onChange={(e) => setLiveData((prev) => ({ ...prev, buttonText: e.target.value }))}
                                 className={errors.buttonText ? "input-error" : ""}
                             />
                             <span className="input-subtitle">
@@ -174,6 +182,7 @@ const CreatePage = (props) => {
                                     minLength: 3,
                                     maxLength: 20
                                 })}
+                                onChange={(e) => setLiveData((prev) => ({ ...prev, pathName: e.target.value }))}
                                 className={errors.pathName ? "input-error" : ""}
                             />
                             <span className="input-subtitle">
@@ -203,6 +212,7 @@ const CreatePage = (props) => {
                     </Row>
                 </form>
             </div>
+            <PageLiveVisualization formData={{ ...liveData, imageSelected }} />
         </>
     )
 }

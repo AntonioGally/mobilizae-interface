@@ -77,8 +77,8 @@ const Router = (props) => {
       <Switch>
         <Route exact path="/" component={DefaultPage} />
         <ProtectedRoute path="/admin" />
-        {props.pageList && props.pageList.map((value) => {
-          return new PageFactory(value, value.id);
+        {props.pageList && props.pageList.map((pageInfo) => {
+          return new PageFactory(pageInfo).createRoute();
         })}
         {/* <Route component={RedirectPage} /> */}
       </Switch>
