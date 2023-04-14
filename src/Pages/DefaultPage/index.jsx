@@ -75,7 +75,7 @@ const DefaultPage = (props) => {
         || subdomain.indexOf("localhost") > -1
         || subdomain.indexOf("mobilizae") > -1
       ) {
-        subdomain = "antoniogally"
+        subdomain = "limasbebidas"
       }
       console.log("Getting data from -> ", host, subdomain)
       request.get(`/companyInfo/${subdomain}`)
@@ -96,12 +96,6 @@ const DefaultPage = (props) => {
     var data = history.location.search?.split("access_token=")[1]?.split("&u=");
     if (data) {
       props.setAdminInfo(JSON.parse(window.decodeURI(data[1])))
-      getCompanyInfo().then((data) => {
-        props.setCompanyInfo(data);
-        getPages(data.id).then((data) => {
-          props.setPageList(data);
-        })
-      });
       localStorage.setItem("access_token", data[0]);
       history.push("/admin")
     }
@@ -123,7 +117,7 @@ const DefaultPage = (props) => {
         <ColumnText textSide="left" image={defaulPageListUser} text="Tenha as informações dos usuários na palma da mão" />
 
         <TextContainerFilled title='Começando agora na moblizae?'
-          description='Entre em contato conosco. ' email="antonio.gally@gmail.com"/>
+          description='Entre em contato conosco. ' email="antonio.gally@gmail.com" />
 
         <ModalLogin showModal={showModal} setShowModal={setShowModal} emailInput={emailInput}
           passwordInputValue={passwordInputValue} setPasswordInputValue={setPasswordInputValue}

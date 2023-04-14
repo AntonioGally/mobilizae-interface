@@ -34,7 +34,7 @@ const Router = (props) => {
         || subdomain.indexOf("localhost") > -1
         || subdomain.indexOf("mobilizae") > -1
       ) {
-        subdomain = "antoniogally"
+        subdomain = "limasbebidas"
       }
       console.log("Getting data from -> ", host, subdomain)
       request.get(`/companyInfo/${subdomain}`)

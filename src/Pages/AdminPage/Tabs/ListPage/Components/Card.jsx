@@ -40,15 +40,15 @@ const Card = (props) => {
                     </div>
                     <div>
                         <h5 onClick={() => console.log(props)}>Participantes:</h5>
-                        <span>{props.content.userCount}</span>
+                        <span>{props.content.userCount || 0}</span>
                     </div>
                     <div>
                         <h5>Grupos preenchidos:</h5>
-                        <span>{(Math.round(Number(props.content.userCount) / 250)).toString()}</span>
+                        <span>{(Math.round(Number(props.content.userCount) / 250) || 0).toString()}</span>
                     </div>
                     <div>
                         <h5>Acessos na página:</h5>
-                        <span>{props.content.log.length}</span>
+                        <span>{props.content.log?.length || 0}</span>
                     </div>
                     <div>
                         <h5>Data de cadastro:</h5>

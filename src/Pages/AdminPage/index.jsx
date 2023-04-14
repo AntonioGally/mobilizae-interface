@@ -85,10 +85,28 @@ const AdminPage = (props) => {
 
   function getCompanyInfo() {
     return new Promise((resolve, reject) => {
-      let subDomain = "antoniogally";
-      request.get(`/companyInfo/${subDomain}`)
+      var host = window.location.host
+      var subdomain = host.split('.')[0];
+      if (
+        subdomain === undefined
+        || subdomain === "www"
+        || subdomain.indexOf("localhost") > -1
+        || subdomain.indexOf("mobilizae") > -1
+      ) {
+        subdomain = "limasbebidas"
+      }
+      console.log("Getting data from -> ", host, subdomain)
+      request.get(`/companyInfo/${subdomain}`)
         .then((data) => { resolve(data.data); })
         .catch((err) => { reject(err); })
+    })
+  }
+
+  function getPages(companyId) {
+    return new Promise((resolve, reject) => {
+      request.get(`/public/pages/${companyId}`)
+        .then((data) => { resolve(data.data) })
+        .catch((err) => { reject(err) })
     })
   }
 
@@ -98,15 +116,24 @@ const AdminPage = (props) => {
   }
 
   useEffect(() => {
-    if (!props.companyInfo) {
-      getCompanyInfo().then((data) => {
-        props.setCompanyInfo(data)
-      })
-    }
     if (props.companyInfo && !props.adminInfo) {
       postToken().then((data) => props.setAdminInfo(data))
     }
   }, [props.companyInfo]);
+
+  useEffect(() => {
+    if (!props.companyInfo) {
+      getCompanyInfo()
+        .then((companyInfoData) => {
+          props.setCompanyInfo(companyInfoData);
+
+          getPages(companyInfoData.id)
+            .then((pagesData) => {
+              props.setPageList(pagesData);
+            })
+        });
+    }
+  }, [history, props.companyInfo])
 
   return (
     <>

@@ -72,7 +72,7 @@ const ListPage = (props) => {
     }
 
     useEffect(() => {
-        if (!props.privatePageList) getPrivatePageList();
+        if (!props.privatePageList && props.companyInfo) getPrivatePageList();
     }, [props.companyInfo])
 
     return (
