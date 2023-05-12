@@ -18,10 +18,10 @@ const VisualizationModal = (props) => {
     const invisibleInputToCopyLink = useRef();
     const qrCodeImage = useRef();
 
-    function copyLink() {
+    function copyLink(pageType = "") {
         setLinkCopy(true);
         invisibleInputToCopyLink.current.style.display = 'block';
-        invisibleInputToCopyLink.current.textContent = window.location.origin + "/#/" + props.modalData.pathname;
+        invisibleInputToCopyLink.current.textContent = window.location.origin + `/#/${pageType}` + props.modalData.pathname;
         invisibleInputToCopyLink.current.select();
         invisibleInputToCopyLink.current.setSelectionRange(0, 99999);
         document.execCommand("copy");
@@ -129,6 +129,22 @@ const VisualizationModal = (props) => {
                             </button>
                             <button onClick={generateQrCode}>
                                 {!downloadQrCode ? "Gerar QR Code" : <Spinner animation="border" size="sm" />}
+                            </button>
+                        </div>
+                    </div>
+                    <div style={{ marginBottom: 15 }}>
+                        <h5>
+                            Link da página de assessoria:
+                            <i style={{ marginLeft: 12, fontSize: 12 }} className="fas fa-external-link-alt"></i>
+                        </h5>
+                        <span>
+                            <a href={`${window.location.origin}/#/manager/${props.modalData.pathname}`} target="_blank" rel="noreferrer">
+                                {window.location.origin}/#/manager/{props.modalData.pathname}
+                            </a>
+                        </span>
+                        <div className='admin-list-page-modal-btn-area'>
+                            <button onClick={() => copyLink("manager/")}>
+                                {linkCopy ? "Copiado!" : "Copiar Link"}
                             </button>
                         </div>
                     </div>

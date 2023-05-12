@@ -122,23 +122,11 @@ const Table = (props) => {
                 }
             },
             {
-                title: "Nome empresa",
-                key: "company_name",
-                dataIndex: "company_name",
-                sorter: {
-                    compare: (a, b) => sort(a.company_name, b.company_name)
-                },
-                ...getColumnFilterProps("company_name"),
-            },
-            {
-                title: "Subdominio empresa",
-                key: "company_subdomain",
-                dataIndex: "company_subdomain",
-                sorter: {
-                    compare: (a, b) => sort(a.company_subdomain, b.company_subdomain)
-                },
-                ...getColumnFilterProps("company_subdomain"),
-            },
+                title: "Convidado por",
+                key: "invitedby",
+                dataIndex: "invitedby",
+                render: (text) => text ? text : "-",
+            }
         ]
     }
 

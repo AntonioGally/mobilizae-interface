@@ -13,7 +13,6 @@ const Button = ({ buttonText, modalImage, groupLink, modalPageInfo, content }) =
       </button>
       <FormModal show={show} closeModal={() => setShow(false)} pageInfo={modalPageInfo} modalImage={modalImage} groupLink={groupLink} content={content} />
     </div>
-
   )
 }
 

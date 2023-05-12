@@ -18,3 +18,7 @@
 .button-container:hover {
   opacity: 0.6;
 }
+
+.button-container.cancel {
+  background-color: #919191;
+}
