@@ -34,7 +34,7 @@ const Router = (props) => {
         || subdomain.indexOf("localhost") > -1
         || subdomain.indexOf("mobilizae") > -1
       ) {
-        subdomain = "limasbebidas"
+        subdomain = "camarasbc"
       }
       console.log("Getting data from -> ", host, subdomain)
       request.get(`/companyInfo/${subdomain}`)
@@ -71,16 +71,19 @@ const Router = (props) => {
     )
   }
 
-
+  if (!props.pageList) return <span>loading..</span>
+  console.log(props.pageList.map((value) => {
+    return new PageFactory(value, value.id);
+  }))
   return (
     <HashRouter>
       <Switch>
         <Route exact path="/" component={DefaultPage} />
         <ProtectedRoute path="/admin" />
-        {props.pageList && props.pageList.map((value) => {
+        {props.pageList.map((value) => {
           return new PageFactory(value, value.id);
         })}
-        {/* <Route component={RedirectPage} /> */}
+        <Route component={RedirectPage} />
       </Switch>
     </HashRouter>
   );

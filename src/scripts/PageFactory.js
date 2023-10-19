@@ -13,6 +13,7 @@ export default class PageFactory {
 
   constructor(props, id) {
     function createComponent() {
+      console.log("asd", props)
       return (
         <div>
           <Banner content={props} imageSrc={`${server.host}/getImage/${props.bannerimage}`} />
@@ -40,7 +41,7 @@ export default class PageFactory {
 
     return (
       <>
-        <Route key={id} path={`/${props.pathname}`} component={createComponent} />
+        <Route key={id} path={`/${props.pathname}`} component={() => createComponent()} />
         <Route key={`manager-${id}`} path={`/manager/${props.pathname}`} component={createManagerComponent} />
       </>
 
